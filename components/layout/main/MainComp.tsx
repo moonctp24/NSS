@@ -10,7 +10,7 @@ const MainComp: NextPage = () => {
   return (
     <>
       <div>Hello Dashboard</div>
-      <div>this is test push</div>
+      <div>this is test push2</div>
     </>
   );
 };
