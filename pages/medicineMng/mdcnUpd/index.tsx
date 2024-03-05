@@ -1,4 +1,4 @@
-import MedicineMngComp from "@/components/layout/medicineMng/MedicineMngComp";
+import MedicineMngComp from "@/components/medicineMng/MedicineMngComp";
 
 const MedicineMngPage = () => {
   return <MedicineMngComp />;

@@ -1,4 +1,4 @@
-import UserMngComp from "@/components/layout/userMng/UserMngComp";
+import UserMngComp from "@/components/userMng/UserMngComp";
 
 const UserMngPage = () => {
   return <UserMngComp />;

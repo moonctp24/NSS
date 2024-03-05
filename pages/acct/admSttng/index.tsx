@@ -1,4 +1,4 @@
-import AdmSttngComp from "@/components/layout/admSttng/AdmSttngComp";
+import AdmSttngComp from "@/components/admSttng/AdmSttngComp";
 
 const LoginPage = () => {
   return <AdmSttngComp />;
