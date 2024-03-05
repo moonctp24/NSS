@@ -93,4 +93,13 @@ button {
   background: #00c1a6;
   color: #ffffff;
 }
+.navLogoutBtn {
+  height: 100px;
+  background: none;
+  color: #000000;
+  font-size: 20px;
+
+  /* absolute; */
+  margin-top: 450px;
+}
 /* ----- button ----- */
