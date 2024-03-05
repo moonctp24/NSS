@@ -14,18 +14,20 @@ const Navbar = () => {
         <button className="navBtn" onClick={() => goMenu("")}>
           대시보드
         </button>
-        <button className="navBtn" onClick={() => goMenu("userMng")}>
+        <button className="navBtn" onClick={() => goMenu("userMng/userList")}>
           회원관리
         </button>
-        <button className="navBtn" onClick={() => goMenu("medicineMng")}>
+        <button className="navBtn" onClick={() => goMenu("medicineMng/mdcnList")}>
           의약품관리
         </button>
-        <button className="navBtn" onClick={() => goMenu("admSttng")}>
+        <button className="navBtn" onClick={() => goMenu("acct/admSttng")}>
           관리자설정
         </button>
-        <p className="absolute left-[130px] top-[984px] text-xl text-center text-[#020202]">
-          <span className="text-xl text-center text-[#020202]">로그아웃</span>
-        </p>
+        {/* <p className="absolute left-[130px] top-[984px] text-xl text-center text-[#020202]"> */}
+        <button className="navLogoutBtn" onClick={() => goMenu("nacct/login")}>
+          로그아웃
+        </button>
+        {/* </p> */}
       </div>
     </>
   );
