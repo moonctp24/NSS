@@ -24,7 +24,7 @@ const Navbar = () => {
           관리자설정
         </button>
         {/* <p className="absolute left-[130px] top-[984px] text-xl text-center text-[#020202]"> */}
-        <button className="navLogoutBtn" onClick={() => goMenu("nacct/login")}>
+        <button className="navLogoutBtn" onClick={() => goMenu("nauth/login")}>
           로그아웃
         </button>
         {/* </p> */}

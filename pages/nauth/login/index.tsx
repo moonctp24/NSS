@@ -1,4 +1,4 @@
-import LoginComp from "@/components/nacct/login/LoginComp";
+import LoginComp from "@/components/nauth/login/LoginComp";
 
 const LoginPage = () => {
   return <LoginComp />;
