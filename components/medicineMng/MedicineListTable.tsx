@@ -1,5 +1,5 @@
 import { dateFormat } from "@/constants/util/commUtil";
-import { confirmAction } from "@/store/modal/confirm-slice";
+// import { confirmAction } from "@/store/modal/confirm-slice";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -11,7 +11,7 @@ const MedicineListTable = (props: any) => {
 
   const itemDelBtn = (itemNo: String) => {
     // alert(itemNo + " 를 삭제하시겠습니까?");
-    dispatch(confirmAction.openModal({ cont: itemNo + " 를 삭제하시겠습니까?" }));
+    // dispatch(confirmAction.openModal({ cont: itemNo + " 를 삭제하시겠습니까?" }));
     console.log(itemNo + " deleted");
   };
 
