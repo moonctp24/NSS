@@ -26,20 +26,20 @@ const Layout = ({ children }: Props) => {
 
   return (
     <>
-      <div className="flex">
-        {authPageYN ? (
-          <>
+      {authPageYN ? (
+        <>
+          <div className="flex">
             <Navbar />
             <div>
               <Header />
               <main>{children}</main>
             </div>
-          </>
-        ) : (
-          <main>{children}</main>
-        )}
-        {/* <Footer styleType={styleType} /> */}
-      </div>
+          </div>
+        </>
+      ) : (
+        <main>{children}</main>
+      )}
+      {/* <Footer styleType={styleType} /> */}
     </>
   );
 };
