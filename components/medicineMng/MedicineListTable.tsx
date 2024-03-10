@@ -1,4 +1,5 @@
 import { dateFormat } from "@/constants/util/commUtil";
+import axios from "axios";
 // import { confirmAction } from "@/store/modal/confirm-slice";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -13,6 +14,18 @@ const MedicineListTable = (props: any) => {
     // alert(itemNo + " 를 삭제하시겠습니까?");
     // dispatch(confirmAction.openModal({ cont: itemNo + " 를 삭제하시겠습니까?" }));
     console.log(itemNo + " deleted");
+    const AXIOS = axios.create({
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+    });
+    let data = {
+      item_seq: itemNo,
+    };
+
+    const res = AXIOS.post("http://3.39.214.33:8081/api/login", JSON.stringify(data));
+    console.log(res);
   };
 
   const goMdcnUpdPage = (itemNo: String) => {
