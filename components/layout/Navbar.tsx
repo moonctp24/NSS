@@ -9,8 +9,8 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="w-[350px] h-[1080px] bg-[#E6E6E6]">
-        <p className="w-[350px] h-28 text-[40px] text-center text-[#00c1a6]">LOGO</p>
+      <div className="w-1/6 h-[1080px] bg-[#E6E6E6]">
+        <p className="w-full h-28 text-[40px] text-center text-[#00c1a6]">LOGO</p>
         <button className="navBtn" onClick={() => goMenu("")}>
           대시보드
         </button>
@@ -23,11 +23,9 @@ const Navbar = () => {
         <button className="navBtn" onClick={() => goMenu("acct/admSttng")}>
           관리자설정
         </button>
-        {/* <p className="absolute left-[130px] top-[984px] text-xl text-center text-[#020202]"> */}
         <button className="navLogoutBtn" onClick={() => goMenu("nauth/login")}>
           로그아웃
         </button>
-        {/* </p> */}
       </div>
     </>
   );
