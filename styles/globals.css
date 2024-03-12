@@ -15,13 +15,16 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-
+html {
+  max-width: 1920px;
+}
 /* body {
   color: rgb(var(--foreground-rgb));
   background: 255, 255, 255;
 } */
 
 body {
+  max-width: 1920px;
   min-height: 100%;
   color: rgb(var(--foreground-rgb));
   background: 255, 255, 255;
@@ -38,7 +41,8 @@ body {
 }
 
 main {
-  min-width: 1300px;
+  width: 1200px;
+  margin: 0 auto;
 }
 .mainComponent {
   margin: 0 auto;
@@ -81,6 +85,7 @@ hr {
 
 .headerFlex {
   display: flex;
+  align-items: flex-end;
   justify-content: space-between;
 }
 .btngrp {
@@ -142,23 +147,27 @@ button {
 }
 .navBtn {
   margin: 0 0;
-  height: 100px;
+  width: 300px;
+  height: 70px;
+  padding: 20px 0;
   background: none;
   color: #000000;
   font-size: 20px;
+  text-align: center;
+  align-content: flex-end;
 }
 .navBtn:hover {
   background: #00c1a6;
+  border-radius: 6px;
+  text-align: center;
   color: #ffffff;
 }
 .navLogoutBtn {
+  width: 300px;
   height: 100px;
   background: none;
   color: #000000;
   font-size: 20px;
-
-  /* absolute; */
-  margin-top: 450px;
 }
 .inTableBtn {
   width: 70px;
