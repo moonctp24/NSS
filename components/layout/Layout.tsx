@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import Navbar from "./Navbar";
+// import Navbar from "./Navbar";
 import Header from "./Header";
 import { useRouter } from "next/router";
 import { NAUTH_PAGE_LIST } from "@/constants/CONST";
@@ -16,7 +16,7 @@ const Layout = ({ children }: Props) => {
   const [authPageYN, setAuthPageYN] = useState(false);
 
   useEffect(() => {
-    console.log(router.pathname);
+    // console.log(router.pathname);
     if (NAUTH_PAGE_LIST.includes(router.pathname)) {
       setAuthPageYN(false);
     } else {
@@ -28,12 +28,9 @@ const Layout = ({ children }: Props) => {
     <>
       {authPageYN ? (
         <>
-          <div className="flex">
-            <Navbar />
-            <div>
-              <Header />
-              <main>{children}</main>
-            </div>
+          <div>
+            <Header />
+            <main>{children}</main>
           </div>
         </>
       ) : (
