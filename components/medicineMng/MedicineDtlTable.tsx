@@ -1,4 +1,5 @@
 import { dateFormat } from "@/constants/util/commUtil";
+import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -8,13 +9,41 @@ const MedicineDtlTable = (props: any) => {
   const [companyNm, setCompanyNm] = useState("");
   const [effct, setEffct] = useState("");
   const [sdEffct, setSdEffct] = useState("");
+  const [cautionM, setCautionM] = useState("");
+  const [keepM, setKeepM] = useState("");
 
   useEffect(() => {
     setMdcnNm(mDtl.medicine_name);
     setCompanyNm(mDtl.company_name);
     setEffct(mDtl.effect);
     setSdEffct(mDtl.side_effect);
+    setCautionM(mDtl.caution);
+    setKeepM(mDtl.keep_method);
   }, [mDtl]);
+
+  useEffect(() => {
+    console.log("clicked!!" + props.isSaveClicked);
+    if (props.isSaveClicked) {
+      let modifiedData = {
+        item_seq: mDtl.item_seq,
+        medicine_name: mdcnNm,
+        company_name: companyNm,
+        description: "테스트",
+        usage: "물과 함께",
+        effect: effct,
+        side_effect: sdEffct,
+        caution: cautionM,
+        keep_method: keepM,
+        appearance: "흰색정제",
+        pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+        class_name: "",
+        otc_name: "",
+        form_code_name: "",
+      };
+      props.getModifiedData(modifiedData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.isSaveClicked]);
 
   return (
     <div>
@@ -76,9 +105,13 @@ const MedicineDtlTable = (props: any) => {
               </tr>
               <tr>
                 <td>보관법</td>
-                <td>{mDtl.keep_method}</td>
+                <td>
+                  <input type="text" value={keepM} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setKeepM(e.target.value)}></input>
+                </td>
                 <td>주의사항</td>
-                <td>{mDtl.caution}</td>
+                <td>
+                  <input type="text" value={cautionM} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCautionM(e.target.value)}></input>
+                </td>
               </tr>
             </>
           ) : (
