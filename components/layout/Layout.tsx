@@ -30,8 +30,8 @@ const Layout = ({ children }: Props) => {
       <div>
         {authPageYN && <Header />}
         <main>{children}</main>
+        {authPageYN && <Footer />}
       </div>
-      <Footer />
     </>
   );
 };
