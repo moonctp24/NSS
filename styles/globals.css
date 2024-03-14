@@ -42,13 +42,12 @@ body {
 
 main {
   width: 100%;
-  min-height: 600px;
-  margin: 70px auto 70px auto;
 }
 .mainComponent {
-  margin: 0 auto;
+  margin: 70px auto 70px auto;
   width: 80%;
   max-width: 1200px;
+  min-height: 600px;
 }
 
 footer {
