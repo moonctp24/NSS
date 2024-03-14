@@ -1,5 +1,5 @@
 import { dateFormat } from "@/constants/util/commUtil";
-import axios from "axios";
+// import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -13,19 +13,19 @@ const MedicineDtlTable = (props: any) => {
   const [keepM, setKeepM] = useState("");
 
   useEffect(() => {
-    setMdcnNm(mDtl.medicine_name);
-    setCompanyNm(mDtl.company_name);
-    setEffct(mDtl.effect);
-    setSdEffct(mDtl.side_effect);
-    setCautionM(mDtl.caution);
-    setKeepM(mDtl.keep_method);
+    setMdcnNm(mDtl?.medicine_name);
+    setCompanyNm(mDtl?.company_name);
+    setEffct(mDtl?.effect);
+    setSdEffct(mDtl?.side_effect);
+    setCautionM(mDtl?.caution);
+    setKeepM(mDtl?.keep_method);
   }, [mDtl]);
 
   useEffect(() => {
     console.log("clicked!!" + props.isSaveClicked);
     if (props.isSaveClicked) {
       let modifiedData = {
-        item_seq: mDtl.item_seq,
+        item_seq: mDtl?.item_seq,
         medicine_name: mdcnNm,
         company_name: companyNm,
         description: "테스트",
@@ -61,7 +61,7 @@ const MedicineDtlTable = (props: any) => {
           <tr></tr>
         </thead>
         <tbody>
-          {!!mDtl ? (
+          {!!mDtl ? ( // 의약품 수정 테이블
             <>
               <tr>
                 <td>번호</td>
@@ -115,9 +115,60 @@ const MedicineDtlTable = (props: any) => {
               </tr>
             </>
           ) : (
-            <tr>
-              <td colSpan={4}>내용을 불러올 수 없습니다.</td>
-            </tr>
+            // <tr>
+            //   <td colSpan={4}>내용을 불러올 수 없습니다.</td>
+            // </tr>
+            // 의약품 추가 테이블
+            <>
+              <tr>
+                <td>번호</td>
+                <td className=""></td>
+                <td>등록일시</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>의약품명</td>
+                <td>
+                  <input type="text" value={mdcnNm} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMdcnNm(e.target.value)}></input>
+                </td>
+                <td>수정일시</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>제조사</td>
+                <td>
+                  <input type="text" value={companyNm} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCompanyNm(e.target.value)}></input>
+                </td>
+                <td>제조일자</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>약 종류</td>
+                <td></td>
+                <td>약 이미지</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>효능</td>
+                <td>
+                  <input type="text" value={effct} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEffct(e.target.value)}></input>
+                </td>
+                <td>부작용</td>
+                <td>
+                  <input type="text" value={sdEffct} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSdEffct(e.target.value)}></input>
+                </td>
+              </tr>
+              <tr>
+                <td>보관법</td>
+                <td>
+                  <input type="text" value={keepM} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setKeepM(e.target.value)}></input>
+                </td>
+                <td>주의사항</td>
+                <td>
+                  <input type="text" value={cautionM} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCautionM(e.target.value)}></input>
+                </td>
+              </tr>
+            </>
           )}
         </tbody>
       </table>
