@@ -69,7 +69,7 @@ const MedicineUpdComp = () => {
   return (
     <>
       <div className="mainComponent">
-        <h1 className="">의약품 상세</h1>
+        <h1>의약품 상세</h1>
         <div className="relative w-[200px] h-[40px] flex float-right">
           <button className="h-[40px] float-right" onClick={mDtlUpdSave}>
             저장
