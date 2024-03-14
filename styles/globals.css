@@ -268,6 +268,10 @@ textarea {
 textarea::placeholder {
   color: #888888;
 }
+.admCommentTextArea {
+  background-color: #d9d9d9;
+  height: 100%;
+}
 /* ----- input ----- */
 
 /* ----- Table Area ----- */
