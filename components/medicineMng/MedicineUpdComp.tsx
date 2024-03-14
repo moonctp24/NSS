@@ -80,9 +80,9 @@ const MedicineUpdComp = () => {
         </div>
         <div className="m-auto	mt-20">{domLoaded && <MedicineDtlTable mDtlInfo={mDtlInfo} isSaveClicked={isSaveClicked} getModifiedData={getModifiedData} />}</div>
         <div className="space20"></div>
-        <h1 className="">관리자 메모</h1>
-        <div className="w-full h-[150px] rounded-md bg-[#d9d9d9] border-4 border-[#b6b6b6] p-10">
-          <input type="text" value={admCmmtM} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAdmCmmtM(e.target.value)}></input>
+        <h1>관리자 메모</h1>
+        <div className="w-full h-[150px] rounded-md bg-[#d9d9d9] border-4 border-[#b6b6b6] p-5">
+          <textarea className="admCommentTextArea" value={admCmmtM} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setAdmCmmtM(e.target.value)} />
         </div>
       </div>
     </>
