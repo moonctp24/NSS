@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
 import MedicineListTable from "./MedicineListTable";
+import { useRouter } from "next/router";
 
 const MedicineMngComp = () => {
   const [domLoaded, setDomLoaded] = useState(false); // 테이블 데이터 로딩 상태
   const [medicineList, setMedicineList] = useState<any>(null);
   const [nowTablePage, setNowTablePage] = useState(1);
   const [ingredientCnt, setIngredientCnt] = useState(0);
+
+  const router = useRouter();
+
+  const goAddMdcnPage = () => {
+    router.push("/medicineMng/mdcnAdd");
+  };
 
   useEffect(() => {
     setMedicineList([
@@ -125,7 +132,10 @@ const MedicineMngComp = () => {
   return (
     <>
       <div className="mainComponent">
-        <h1 className="">의약품 목록</h1>
+        <h1>의약품 목록</h1>
+        <button className="w-[150px] h-[40px] float-right" onClick={goAddMdcnPage}>
+          의약품 추가
+        </button>
         <div className="m-auto	">{domLoaded && <MedicineListTable medicineList={medicineList} nowTablePage={nowTablePage} />}</div>
         {/* ======= paging ======= */}
         <div className="paging">
