@@ -1,7 +1,9 @@
 const UserMngComp = () => {
   return (
     <>
-      <div>회원관리 페이지 제작중</div>
+      <div className="mainComponent">
+        <h1>회원관리</h1>
+      </div>
     </>
   );
 };

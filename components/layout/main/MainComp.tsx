@@ -9,8 +9,9 @@ const MainComp: NextPage = () => {
   };
   return (
     <>
-      <div>Hello Dashboard</div>
-      <div>this is test push5</div>
+      <div className="mainComponent">
+        <h1>대시보드</h1>
+      </div>
     </>
   );
 };
