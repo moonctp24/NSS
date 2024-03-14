@@ -105,7 +105,7 @@ const LoginComp = () => {
   };
   return (
     <>
-      <div className="w-[1920px] h-[1080px] relative overflow-hidden bg-[#00c1a6]">
+      <div className="w-full h-[1080px] relative overflow-hidden bg-[#00c1a6]">
         <div className="w-[600px] h-[855px] absolute left-[659px] top-[111px] bg-white/75"></div>
         <div className="flex flex-col justify-start items-center absolute left-[790px] top-[327px] gap-5">
           <p className="flex-grow-0 flex-shrink-0 text-[40px] text-left text-[#00c1a6]">로그인</p>
