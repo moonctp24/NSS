@@ -4,7 +4,7 @@ import { NextApiResponse } from "next";
 import router from "next/router";
 import { NextApiRequest } from "next/types";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { alertAction } from "store/modal/alert-slice";
 import { spinnerAction } from "store/spinner/spinner-slice";
 import { cookieStringToObject } from "./commUtil";
@@ -27,21 +27,27 @@ export const useAxios = () => {
       dispatch(spinnerAction.loading());
     }
     AXIOS.post(url, JSON.stringify(data))
-      .then((res) => {
-        if (res.data.responseCode == "200" || url == "/api/tokenValidationCheck") {
-          setCode(res.data.responseCode);
+      .then((res: any) => {
+        console.log(res);
+        if (res.status == "200" || url == "/api/tokenValidationCheck") {
+          setCode(res.status);
           setResponse(res.data.data);
         } else if (res.data.responseCode == "401") {
           dispatch(alertAction.openModal({ cont: "권한이 없습니다." }));
-          router.push("/");
+          router.push("/nauth/login");
         } else {
           throw new Error(res?.data?.message || "오류가 발생 했습니다.");
         }
       })
       .catch((err) => {
-        console.log("useAxios err :: ", err);
-        dispatch(alertAction.openModal({ cont: err?.message || "오류가 발생 했습니다." }));
-        // router.push("/");
+        if (err?.response?.status) {
+          console.log("error catch" + err);
+        } else {
+          console.log("useAxios err :: ", err);
+          console.log(err?.response?.status);
+          dispatch(alertAction.openModal({ cont: err?.message || "오류가 발생 했습니다." }));
+        }
+        router.push("/nauth/login");
       })
       .finally(() => {
         dispatch(spinnerAction.complete());
@@ -94,13 +100,14 @@ export const BACK_API = async (url: String, req: NextApiRequest, res: NextApiRes
     const response: AxiosResponse<any, any> = await AXIOS.post(`${BASE_URL}${url}`, body, {
       headers: {
         // Cookie: cookie,
+        // authorization: accessToken ? `Bearer ${accessToken}` : "",
       },
     });
 
     // console.log("header cookie check::: ", response.headers["set-cookie"]);
     let cookieObj: Array<any> = new Array(cookieStringToObject(response.headers["set-cookie"]));
     cookieObj = cookieObj[0]; // 윗 줄에서 new Array를 해서 그런지 결과가 새 배열에 다시 담겨옴.
-    console.log("BACK_API cookieObj :: ", cookieObj);
+    // console.log("BACK_API cookieObj :: ", cookieObj);
     if (cookieObj.length > 0) {
       res.setHeader("Set-Cookie", [
         `jwtTokenCookie=${cookieObj[0]?.jwtTokenCookie}; path=/; HttpOnly; Expires=${cookieObj[0]?.Expires};`,
@@ -111,6 +118,8 @@ export const BACK_API = async (url: String, req: NextApiRequest, res: NextApiRes
       ]);
     }
     console.log(`BACK_API response.data.data :: `, response.data.data);
+
+    axios.defaults.headers.Authorization = "Bearer " + response.data.data.adminJwt;
 
     return {
       responseCode: response.data.responseCode,
