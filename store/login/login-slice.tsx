@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialLoginState = {
   isLogin: false,
   userEmail: null,
-  userNickname: null,
-  userRole: null,
+  userName: null,
+  adminJwt: null,
 };
 
 const loginSlice = createSlice({
@@ -14,24 +14,24 @@ const loginSlice = createSlice({
     login: (state, action) => {
       state.isLogin = true;
       state.userEmail = action.payload.userEmail;
-      state.userNickname = action.payload.userNickname;
-      state.userRole = action.payload.userRole;
+      state.userName = action.payload.userName;
+      state.adminJwt = action.payload.adminJwt;
       localStorage.setItem("isLogin", "Y");
       localStorage.setItem("userEmail", action.payload.userEmail);
-      localStorage.setItem("userNickname", action.payload.userNickname);
-      localStorage.setItem("userRole", action.payload.userRole);
+      localStorage.setItem("userName", action.payload.userName);
+      localStorage.setItem("adminJwt", action.payload.adminJwt);
       // console.log("login action setToken()");
     },
     logout: (state) => {
       state.isLogin = false;
       state.userEmail = initialLoginState.userEmail;
-      state.userNickname = initialLoginState.userNickname;
-      state.userRole = initialLoginState.userRole;
+      state.userName = initialLoginState.userName;
+      state.adminJwt = initialLoginState.adminJwt;
 
       localStorage.removeItem("isLogin");
       localStorage.removeItem("userEmail");
-      localStorage.removeItem("userNickname");
-      localStorage.removeItem("userRole");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("adminJwt");
       // console.log("logout action removeToken()");
     },
   },

@@ -1,4 +1,5 @@
 import { useAxios } from "@/constants/util/API_UTIL";
+import { loginAction } from "@/store/login/login-slice";
 import { alertAction } from "@/store/modal/alert-slice";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -44,41 +45,31 @@ const LoginComp = () => {
   };
 
   useEffect(() => {
-    // console.log(`code :: ${code} / response :: `, response);
     postResult();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code, response, dispatch, router]);
 
   const postResult = useCallback(() => {
-    // console.log(`code :: ${code} / response :: `, response);
+    console.log(`code :: ${code} / response :: `, response);
     if (response && code == "200") {
-      // dispatch(
-      //   loginAction.login({
-      //     isLogin: true,
-      //     userEmail: response.userEmail,
-      //     userNickname: response.userNickname,
-      //     userRole: response.userRole,
-      //   })
-      // );
+      dispatch(
+        loginAction.login({
+          isLogin: true,
+          userEmail: response.adminEmail,
+          userName: response.adminName,
+          adminJwt: response.adminJwt,
+        })
+      );
       router.push("/");
     }
   }, [code, response, dispatch, router]);
 
   // 로그인 버튼 클릭 -> 로그인 로직 실행
   const loginBtn = async () => {
-    const AXIOS = axios.create({
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-    });
     let data = {
       userEmail: "test@email.com",
       password: "test123!!",
     };
-
-    const res = AXIOS.post("http://3.39.214.33:8081/api/login", JSON.stringify(data));
-    console.log(res);
 
     // 정홥성 확인이 완료되면 '로그인'로직 실행
     // if (validationCheck()) {
@@ -87,21 +78,7 @@ const LoginComp = () => {
     //     password: passwordInput
     //   };
 
-    //     fetchData("/api/login", data, true);
-    //     axios
-    //       .post("http://3.39.214.33:8081/api/login", JSON.stringify(data))
-    //       .then((res) => {
-    //         console.log(res);
-    //       })
-    //       .catch((err) => {
-    //         console.log("useAxios err :: ", err);
-    //         dispatch(alertAction.openModal({ cont: err?.message || "오류가 발생 했습니다." }));
-    //         // router.push("/");
-    //       })
-    //       .finally(() => {
-    //         //   dispatch(spinnerAction.complete());
-    //       });
-    // }
+    fetchData("/api/nacct/login", data, true);
   };
   return (
     <>
