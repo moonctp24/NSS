@@ -1,7 +1,7 @@
-import UserMngComp from "@/components/userMng/UserMngComp";
+import UserDtlComp from "@/components/userMng/UserDtlComp";
 
-const UserMngPage = () => {
-  return <UserMngComp />;
+const UserDtlPage = () => {
+  return <UserDtlComp />;
 };
 
-export default UserMngPage;
+export default UserDtlPage;
