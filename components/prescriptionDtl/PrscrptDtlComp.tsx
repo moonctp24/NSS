@@ -26,6 +26,7 @@ const PrscrptDtlComp = () => {
   return (
     <>
       <div className="mainComponent">
+        <h1>처방전 상세</h1>
         <div className="w-[390px] h-[1000px] relative overflow-hidden bg-white">
           <div className="w-[443px] h-[571px]">
             <p className="w-[205px] h-[30px] absolute left-[19px] top-[218px] text-[15px] text-left text-[#020202]">아침 식후</p>
