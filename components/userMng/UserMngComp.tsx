@@ -98,8 +98,8 @@ const UserMngComp = () => {
     setIsClicked(!isClicked);
   };
 
-  const goUsrMng = () => {
-    router.push("/userMng/userDtl");
+  const goUsrMng = (userId: String) => {
+    router.push(`/userMng/userDtl/${userId}`);
   };
 
   return (
@@ -142,7 +142,7 @@ const UserMngComp = () => {
                         <div className="relative h-[50px] w-[50px] rounded-full overflow-hidden">
                           <Image src={usr.user_image} alt={"usrImg"} layout="fill"></Image>
                         </div>
-                        <div className="text-base	text-center px-3 py-3 cursor-pointer	" onClick={goUsrMng}>
+                        <div className="text-base	text-center px-3 py-3 cursor-pointer	" onClick={() => goUsrMng(usr.user_id)}>
                           {usr.user_name}
                         </div>
                       </div>
