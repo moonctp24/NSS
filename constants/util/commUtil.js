@@ -112,13 +112,13 @@ export function javaToHtml(java) {
  * @param {Number} l length (ex: 4)
  * @returns {String} str (ex: 0013)
  */
-// export function lPad(n, l = 2) {
-//   let str = "" + n;
-//   while (str.length < l) {
-//     str = "0" + str;
-//   }
-//   return str;
-// }
+export function lPad(n, l = 2) {
+  let str = "" + n;
+  while (str.length < l) {
+    str = "0" + str;
+  }
+  return str;
+}
 
 /**
  * 토큰 쿠키에 저장
