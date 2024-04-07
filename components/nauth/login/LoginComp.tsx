@@ -7,8 +7,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 const LoginComp = () => {
-  const [emailInput, setEmailInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
+  const [emailInput, setEmailInput] = useState("test@email.com");
+  const [passwordInput, setPasswordInput] = useState("test123!!");
   const { code, response, fetchData } = useAxios();
   // const [cookies, setCookie, removeCookie] = useCookies();
 
@@ -51,6 +51,7 @@ const LoginComp = () => {
 
   const postResult = useCallback(() => {
     console.log(`code :: ${code} / response :: `, response);
+    // console.log("response.status::") + response?.status;
     if (response && code == "200") {
       dispatch(
         loginAction.login({
@@ -62,23 +63,20 @@ const LoginComp = () => {
       );
       router.push("/");
     }
+    // alert(response.status);
   }, [code, response, dispatch, router]);
 
   // 로그인 버튼 클릭 -> 로그인 로직 실행
   const loginBtn = async () => {
-    let data = {
-      userEmail: "test@email.com",
-      password: "test123!!",
-    };
-
     // 정홥성 확인이 완료되면 '로그인'로직 실행
-    // if (validationCheck()) {
-    //   let data = {
-    //     userEmail: emailInput,
-    //     password: passwordInput
-    //   };
+    if (validationCheck()) {
+      let data = {
+        userEmail: emailInput,
+        password: passwordInput,
+      };
 
-    fetchData("/api/nacct/login", data, true);
+      fetchData("post", "/api/nacct/login", data, true);
+    }
   };
   return (
     <>
