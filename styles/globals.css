@@ -506,7 +506,7 @@ textarea::placeholder {
 /* ----- Search Area ----- */
 .srch_area {
   /* margin-bottom: 30px; */
-  padding: 30px 30px 33px;
+  padding: 30px 40px 33px;
   /* border: 1px solid #6926d7; */
   border-radius: 6px;
 }
