@@ -5,16 +5,17 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const router = useRouter();
-  const isLogin = useSelector((state: any) => state.login.isLogin); // 현재 로그인여부를 Redux에서 불러오기
+  // const isLogin = useSelector((state: any) => state.login.isLogin); // 현재 로그인여부를 Redux에서 불러오기
+  const isLoginYN = localStorage.getItem("isLogin");
   const userName = useSelector((state: any) => state.login.userName);
-  console.log(userName);
+  // console.log(userName);
   useEffect(() => {
-    if (isLogin) {
+    if (isLoginYN) {
       //
     } else {
       router.push("/nauth/login");
     }
-  }, [isLogin, router]);
+  }, [isLoginYN, router]);
   // const [title, setTitle] = useState("");
 
   // useEffect(() => {
