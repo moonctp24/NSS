@@ -1,12 +1,14 @@
 import { useState } from "react";
 import MedicineDtlTable from "./MedicineDtlTable";
 import { useRouter } from "next/router";
+import { useAxios } from "@/constants/util/API_UTIL";
 
 const MedicineAddComp = () => {
   const [isSaveClicked, setIsSaveClicked] = useState(false);
   const [admCmmtM, setAdmCmmtM] = useState("");
 
   const router = useRouter();
+  const { code, response, fetchData } = useAxios();
 
   const goMcdnListPage = () => {
     router.push("/medicineMng/mdcnList");
@@ -19,18 +21,7 @@ const MedicineAddComp = () => {
   const getModifiedData = (modifiedData: any) => {
     if (isSaveClicked) {
       modifiedData.admin_comment = admCmmtM;
-      console.log(modifiedData);
-
-      // 의약품 추가 통신
-      //   const AXIOS = axios.create({
-      //     withCredentials: true,
-      //     headers: {
-      //       "Content-Type": "application/json; charset=utf-8",
-      //     },
-      //   });
-
-      // const res = AXIOS.post("http://3.39.214.33:8081/api/login", JSON.stringify(data));
-      // console.log(res);
+      fetchData("post", "/api/medicineMng/addMdcnDtl", modifiedData, true);
     }
     setIsSaveClicked(false);
   };

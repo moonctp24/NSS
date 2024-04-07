@@ -124,6 +124,7 @@ const MedicineMngComp = () => {
     setDomLoaded(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   useEffect(() => {
     setIngredientCnt(medicineList?.length);
   }, [medicineList]);

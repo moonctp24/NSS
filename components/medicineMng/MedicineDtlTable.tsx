@@ -13,32 +13,32 @@ const MedicineDtlTable = (props: any) => {
   const [keepM, setKeepM] = useState("");
 
   useEffect(() => {
-    setMdcnNm(mDtl?.medicine_name);
-    setCompanyNm(mDtl?.company_name);
+    setMdcnNm(mDtl?.medicineName);
+    setCompanyNm(mDtl?.companyName);
     setEffct(mDtl?.effect);
-    setSdEffct(mDtl?.side_effect);
+    setSdEffct(mDtl?.sideEffect);
     setCautionM(mDtl?.caution);
-    setKeepM(mDtl?.keep_method);
+    setKeepM(mDtl?.keepMethod);
   }, [mDtl]);
 
   useEffect(() => {
     console.log("clicked!!" + props.isSaveClicked);
     if (props.isSaveClicked) {
       let modifiedData = {
-        item_seq: mDtl?.item_seq,
-        medicine_name: mdcnNm,
-        company_name: companyNm,
+        itemSeq: mDtl?.itemSeq,
+        medicineName: mdcnNm,
+        companyName: companyNm,
         description: "테스트",
         usage: "물과 함께",
         effect: effct,
-        side_effect: sdEffct,
+        sideEffect: sdEffct,
         caution: cautionM,
-        keep_method: keepM,
+        keepMethod: keepM,
         appearance: "흰색정제",
-        pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-        class_name: "",
-        otc_name: "",
-        form_code_name: "",
+        pillImage: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+        className: "",
+        otcName: "",
+        formCodeName: "",
       };
       props.getModifiedData(modifiedData);
     }
@@ -65,7 +65,7 @@ const MedicineDtlTable = (props: any) => {
             <>
               <tr>
                 <td>번호</td>
-                <td className="">{mDtl.item_seq}</td>
+                <td className="">{mDtl.itemSeq}</td>
                 <td>등록일시</td>
                 <td>{dateFormat(mDtl.created_at)}</td>
               </tr>
