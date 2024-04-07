@@ -2,7 +2,7 @@ import { useAxios } from "@/constants/util/API_UTIL";
 import { codeToKor } from "@/constants/util/commUtil";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const UserDtlComp = () => {
   const router = useRouter();
@@ -12,32 +12,51 @@ const UserDtlComp = () => {
   const { code, response, fetchData } = useAxios();
 
   useEffect(() => {
+    getResult();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code, response, router]);
+
+  const getResult = useCallback(() => {
+    console.log(`code :: ${code} / response :: `, response);
+    if (response && code == "200") {
+      if (response.status === 200) {
+        setUserDtlInfo(response);
+        setPrescriptionCnt(response.prescriptions_id_list?.length);
+        setDomLoaded(true);
+      } else {
+        let usrDtlInfo = {
+          userId: "memId_00000000000001",
+          userEmail: "test@email.com",
+          username: "김이름",
+          userStatus: "ADMIN",
+          user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+          prescriptions_id_list: [
+            // 이 회원이 받은 처방전 내역
+            {
+              prescriptions_id: "prescriptionsId_00000000000001",
+              prescription_name: "처방전1",
+            },
+            {
+              prescriptions_id: "prescriptionsId_00000000000002",
+              prescription_name: "처방전2",
+            },
+            {
+              prescriptions_id: "prescriptionsId_00000000000003",
+              prescription_name: "처방전3",
+            },
+          ],
+        };
+        setUserDtlInfo(usrDtlInfo);
+        setPrescriptionCnt(usrDtlInfo.prescriptions_id_list.length);
+        setDomLoaded(true);
+      }
+    }
+  }, [code, response]);
+
+  useEffect(() => {
     console.log(router.query.itemSeq);
-    let usrDtlInfo = {
-      userId: "memId_00000000000001",
-      userEmail: "test@email.com",
-      username: "김이름",
-      userStatus: "ADMIN",
-      user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-      prescriptions_id_list: [
-        // 이 회원이 받은 처방전 내역
-        {
-          prescriptions_id: "prescriptionsId_00000000000001",
-          prescription_name: "처방전1",
-        },
-        {
-          prescriptions_id: "prescriptionsId_00000000000002",
-          prescription_name: "처방전2",
-        },
-        {
-          prescriptions_id: "prescriptionsId_00000000000003",
-          prescription_name: "처방전3",
-        },
-      ],
-    };
-    setUserDtlInfo(usrDtlInfo);
-    setPrescriptionCnt(usrDtlInfo.prescriptions_id_list.length);
-    setDomLoaded(true);
+    fetchData("get", "/api/userMng/getUserDtl", null, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const goPrscrptDtl = (prscrptId: string) => {
