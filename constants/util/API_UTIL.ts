@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { alertAction } from "store/modal/alert-slice";
 import { spinnerAction } from "store/spinner/spinner-slice";
-import { cookieStringToObject } from "./commUtil";
+// import { cookieStringToObject } from "./commUtil";
 
 const BASE_URL = `${process.env.API_URL}`;
 let adminJwt = "";
@@ -140,19 +140,19 @@ export const BACK_API = async (way: String, url: String, req: NextApiRequest, re
       });
 
       // console.log("header cookie check::: ", response.headers["set-cookie"]);
-      let cookieObj: Array<any> = new Array(cookieStringToObject(response.headers["set-cookie"]));
-      cookieObj = cookieObj[0]; // 윗 줄에서 new Array를 해서 그런지 결과가 새 배열에 다시 담겨옴.
-      // console.log("BACK_API cookieObj :: ", cookieObj);
-      if (cookieObj.length > 0) {
-        res.setHeader("Set-Cookie", [
-          `jwtTokenCookie=${cookieObj[0]?.jwtTokenCookie}; path=/; HttpOnly; Expires=${cookieObj[0]?.Expires};`,
-          `jwtRefreshTokenCookie=${cookieObj[1]?.jwtRefreshTokenCookie}; path=/; HttpOnly; Expires=${cookieObj[1]?.Expires};`,
-          `expiredTokenTimeCookie=${cookieObj[2]?.expiredTokenTimeCookie}; path=/; HttpOnly; Expires=${cookieObj[2]?.Expires};`,
-          `userEmailCookie=${cookieObj[3]?.userEmailCookie}; path=/; Expires=${cookieObj[3]?.Expires};`,
-          // `userNicknameCookie=${cookieObj[4]?.userNicknameCookie}; path=/; Expires=${cookieObj[4]?.Expires};`,
-        ]);
-      }
-      console.log(`BACK_API response.data.data :: `, response.data.data);
+      // let cookieObj: Array<any> = new Array(cookieStringToObject(response.headers["set-cookie"]));
+      // cookieObj = cookieObj[0]; // 윗 줄에서 new Array를 해서 그런지 결과가 새 배열에 다시 담겨옴.
+      // // console.log("BACK_API cookieObj :: ", cookieObj);
+      // if (cookieObj.length > 0) {
+      //   res.setHeader("Set-Cookie", [
+      //     `jwtTokenCookie=${cookieObj[0]?.jwtTokenCookie}; path=/; HttpOnly; Expires=${cookieObj[0]?.Expires};`,
+      //     `jwtRefreshTokenCookie=${cookieObj[1]?.jwtRefreshTokenCookie}; path=/; HttpOnly; Expires=${cookieObj[1]?.Expires};`,
+      //     `expiredTokenTimeCookie=${cookieObj[2]?.expiredTokenTimeCookie}; path=/; HttpOnly; Expires=${cookieObj[2]?.Expires};`,
+      //     `userEmailCookie=${cookieObj[3]?.userEmailCookie}; path=/; Expires=${cookieObj[3]?.Expires};`,
+      //     // `userNicknameCookie=${cookieObj[4]?.userNicknameCookie}; path=/; Expires=${cookieObj[4]?.Expires};`,
+      //   ]);
+      // }
+      // console.log(`BACK_API response.data.data :: `, response.data.data);
 
       axios.defaults.headers.Authorization = "Bearer " + response.data.data.adminJwt;
 
@@ -172,19 +172,19 @@ export const BACK_API = async (way: String, url: String, req: NextApiRequest, re
       });
 
       // console.log("header cookie check::: ", response.headers["set-cookie"]);
-      let cookieObj: Array<any> = new Array(cookieStringToObject(response.headers["set-cookie"]));
-      cookieObj = cookieObj[0]; // 윗 줄에서 new Array를 해서 그런지 결과가 새 배열에 다시 담겨옴.
-      // console.log("BACK_API cookieObj :: ", cookieObj);
-      if (cookieObj.length > 0) {
-        res.setHeader("Set-Cookie", [
-          `jwtTokenCookie=${cookieObj[0]?.jwtTokenCookie}; path=/; HttpOnly; Expires=${cookieObj[0]?.Expires};`,
-          `jwtRefreshTokenCookie=${cookieObj[1]?.jwtRefreshTokenCookie}; path=/; HttpOnly; Expires=${cookieObj[1]?.Expires};`,
-          `expiredTokenTimeCookie=${cookieObj[2]?.expiredTokenTimeCookie}; path=/; HttpOnly; Expires=${cookieObj[2]?.Expires};`,
-          `userEmailCookie=${cookieObj[3]?.userEmailCookie}; path=/; Expires=${cookieObj[3]?.Expires};`,
-          // `userNicknameCookie=${cookieObj[4]?.userNicknameCookie}; path=/; Expires=${cookieObj[4]?.Expires};`,
-        ]);
-      }
-      console.log(`BACK_API response.data.data :: `, response.data.data);
+      // let cookieObj: Array<any> = new Array(cookieStringToObject(response.headers["set-cookie"]));
+      // cookieObj = cookieObj[0]; // 윗 줄에서 new Array를 해서 그런지 결과가 새 배열에 다시 담겨옴.
+      // // console.log("BACK_API cookieObj :: ", cookieObj);
+      // if (cookieObj.length > 0) {
+      //   res.setHeader("Set-Cookie", [
+      //     `jwtTokenCookie=${cookieObj[0]?.jwtTokenCookie}; path=/; HttpOnly; Expires=${cookieObj[0]?.Expires};`,
+      //     `jwtRefreshTokenCookie=${cookieObj[1]?.jwtRefreshTokenCookie}; path=/; HttpOnly; Expires=${cookieObj[1]?.Expires};`,
+      //     `expiredTokenTimeCookie=${cookieObj[2]?.expiredTokenTimeCookie}; path=/; HttpOnly; Expires=${cookieObj[2]?.Expires};`,
+      //     `userEmailCookie=${cookieObj[3]?.userEmailCookie}; path=/; Expires=${cookieObj[3]?.Expires};`,
+      //     // `userNicknameCookie=${cookieObj[4]?.userNicknameCookie}; path=/; Expires=${cookieObj[4]?.Expires};`,
+      //   ]);
+      // }
+      // console.log(`BACK_API response.data.data :: `, response.data.data);
 
       axios.defaults.headers.Authorization = "Bearer " + response.data.data.adminJwt;
 

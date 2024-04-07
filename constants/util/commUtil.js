@@ -112,13 +112,13 @@ export function javaToHtml(java) {
  * @param {Number} l length (ex: 4)
  * @returns {String} str (ex: 0013)
  */
-export function lPad(n, l = 2) {
-  let str = "" + n;
-  while (str.length < l) {
-    str = "0" + str;
-  }
-  return str;
-}
+// export function lPad(n, l = 2) {
+//   let str = "" + n;
+//   while (str.length < l) {
+//     str = "0" + str;
+//   }
+//   return str;
+// }
 
 /**
  * 토큰 쿠키에 저장
@@ -127,47 +127,47 @@ export function lPad(n, l = 2) {
  * @param {String} refreshToken
  * @param {String} expireDate
  */
-export function setJwtToken(id, accessToken, refreshToken, expireDate) {
-  logger({ id, accessToken, refreshToken, expireDate }, 0, "setToken");
-  axios.defaults.headers.Authorization = "Bearer " + accessToken;
-  cookie.save(COOKIES.IS_LOGIN, true, { path: "/" });
-  cookie.save(COOKIES.ID, id, { path: "/" });
-  cookie.save(COOKIES.ACCESS_TOKEN, accessToken, { path: "/" });
-  cookie.save(COOKIES.REFRESH_TOKEN, refreshToken, { path: "/" });
-  cookie.save(COOKIES.EXPIRE_DATE, expireDate, { path: "/" });
-}
+// export function setJwtToken(id, accessToken, refreshToken, expireDate) {
+//   logger({ id, accessToken, refreshToken, expireDate }, 0, "setToken");
+//   axios.defaults.headers.Authorization = "Bearer " + accessToken;
+//   cookie.save(COOKIES.IS_LOGIN, true, { path: "/" });
+//   cookie.save(COOKIES.ID, id, { path: "/" });
+//   cookie.save(COOKIES.ACCESS_TOKEN, accessToken, { path: "/" });
+//   cookie.save(COOKIES.REFRESH_TOKEN, refreshToken, { path: "/" });
+//   cookie.save(COOKIES.EXPIRE_DATE, expireDate, { path: "/" });
+// }
 
 /**
  * 토큰 삭제
  */
-export function removeToken() {
-  logger("removeToken()");
-  delete axios.defaults.headers.Authorization;
-  cookie.remove(COOKIES.IS_LOGIN, { path: "/" });
-  cookie.remove(COOKIES.ID, { path: "/" });
-  cookie.remove(COOKIES.ACCESS_TOKEN, { path: "/" });
-  cookie.remove(COOKIES.REFRESH_TOKEN, { path: "/" });
-  cookie.remove(COOKIES.EXPIRE_DATE, { path: "/" });
-}
+// export function removeToken() {
+//   logger("removeToken()");
+//   delete axios.defaults.headers.Authorization;
+//   cookie.remove(COOKIES.IS_LOGIN, { path: "/" });
+//   cookie.remove(COOKIES.ID, { path: "/" });
+//   cookie.remove(COOKIES.ACCESS_TOKEN, { path: "/" });
+//   cookie.remove(COOKIES.REFRESH_TOKEN, { path: "/" });
+//   cookie.remove(COOKIES.EXPIRE_DATE, { path: "/" });
+// }
 
 /**
  * 토큰 분리
  */
-export const cookieStringToObject = (cookieString) => {
-  if (!cookieString) {
-    return "";
-  } else {
-    let result = [];
-    for (var j = 0; j < cookieString.length; j++) {
-      let tmp = [];
-      const cookieObj = cookieString[j].split("; ");
+// export const cookieStringToObject = (cookieString) => {
+//   if (!cookieString) {
+//     return "";
+//   } else {
+//     let result = [];
+//     for (var j = 0; j < cookieString.length; j++) {
+//       let tmp = [];
+//       const cookieObj = cookieString[j].split("; ");
 
-      for (var i = 0; i < cookieObj.length; i++) {
-        var cur = cookieObj[i].split("=");
-        tmp[cur[0]] = cur[1];
-      }
-      result[j] = tmp;
-    }
-    return result;
-  }
-};
+//       for (var i = 0; i < cookieObj.length; i++) {
+//         var cur = cookieObj[i].split("=");
+//         tmp[cur[0]] = cur[1];
+//       }
+//       result[j] = tmp;
+//     }
+//     return result;
+//   }
+// };
