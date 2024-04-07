@@ -2,6 +2,27 @@ import axios from "axios";
 import { COOKIES } from "constants/CONST";
 
 /**
+ * 회원 상태 코드 한글변환
+ * @param {string} code
+ * @returns
+ */
+export function codeToKor(code) {
+  if (code === "ACTIVE") {
+    return "일반";
+  } else if (code === "ADMIN") {
+    return "관리자";
+  } else if (code === "INACTIVE") {
+    return "비활성화";
+  } else if (code === "REMOVED") {
+    return "탈퇴";
+  } else if (code === "BANNED") {
+    return "정지";
+  } else {
+    return "잘못된 형식";
+  }
+}
+
+/**
  * 콘솔로그
  * @param {Object} d
  * @param {Number} t 0=log / 1=error / 2=info / 3=debug
