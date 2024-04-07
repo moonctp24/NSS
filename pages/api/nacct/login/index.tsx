@@ -2,11 +2,11 @@ import { BACK_API } from "constants/util/API_UTIL";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const response = await BACK_API("/api/login", req, res);
+  const response = await BACK_API("POST", "/api/login", req, res);
   console.log(`login handler response :: `, response);
-  let data = "";
+  let data = {};
   // console.log("222222222" + res.statusCode);
-  if (res.statusCode == 200) {
+  if (res.statusCode === 200) {
     data = response.data;
   } else {
     console.log("error code check" + response.responseCode);
