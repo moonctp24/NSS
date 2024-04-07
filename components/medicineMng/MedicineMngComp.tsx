@@ -33,6 +33,7 @@ const MedicineMngComp = () => {
       setMedicineList(tmpList);
     }
   }, [code, response]);
+
   const goAddMdcnPage = () => {
     router.push("/medicineMng/mdcnAdd");
   };
