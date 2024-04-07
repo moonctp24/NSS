@@ -1,3 +1,5 @@
+import { useAxios } from "@/constants/util/API_UTIL";
+import { codeToKor } from "@/constants/util/commUtil";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -7,31 +9,15 @@ const UserDtlComp = () => {
   const [userDtlInfo, setUserDtlInfo] = useState<any>(Object || null);
   const [prescriptionCnt, setPrescriptionCnt] = useState(0);
   const [domLoaded, setDomLoaded] = useState(false); // 테이블 데이터 로딩 상태
-
-  const codeToKor = (code: string) => {
-    if (code === "ACTIVE") {
-      return "일반";
-    } else if (code === "ADMIN") {
-      return "관리자";
-    } else if (code === "INACTIVE") {
-      return "비활성화";
-    } else if (code === "REMOVED") {
-      return "탈퇴";
-    } else if (code === "BANNED") {
-      return "정지";
-    } else {
-      return "잘못된 형식";
-    }
-  };
+  const { code, response, fetchData } = useAxios();
 
   useEffect(() => {
     console.log(router.query.itemSeq);
-    // item_seq로 상세정보 조회하는 통신
     let usrDtlInfo = {
-      user_id: "memId_00000000000001",
-      user_email: "test@email.com",
-      user_name: "김이름",
-      user_status: "ADMIN",
+      userId: "memId_00000000000001",
+      userEmail: "test@email.com",
+      username: "김이름",
+      userStatus: "ADMIN",
       user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
       prescriptions_id_list: [
         // 이 회원이 받은 처방전 내역
@@ -58,6 +44,42 @@ const UserDtlComp = () => {
     router.push(`/prescriptionMng/prescriptionDtl/${prscrptId}`);
   };
 
+  /**
+   * 등급 선택 이벤트
+   */
+  const [isClicked, setIsClicked] = useState(false); // server selected YN
+  const selectBoxBtnHandler = () => {
+    setIsClicked(!isClicked);
+  };
+
+  const [stateList, setStateList] = useState<any>(["ACTIVE", "ADMIN", "BANNED", "INACTIVE", "REMOVED"]);
+  const [selectedValue, setSelectedValue] = useState<any>(null); // 현재 선택된 status
+  let selectedStatusNm = stateList?.map((state: any, index: number) => (
+    <li key={index}>
+      <div className="selectbutton" onClick={() => answerStateValueSelectedHandler(state)}>
+        {codeToKor(state)}
+      </div>
+    </li>
+  ));
+
+  const answerStateValueSelectedHandler = (state: string) => {
+    console.log(state);
+    setSelectedValue(state);
+    setIsClicked(!isClicked);
+    let paramD = {
+      userEmail: userDtlInfo.userEmail,
+      userStatus: state,
+    };
+    fetchData("post", "/api/userMng/updUserDtl", paramD, true);
+  };
+
+  /**
+   * 회원 목록으로 이동
+   */
+  const goUserListPage = () => {
+    router.push("/userMng/userList");
+  };
+
   return (
     <>
       <div className="mainComponent">
@@ -68,18 +90,28 @@ const UserDtlComp = () => {
               <div className="relative h-[50px] w-[50px] rounded-full overflow-hidden">
                 <Image src={userDtlInfo.user_image} alt={"usrImg"} layout="fill"></Image>
               </div>
-              <div className="text-base	text-center px-3 py-3 cursor-pointer	">{userDtlInfo.user_name}</div>
-              <div> {codeToKor(userDtlInfo.user_status)}</div>
+              <div className="text-base	text-center px-3 py-3 cursor-pointer	">{userDtlInfo.username}</div>
+              <div className="select_box_small" id="select_box_small">
+                <div className={`select_box_small ${isClicked && "open"}`} id="select_box_small">
+                  <button className="select_txt_small" id="select_txt_small" onClick={selectBoxBtnHandler}>
+                    {codeToKor(selectedValue ? selectedValue : userDtlInfo.userStatus)}
+                  </button>
+                  {!!selectedStatusNm && <ul className="select_lst">{selectedStatusNm}</ul>}
+                </div>
+              </div>
             </div>
+            <button className="w-[100px] h-[40px] btn_gray float-right" onClick={goUserListPage}>
+              목록
+            </button>
           </div>
           <hr />
           <div className="padding20">
             <div className="usrListGrp">
               <div className="flex">
                 <div>처방내역</div>
+                &nbsp;
                 <div className="text-[#00c1a6]">{prescriptionCnt}</div>
               </div>
-              {/* <div>&gt;</div> */}
             </div>
             <div className="padding10" />
             {domLoaded &&
