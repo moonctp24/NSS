@@ -60,7 +60,6 @@ export const useAxios = () => {
           dispatch(spinnerAction.complete());
         });
     } else if (way === "get") {
-      console.log("3434343434", data);
       AXIOS.get(url, { params: { id: 2 } })
         .then((res: any) => {
           // console.log(res);
