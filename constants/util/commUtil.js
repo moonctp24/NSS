@@ -108,7 +108,6 @@ export function lPad(n, l = 2) {
  */
 export function setJwtToken(id, accessToken, refreshToken, expireDate) {
   logger({ id, accessToken, refreshToken, expireDate }, 0, "setToken");
-  // console.log("============eeeeeeeeee");
   axios.defaults.headers.Authorization = "Bearer " + accessToken;
   cookie.save(COOKIES.IS_LOGIN, true, { path: "/" });
   cookie.save(COOKIES.ID, id, { path: "/" });
