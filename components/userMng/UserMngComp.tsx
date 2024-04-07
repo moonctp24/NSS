@@ -33,33 +33,33 @@ const UserMngComp = () => {
           ? tmpList
           : [
               {
-                user_id: "memId_00000000000001",
-                user_name: "김이름",
-                user_status: "ACTIVE",
+                userId: "memId_00000000000001",
+                username: "김이름",
+                userStatus: "ACTIVE",
                 user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
               },
               {
-                user_id: "memId_00000000000002",
-                user_name: "김이름1",
-                user_status: "ADMIN",
+                userId: "memId_00000000000002",
+                username: "김이름1",
+                userStatus: "ADMIN",
                 user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
               },
               {
-                user_id: "memId_00000000000003",
-                user_name: "김이름2",
-                user_status: "INACTIVE",
+                userId: "memId_00000000000003",
+                username: "김이름2",
+                userStatus: "INACTIVE",
                 user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
               },
               {
-                user_id: "memId_00000000000004",
-                user_name: "김이름3",
-                user_status: "REMOVED",
+                userId: "memId_00000000000004",
+                username: "김이름3",
+                userStatus: "REMOVED",
                 user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
               },
               {
-                user_id: "memId_00000000000005",
-                user_name: "김이름4",
-                user_status: "BANNED",
+                userId: "memId_00000000000005",
+                username: "김이름4",
+                userStatus: "BANNED",
                 user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
               },
             ]
@@ -124,17 +124,17 @@ const UserMngComp = () => {
             (!!usrList ? (
               usrList.map((usr: any, index: number) => {
                 return (
-                  <div key={String(usr.user_id)}>
+                  <div key={String(usr.userId)}>
                     <div className="w-[400px] usrListGrp px-3 py-3 mx-auto my-0">
                       <div className="flex">
                         <div className="relative h-[50px] w-[50px] rounded-full overflow-hidden">
                           <Image src={usr.user_image} alt={"usrImg"} layout="fill"></Image>
                         </div>
-                        <div className="text-base	text-center px-3 py-3 cursor-pointer	" onClick={() => goUsrMng(usr.user_id)}>
-                          {usr.user_name}
+                        <div className="text-base	text-center px-3 py-3 cursor-pointer	" onClick={() => goUsrMng(usr.userId)}>
+                          {usr.username}
                         </div>
                       </div>
-                      <div className="text-[#00c1a6] font-bold	py-3">{codeToKor(usr.user_status)}</div>
+                      <div className="text-[#00c1a6] font-bold	py-3">{codeToKor(usr.userStatus)}</div>
                     </div>
                   </div>
                 );
