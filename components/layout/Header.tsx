@@ -40,7 +40,9 @@ const Header = () => {
   return (
     <>
       <div className="w-full h-[120px] bg-[#e6e6e6] headerFlex">
-        <p className="w-[300px] h-[100px] left-[-81px] top-[-5px] text-[40px] text-center text-[#00c1a6]">LOGO</p>
+        <p className="w-[300px] h-[100px] left-[-81px] top-[-5px] text-[40px] text-center text-[#00c1a6]" onClick={() => goMenu("")}>
+          LOGO
+        </p>
         <div className="headerFlex w-[1200px]">
           <button className="navBtn" onClick={() => goMenu("")}>
             대시보드
