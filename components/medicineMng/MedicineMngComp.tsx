@@ -21,7 +21,7 @@ const MedicineMngComp = () => {
   const getResult = useCallback(() => {
     // console.log(`code :: ${code} / response :: `, response);
     if (response && code == "200") {
-      console.log(response);
+      // console.log(response);
       const tmpObject = response;
       const tmpList: { [s: string]: any } = [];
       // object 형으로 받아와서 배열 형태로 변환해주기
