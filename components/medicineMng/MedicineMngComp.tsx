@@ -163,7 +163,7 @@ const MedicineMngComp = () => {
         <button className="w-[150px] h-[40px] float-right" onClick={goAddMdcnPage}>
           의약품 추가
         </button>
-        <div className="m-auto	">{domLoaded && <MedicineListTable medicineList={medicineList} nowTablePage={nowTablePage} />}</div>
+        <div className="m-auto">{domLoaded && <MedicineListTable medicineList={medicineList} nowTablePage={nowTablePage} />}</div>
         {/* ======= paging ======= */}
         <div className="paging">
           <div className="first" onClick={() => clickOtherPageHandler(1)}>
