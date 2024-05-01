@@ -4,6 +4,11 @@
 export const NAUTH_PAGE_LIST = ["/nauth/login"];
 
 /**
+ * 유효하지 않은 페이지
+ */
+export const NON_VALIED = "/404";
+
+/**
  * LOGIN INFORMATION KEY CONSTANT
  */
 // export const COOKIES = {
