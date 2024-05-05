@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import MedicineDtlTable from "./MedicineDtlTable";
 import { useAxios } from "@/constants/util/API_UTIL";
+import axios from "axios";
 
 const MedicineUpdComp = () => {
   const router = useRouter();
@@ -17,6 +18,19 @@ const MedicineUpdComp = () => {
       itemSeq: router.query.itemSeq,
       id: 2,
     };
+    // axios
+    //   .get("http://3.39.214.33:8081/api/free/medicine", {
+    //     params: {
+    //       itemSeq: router.query.itemSeq,
+    //       id: 2,
+    //     },
+    //   })
+    //   .then(() => {
+    //     console.log("success");
+    //   })
+    //   .catch(() => {
+    //     console.log("fail");
+    //   });
     fetchData("get", `/api/medicineMng/getMdcnDtl`, paramD, true);
     // item_seq로 상세정보 조회하는 통신
     let tmpResData = {
@@ -63,6 +77,36 @@ const MedicineUpdComp = () => {
     }
     setIsSaveClicked(false);
   };
+  const itemDelBtn = (delItem: any) => {
+    // alert(itemNo + " 를 삭제하시겠습니까?");
+    // dispatch(confirmAction.openModal({ cont: delItem.medicineName + " 를 삭제하시겠습니까?" }));
+    console.log(delItem.medicineName + " deleted");
+    axios
+      .get("http://3.39.214.33:8081/api/free/medicine", {
+        params: {
+          itemSeq: delItem.itemSeq,
+          id: delItem.itemNo,
+        },
+      })
+      .then(() => {
+        console.log("success");
+      })
+      .catch(() => {
+        console.log("fail");
+      });
+    // const AXIOS = axios.create({
+    //   withCredentials: true,
+    //   headers: {
+    //     "Content-Type": "application/json; charset=utf-8",
+    //   },
+    // });
+    // let data = {
+    //   item_seq: itemNo,
+    // };
+
+    // const res = AXIOS.post("http://3.39.214.33:8081/api/login", JSON.stringify(data));
+    // console.log(res);
+  };
 
   return (
     <>
@@ -71,6 +115,9 @@ const MedicineUpdComp = () => {
         <div className="relative w-[200px] h-[40px] flex float-right">
           <button className="h-[40px] float-right" onClick={mDtlUpdSave}>
             저장
+          </button>
+          <button className="h-[40px] btn_gray float-right" onClick={itemDelBtn}>
+            삭제
           </button>
           <button className="h-[40px] btn_gray float-right" onClick={goMcdnListPage}>
             목록

@@ -22,9 +22,9 @@ const MedicineMngComp = () => {
     // console.log(`code :: ${code} / response :: `, response);
     if (response && code == "200") {
       // console.log(response);
+      // object 형으로 받아와서 배열 형태로 변환해주기
       const tmpObject = response;
       const tmpList: { [s: string]: any } = [];
-      // object 형으로 받아와서 배열 형태로 변환해주기
       let i = 0;
       for (const [key, value] of Object.entries(tmpObject)) {
         tmpList[i] = value;
@@ -34,12 +34,8 @@ const MedicineMngComp = () => {
     }
   }, [code, response]);
 
-  const goAddMdcnPage = () => {
-    router.push("/medicineMng/mdcnAdd");
-  };
-
   useEffect(() => {
-    fetchData("get", "/api/medicineMng/getMdcnList", null, true);
+    fetchData("get", "/api/medicineMng/getMdcnList", null, true); // 의약품 리스트 조회 통신
     // setMedicineList([
     //   {
     //     item_seq: "medicineId_99999999999995",
@@ -127,8 +123,15 @@ const MedicineMngComp = () => {
   }, []);
 
   useEffect(() => {
-    setIngredientCnt(medicineList?.length);
+    setIngredientCnt(medicineList?.length); // 테이블 페이징을 위한 의약품 갯수 카운트
   }, [medicineList]);
+
+  /**
+   * 의약품 상세 조회 페이지 이동
+   */
+  const goAddMdcnPage = () => {
+    router.push("/medicineMng/mdcnAdd");
+  };
 
   const drawTablePage = () => {
     let tmpArray = [];

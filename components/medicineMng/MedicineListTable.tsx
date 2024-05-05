@@ -1,34 +1,10 @@
 import { dateFormat } from "@/constants/util/commUtil";
-import { confirmAction } from "@/store/modal/confirm-slice";
-import axios from "axios";
-// import { confirmAction } from "@/store/modal/confirm-slice";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
 
 const MedicineListTable = (props: any) => {
   const medicineList = props.medicineList;
-  console.log(medicineList);
-  const dispatch = useDispatch();
   const router = useRouter();
-
-  const itemDelBtn = (itemNo: String) => {
-    // alert(itemNo + " 를 삭제하시겠습니까?");
-    dispatch(confirmAction.openModal({ cont: itemNo + " 를 삭제하시겠습니까?" }));
-    console.log(itemNo + " deleted");
-    // const AXIOS = axios.create({
-    //   withCredentials: true,
-    //   headers: {
-    //     "Content-Type": "application/json; charset=utf-8",
-    //   },
-    // });
-    let data = {
-      item_seq: itemNo,
-    };
-
-    // const res = AXIOS.post("http://3.39.214.33:8081/api/login", JSON.stringify(data));
-    // console.log(res);
-  };
 
   const goMdcnUpdPage = (itemNo: String) => {
     console.log(itemNo);
@@ -45,7 +21,7 @@ const MedicineListTable = (props: any) => {
           <col width="*%" />
           <col width="17%" />
           <col width="17%" />
-          <col width="20%" />
+          {/* <col width="20%" /> */}
         </colgroup>
         <thead>
           <tr>
@@ -55,7 +31,7 @@ const MedicineListTable = (props: any) => {
             <th>제조사</th>
             <th>등록일시</th>
             <th>마지막수정일시</th>
-            <th>버튼</th>
+            {/* <th>버튼</th> */}
           </tr>
         </thead>
         <tbody>
@@ -65,14 +41,21 @@ const MedicineListTable = (props: any) => {
                 return (
                   <tr key={String(m.itemSeq)}>
                     <td className="t_center">{index + 1}</td>
-                    <td className="t_left">{m.medicineName}</td>
+                    <td
+                      className="t_left makePointer"
+                      onClick={(e: any) => {
+                        goMdcnUpdPage(m.itemSeq);
+                      }}
+                    >
+                      {m.medicineName}
+                    </td>
                     <td className="t_center">
-                      <Image width={50} height={50} src={m.pill_image} alt={"pillImg"}></Image>
+                      <Image width={50} height={50} src={m.pill_image || "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg"} alt={"pillImg"}></Image>
                     </td>
                     <td className="t_left">{m.companyName}</td>
                     <td className="t_center">{dateFormat(m.created_at)}</td>
                     <td className="t_center">{dateFormat(m.updated_at)}</td>
-                    <td className="">
+                    {/* <td className="">
                       <button
                         className="inTableBtn"
                         onClick={() => {
@@ -84,19 +67,19 @@ const MedicineListTable = (props: any) => {
                       <button
                         className="btn_gray inTableBtn"
                         onClick={(e: any) => {
-                          itemDelBtn(m.itemSeq);
+                          itemDelBtn(m);
                         }}
                       >
                         삭제
                       </button>
-                    </td>
+                    </td> */}
                   </tr>
                 );
               }
             })
           ) : (
             <tr>
-              <td colSpan={7}>목록을 불러올 수 없습니다.</td>
+              <td colSpan={6}>목록을 불러올 수 없습니다.</td>
             </tr>
           )}
         </tbody>
