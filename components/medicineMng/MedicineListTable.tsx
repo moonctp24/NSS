@@ -6,8 +6,12 @@ const MedicineListTable = (props: any) => {
   const medicineList = props.medicineList;
   const router = useRouter();
 
+  /**
+   * 의약품 상세 페이지로 이동
+   * @param itemNo 의약품 상세 조회를 위한 키값 (현재는 id -> 추후 itemNo로 변경예정)
+   */
   const goMdcnUpdPage = (itemNo: String) => {
-    console.log(itemNo);
+    // console.log(itemNo);
     router.push(`/medicineMng/mdcnUpd/${itemNo}`);
   };
 
@@ -44,7 +48,7 @@ const MedicineListTable = (props: any) => {
                     <td
                       className="t_left makePointer"
                       onClick={(e: any) => {
-                        goMdcnUpdPage(m.itemSeq);
+                        goMdcnUpdPage(m.id); // todo:: id -> itemSeq
                       }}
                     >
                       {m.medicineName}
