@@ -48,19 +48,7 @@ const MedicineDtlTable = (props: any) => {
   return (
     <div>
       <table className="tbl_item" summary="mdcnDtl">
-        {/* <colgroup>
-          <col width="2%" />
-          <col width="*%" />
-          <col width="*%" />
-          <col width="*%" />
-          <col width="17%" />
-          <col width="17%" />
-          <col width="20%" />
-        </colgroup> */}
-        <thead>
-          <tr></tr>
-        </thead>
-        <tbody>
+        <tbody className="tableBodyTopBorderStyle">
           {!!mDtl ? ( // 의약품 수정 테이블
             <>
               <tr>
@@ -85,14 +73,14 @@ const MedicineDtlTable = (props: any) => {
                 <td>제조일자</td>
                 <td>{dateFormat(mDtl.updated_at)}</td>
               </tr>
-              <tr>
+              {/* <tr>
                 <td>약 종류</td>
                 <td>{mDtl.appearance}</td>
                 <td>약 이미지</td>
                 <td>
-                  <Image src={mDtl.pill_image} width={50} height={50} alt="pillImg"></Image>
+                  <Image src={mDtl.pill_image || "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg"} width={50} height={50} alt="pillImg"></Image>
                 </td>
-              </tr>
+              </tr> */}
               <tr>
                 <td>효능</td>
                 <td>
@@ -142,12 +130,12 @@ const MedicineDtlTable = (props: any) => {
                 <td>제조일자</td>
                 <td></td>
               </tr>
-              <tr>
+              {/* <tr>
                 <td>약 종류</td>
                 <td></td>
                 <td>약 이미지</td>
                 <td></td>
-              </tr>
+              </tr> */}
               <tr>
                 <td>효능</td>
                 <td>

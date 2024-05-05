@@ -315,6 +315,9 @@ textarea::placeholder {
 .tbl_item tfoot td {
   border-top: 1px solid #00c1a6;
 }
+.tableBodyTopBorderStyle {
+  border-top: 1px solid #e1cfff;
+}
 
 .tbl_timetable thead th {
   font-size: 18px;
