@@ -21,103 +21,108 @@ const MedicineMngComp = () => {
   const getResult = useCallback(() => {
     // console.log(`code :: ${code} / response :: `, response);
     if (response && code == "200") {
-      // console.log(response);
-      // object 형으로 받아와서 배열 형태로 변환해주기
-      const tmpObject = response;
-      const tmpList: { [s: string]: any } = [];
-      let i = 0;
-      for (const [key, value] of Object.entries(tmpObject)) {
-        tmpList[i] = value;
-        i++;
+      if (response.length) {
+        // 통신 잘됐을 때
+        // object 형으로 받아와서 배열 형태로 변환해주기
+        const tmpObject = response;
+        const tmpList: { [s: string]: any } = [];
+        let i = 0;
+        for (const [key, value] of Object.entries(tmpObject)) {
+          tmpList[i] = value;
+          i++;
+        }
+        console.log(tmpList);
+        setMedicineList(tmpList);
+      } else {
+        // 통신 안됐을 때
+        setMedicineList([
+          {
+            itemSeq: "medicineId_99999999999995",
+            medicineName: "약이름",
+            companyName: "약회사",
+            pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+            created_at: "20240301153021",
+            updated_at: "20240301153021",
+          },
+          {
+            itemSeq: "medicineId_99999999999994",
+            medicineName: "약이름2",
+            companyName: "약회사2",
+            pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+            created_at: "20240301153021",
+            updated_at: "20240301153021",
+          },
+          {
+            itemSeq: "medicineId_99999999999993",
+            medicineName: "약이름3",
+            companyName: "약회사3",
+            pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+            created_at: "20240301153021",
+            updated_at: "20240301153021",
+          },
+          {
+            itemSeq: "medicineId_99999999999991",
+            medicineName: "약이름4",
+            companyName: "약회사4",
+            pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+            created_at: "20240301153021",
+            updated_at: "20240301153021",
+          },
+          {
+            itemSeq: "medicineId_99999999999992",
+            medicineName: "약이름5",
+            companyName: "약회사5",
+            pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+            created_at: "20240301153021",
+            updated_at: "20240301153021",
+          },
+          {
+            itemSeq: "medicineId_99999999999980",
+            medicineName: "약이름6",
+            companyName: "약회사",
+            pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+            created_at: "20240301153021",
+            updated_at: "20240301153021",
+          },
+          {
+            itemSeq: "medicineId_99999999999981",
+            medicineName: "약이름7",
+            companyName: "약회사2",
+            pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+            created_at: "20240301153021",
+            updated_at: "20240301153021",
+          },
+          {
+            itemSeq: "medicineId_99999999999982",
+            medicineName: "약이름8",
+            companyName: "약회사3",
+            pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+            created_at: "20240301153021",
+            updated_at: "20240301153021",
+          },
+          {
+            itemSeq: "medicineId_99999999999983",
+            medicineName: "약이름9",
+            companyName: "약회사4",
+            pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+            created_at: "20240301153021",
+            updated_at: "20240301153021",
+          },
+          {
+            itemSeq: "medicineId_99999999999984",
+            medicineName: "약이름10",
+            companyName: "약회사5",
+            pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+            created_at: "20240301153021",
+            updated_at: "20240301153021",
+          },
+        ]);
       }
-      setMedicineList(tmpList);
     }
   }, [code, response]);
 
   useEffect(() => {
     fetchData("get", "/api/medicineMng/getMdcnList", null, true); // 의약품 리스트 조회 통신
-    // setMedicineList([
-    //   {
-    //     item_seq: "medicineId_99999999999995",
-    //     medicine_name: "약이름",
-    //     company_name: "약회사",
-    //     pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-    //     created_at: "20240301153021",
-    //     updated_at: "20240301153021",
-    //   },
-    //   {
-    //     item_seq: "medicineId_99999999999994",
-    //     medicine_name: "약이름2",
-    //     company_name: "약회사2",
-    //     pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-    //     created_at: "20240301153021",
-    //     updated_at: "20240301153021",
-    //   },
-    //   {
-    //     item_seq: "medicineId_99999999999993",
-    //     medicine_name: "약이름3",
-    //     company_name: "약회사3",
-    //     pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-    //     created_at: "20240301153021",
-    //     updated_at: "20240301153021",
-    //   },
-    //   {
-    //     item_seq: "medicineId_99999999999991",
-    //     medicine_name: "약이름4",
-    //     company_name: "약회사4",
-    //     pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-    //     created_at: "20240301153021",
-    //     updated_at: "20240301153021",
-    //   },
-    //   {
-    //     item_seq: "medicineId_99999999999992",
-    //     medicine_name: "약이름5",
-    //     company_name: "약회사5",
-    //     pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-    //     created_at: "20240301153021",
-    //     updated_at: "20240301153021",
-    //   },
-    //   {
-    //     item_seq: "medicineId_99999999999980",
-    //     medicine_name: "약이름6",
-    //     company_name: "약회사",
-    //     pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-    //     created_at: "20240301153021",
-    //     updated_at: "20240301153021",
-    //   },
-    //   {
-    //     item_seq: "medicineId_99999999999981",
-    //     medicine_name: "약이름7",
-    //     company_name: "약회사2",
-    //     pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-    //     created_at: "20240301153021",
-    //     updated_at: "20240301153021",
-    //   },
-    //   {
-    //     item_seq: "medicineId_99999999999982",
-    //     medicine_name: "약이름8",
-    //     company_name: "약회사3",
-    //     pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-    //     created_at: "20240301153021",
-    //     updated_at: "20240301153021",
-    //   },
-    //   {
-    //     item_seq: "medicineId_99999999999983",
-    //     medicine_name: "약이름9",
-    //     company_name: "약회사4",
-    //     pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-    //     created_at: "20240301153021",
-    //     updated_at: "20240301153021",
-    //   },
-    //   {
-    //     item_seq: "medicineId_99999999999984",
-    //     medicine_name: "약이름10",
-    //     company_name: "약회사5",
-    //     pill_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-    //     created_at: "20240301153021",
-    //     updated_at: "20240301153021",
-    //   },
-    // ]);
     setDomLoaded(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
