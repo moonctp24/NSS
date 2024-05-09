@@ -6,6 +6,7 @@ const initialAlertState = {
   cont: null,
   width: "520", // 900, 700, 520, 320
   callback: null,
+  type: "alert",
 };
 
 const alertSlice = createSlice({

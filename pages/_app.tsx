@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import Head from "next/head";
-// import CommModalGroup from "@/components/popup/CommModalGroup";
+import CommModalGroup from "@/components/popup/CommModalGroup";
 import Layout from "@/components/layout/Layout";
 import store from "@/store";
 import "@/styles/globals.css";
@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>NSS</title>
       </Head>
       <Provider store={store}>
-        {/* <CommModalGroup /> */}
+        <CommModalGroup />
         <Layout>
           <Component {...pageProps} />
         </Layout>

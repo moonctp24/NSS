@@ -10,6 +10,7 @@ const initialConfirmState = {
   width: "520", // 900, 700, 520, 320
   cntOpt: null,
   btnOpt: null,
+  type: "confirm",
 };
 
 const confirmSlice = createSlice({
