@@ -1,31 +1,61 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import MedicineDtlTable from "./MedicineDtlTable";
 import { useAxios } from "@/constants/util/API_UTIL";
 import axios from "axios";
 import Image from "next/image";
+import { confirmAction } from "@/store/modal/confirm-slice";
+import { useDispatch } from "react-redux";
 
 const MedicineUpdComp = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [mDtlInfo, setMDtlInfo] = useState<any>(Object || null);
   const [domLoaded, setDomLoaded] = useState(false); // 테이블 데이터 로딩 상태
   const [admCmmtM, setAdmCmmtM] = useState("");
   const [isSaveClicked, setIsSaveClicked] = useState(false);
   const { code, response, fetchData } = useAxios();
 
+  // useEffect(() => {
+  //   getResult();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [code, response, router]);
+
+  // const getResult = useCallback(() => {
+  //   console.log(`code :: ${code} / response :: `, response);
+  //   if (response && code == "200") {
+  //     // console.log(response);
+  //     // object 형으로 받아와서 배열 형태로 변환해주기
+  //     const tmpObject = response;
+  //     const tmpList: { [s: string]: any } = [];
+  //     let i = 0;
+  //     for (const [key, value] of Object.entries(tmpObject)) {
+  //       tmpList[i] = value;
+  //       i++;
+  //     }
+  //     // setMedicineList(tmpList);
+  //   }
+  // }, [code, response]);
+
   useEffect(() => {
-    console.log(router.query.itemSeq);
+    // console.log(router.query.itemSeq);
     let paramD = {
       itemSeq: router.query.itemSeq,
       id: router.query.itemSeq,
     };
-    axios
-      .get("http://3.39.214.33:8081/api/free/medicine", {
-        params: {
-          itemSeq: router.query.itemSeq,
-          id: router.query.itemSeq,
-        },
-      })
+    const AXIOS = axios.create({
+      // withCredentials: true,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        // Authorization: adminJwt ? `Bearer ${adminJwt}` : "",
+      },
+    });
+    AXIOS.get("http://3.39.214.33:8081/api/free/medicine", {
+      params: {
+        itemSeq: router.query.itemSeq,
+        id: router.query.itemSeq,
+      },
+    })
       .then((data) => {
         console.log("success");
         console.log(data);
@@ -36,34 +66,36 @@ const MedicineUpdComp = () => {
       })
       .catch(() => {
         console.log("fail");
+        // 더미 데이터 세팅
+        let tmpResData = {
+          id: 2,
+          itemNo: "1111",
+          medicineName: "겔포스현탁액(인산알루미늄겔)",
+          companyName: "(주)보령",
+          description: "",
+          usage: "성인은 1회 1포씩, 1일 3~4회 식간(식사 때와 식사 때 사이) 및 취침 시 복용합니다.\n\n연령 또는 증상에 따라 적절히 증감합니다.\n",
+          effect: "이 약은 위·십이지장 궤양, 위염, 위산과다(속쓰림, 위통, 구역, 구토)의 제산작용 및 증상의 개선에 사용합니다.\n",
+          sideEffect: "변비 등이 나타날 수 있습니다.\n",
+          caution: "이 약을 복용하기 전에 신장장애, 변비 환자는 의사 또는 약사와 상의하십시오.\n",
+          warning: "",
+          interaction: null,
+          keepMethod: "빛을 피해 실온에서 보관하십시오.\n",
+          appearance: "",
+          colorClass1: "",
+          colorClass2: "",
+          pillImage: "",
+          className: "",
+          otcName: "",
+          formCodeName: "",
+          itemSeq: "197400207",
+          adminComment: "관리자 코멘트",
+        };
+        setMDtlInfo(tmpResData);
+        setAdmCmmtM(tmpResData.adminComment || "관리자 코멘트는 없습니다");
       });
     // fetchData("get", `/api/medicineMng/getMdcnDtl`, paramD, true);
-    // item_seq로 상세정보 조회하는 통신
-    // let tmpResData = {
-    //   id: 2,
-    //   medicineName: "겔포스현탁액(인산알루미늄겔)",
-    //   companyName: "(주)보령",
-    //   description: "",
-    //   usage: "성인은 1회 1포씩, 1일 3~4회 식간(식사 때와 식사 때 사이) 및 취침 시 복용합니다.\n\n연령 또는 증상에 따라 적절히 증감합니다.\n",
-    //   effect: "이 약은 위·십이지장 궤양, 위염, 위산과다(속쓰림, 위통, 구역, 구토)의 제산작용 및 증상의 개선에 사용합니다.\n",
-    //   sideEffect: "변비 등이 나타날 수 있습니다.\n",
-    //   caution: "이 약을 복용하기 전에 신장장애, 변비 환자는 의사 또는 약사와 상의하십시오.\n",
-    //   warning: "",
-    //   interaction: null,
-    //   keepMethod: "빛을 피해 실온에서 보관하십시오.\n",
-    //   appearance: "",
-    //   colorClass1: "",
-    //   colorClass2: "",
-    //   pillImage: "",
-    //   className: "",
-    //   otcName: "",
-    //   formCodeName: "",
-    //   itemSeq: "197400207",
-    //   admin_comment: "관리자 코멘트",
-    // };
-    // setMDtlInfo(tmpResData);
+
     setDomLoaded(true);
-    // setAdmCmmtM(tmpResData.admin_comment);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -90,27 +122,32 @@ const MedicineUpdComp = () => {
     setIsSaveClicked(false);
   };
 
+  const modalCallback = () => {
+    console.log("confirm");
+    dispatch(confirmAction.closeModal());
+  };
+
   /**
    * 의약품 삭제하기 버튼
    * @param delItem 삭제할 의약품 정보
    */
-  const itemDelBtn = (delItem: any) => {
-    // alert(itemNo + " 를 삭제하시겠습니까?");
-    // dispatch(confirmAction.openModal({ cont: delItem.medicineName + " 를 삭제하시겠습니까?" }));
-    console.log(delItem.medicineName + " deleted");
-    axios
-      .get("http://3.39.214.33:8081/api/free/medicine", {
-        params: {
-          itemSeq: delItem.itemSeq,
-          id: delItem.itemNo,
-        },
-      })
-      .then(() => {
-        console.log("success");
-      })
-      .catch(() => {
-        console.log("fail");
-      });
+  const itemDelBtn = () => {
+    // alert(mDtlInfo.itemSeq + " 를 삭제하시겠습니까?");
+    dispatch(confirmAction.openModal({ cont: mDtlInfo.medicineName + " 를 삭제하시겠습니까?", callback: modalCallback }));
+    console.log(mDtlInfo.medicineName + " deleted");
+    // axios
+    //   .get("http://3.39.214.33:8081/api/free/medicine", {
+    //     params: {
+    //       itemSeq: mDtlInfo.itemSeq,
+    //       id: mDtlInfo.itemSeq,
+    //     },
+    //   })
+    //   .then(() => {
+    //     console.log("success");
+    //   })
+    //   .catch(() => {
+    //     console.log("fail");
+    //   });
   };
 
   return (
