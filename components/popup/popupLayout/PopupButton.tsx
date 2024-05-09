@@ -9,10 +9,6 @@ type Data = {
 };
 
 const PopupButton = ({ type, action, btnOpt, btmPd }: Data) => {
-  console.log(
-    "debug22:: ",
-    useSelector((state: any) => state[type])
-  );
   const dispatch = useDispatch();
   const callback = useSelector((state: any) => state[type].callback);
   const data = useSelector((state: any) => state[type].data);
