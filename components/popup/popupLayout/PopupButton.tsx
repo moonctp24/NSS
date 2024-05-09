@@ -37,7 +37,7 @@ const PopupButton = ({ type, action, btnOpt, btmPd }: Data) => {
   };
   return (
     <>
-      <div className="card_btnArea">
+      <div className="flex">
         {type === "popup" ? (
           <>
             <button className="largbt btn_white" onClick={closeHandler}>
@@ -58,7 +58,7 @@ const PopupButton = ({ type, action, btnOpt, btmPd }: Data) => {
           </>
         ) : type === "confirm" ? (
           <>
-            <button className="btn_white" onClick={() => dispatch(action.closeModal())}>
+            <button className="btn_gray" onClick={() => dispatch(action.closeModal())}>
               취소
             </button>
             <button
