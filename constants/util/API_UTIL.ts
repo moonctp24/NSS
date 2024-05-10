@@ -35,8 +35,8 @@ export const useAxios = () => {
     if (way === "post") {
       AXIOS.post(url, JSON.stringify(data))
         .then((res: any) => {
-          console.log("4444444444444444");
-          console.log(res);
+          // console.log("4444444444444444");
+          // console.log(res);
           if (res.data.responseCode === "200" || res.data.responseCode === 200) {
             // if (res.status === "200" || res.status === 200) {
             setCode(res.data.responseCode);
