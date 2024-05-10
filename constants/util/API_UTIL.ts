@@ -16,7 +16,7 @@ if (typeof window !== "undefined") {
 }
 
 const AXIOS = axios.create({
-  withCredentials: true,
+  // withCredentials: true,
   headers: {
     "Content-Type": "application/json; charset=utf-8",
     Authorization: adminJwt ? `Bearer ${adminJwt}` : "",
@@ -28,41 +28,45 @@ export const useAxios = () => {
   const [code, setCode] = useState<any>(null);
   const [response, setResponse] = useState<any>(null);
   const fetchData = (way: String, url: string, data: object | null, isLoading: boolean | undefined) => {
+    // console.log("====4545:: ", data);
     if (!!isLoading) {
       dispatch(spinnerAction.loading());
     }
     if (way === "post") {
       AXIOS.post(url, JSON.stringify(data))
         .then((res: any) => {
-          // console.log(res);
-          // if (res.data.responseCode === "200" || res.data.responseCode === 200) {
-          if (res.status === "200" || res.status === 200) {
-            setCode(res.status);
+          console.log("4444444444444444");
+          console.log(res);
+          if (res.data.responseCode === "200" || res.data.responseCode === 200) {
+            // if (res.status === "200" || res.status === 200) {
+            setCode(res.data.responseCode);
             setResponse(res.data.data);
           } else if (res.data.responseCode === "500" || res.data.status === 500) {
             dispatch(alertAction.openModal({ cont: "권한이 없습니다." }));
             router.push("/nauth/login");
           } else {
-            // throw new Error(res?.data?.message || "오류가 발생 했습니다.");
+            // console.log(res.data.message);
+            throw new Error(res?.data?.message || "오류가 발생 했습니다.");
           }
         })
         .catch((err) => {
           if (err?.response?.status) {
-            console.log("error catch" + err);
+            // console.log("error catch" + err);
           } else {
-            console.log("useAxios err :: ", err);
-            console.log(err?.response?.status);
+            // console.log("useAxios err :: ", err);
+            // console.log(err?.response?.status);
             dispatch(alertAction.openModal({ cont: err?.message || "오류가 발생 했습니다." }));
           }
-          router.push("/nauth/login");
+          // router.push("/nauth/login");
         })
         .finally(() => {
           dispatch(spinnerAction.complete());
         });
     } else if (way === "get") {
-      AXIOS.get(url)
+      // console.log("hello++ ", data);
+      AXIOS.get(url, { params: data })
         .then((res: any) => {
-          // console.log(res);
+          // console.log("hello++ ", res);
           if (res.status === "200" || res.status === 200) {
             setCode(res.status);
             setResponse(res.data.data);
@@ -102,35 +106,6 @@ export const BACK_API = async (way: String, url: String, req: NextApiRequest, re
     console.log(`BACK_API req body :: `, body);
     console.log(`BACK_API BASE_URL :: `, BASE_URL);
 
-    // const jwtTokenCookie = getCookie("jwtTokenCookie", { req, res });
-    // const jwtRefreshTokenCookie = getCookie("jwtRefreshTokenCookie", { req, res });
-    // const expiredTokenTimeCookie = getCookie("expiredTokenTimeCookie", { req, res });
-    // const userEmailCookie = getCookie("userEmailCookie", { req, res });
-    // // const userNicknameCookie = getCookie("userNicknameCookie", { req, res });
-
-    // let cookie = "";
-    // console.log(`BACK_API jwtTokenCookie :: `, jwtTokenCookie);
-    // if (jwtTokenCookie) {
-    //   // setCookie("jwtTokenCookie", jwtTokenCookie, { req, res, path: "/", maxAge: 60 * 60 * 30 });
-    //   cookie += `jwtTokenCookie=${jwtTokenCookie};`;
-    // }
-    // if (jwtRefreshTokenCookie) {
-    //   // setCookie("jwtRefreshTokenCookie", jwtRefreshTokenCookie, { req, res, maxAge: 60 * 60 * 30 });
-    //   cookie += `jwtRefreshTokenCookie=${jwtRefreshTokenCookie};`;
-    // }
-    // if (expiredTokenTimeCookie) {
-    //   // setCookie("expiredTokenTimeCookie", expiredTokenTimeCookie, { req, res, maxAge: 60 * 60 * 30 });
-    //   cookie += `expiredTokenTimeCookie=${expiredTokenTimeCookie};`;
-    // }
-    // if (userEmailCookie) {
-    //   // setCookie("userEmailCookie", userEmailCookie, { req, res, maxAge: 60 * 60 * 30 });
-    //   cookie += `userEmailCookie=${userEmailCookie};`;
-    // }
-    // if (userNicknameCookie) {
-    //   // setCookie("userNicknameCookie", userNicknameCookie, { req, res, maxAge: 60 * 60 * 30 });
-    //   cookie += `userNicknameCookie=${userNicknameCookie};`;
-    // }
-
     if (way === "POST") {
       // 여기서 스프링 서버에 요청을 날려줌 (with cookies)
       const response: AxiosResponse<any, any> = await AXIOS.post(`${BASE_URL}${url}`, body, {
@@ -138,20 +113,6 @@ export const BACK_API = async (way: String, url: String, req: NextApiRequest, re
           // Cookie: cookie,
         },
       });
-
-      // console.log("header cookie check::: ", response.headers["set-cookie"]);
-      // let cookieObj: Array<any> = new Array(cookieStringToObject(response.headers["set-cookie"]));
-      // cookieObj = cookieObj[0]; // 윗 줄에서 new Array를 해서 그런지 결과가 새 배열에 다시 담겨옴.
-      // // console.log("BACK_API cookieObj :: ", cookieObj);
-      // if (cookieObj.length > 0) {
-      //   res.setHeader("Set-Cookie", [
-      //     `jwtTokenCookie=${cookieObj[0]?.jwtTokenCookie}; path=/; HttpOnly; Expires=${cookieObj[0]?.Expires};`,
-      //     `jwtRefreshTokenCookie=${cookieObj[1]?.jwtRefreshTokenCookie}; path=/; HttpOnly; Expires=${cookieObj[1]?.Expires};`,
-      //     `expiredTokenTimeCookie=${cookieObj[2]?.expiredTokenTimeCookie}; path=/; HttpOnly; Expires=${cookieObj[2]?.Expires};`,
-      //     `userEmailCookie=${cookieObj[3]?.userEmailCookie}; path=/; Expires=${cookieObj[3]?.Expires};`,
-      //     // `userNicknameCookie=${cookieObj[4]?.userNicknameCookie}; path=/; Expires=${cookieObj[4]?.Expires};`,
-      //   ]);
-      // }
       // console.log(`BACK_API response.data.data :: `, response.data.data);
 
       axios.defaults.headers.Authorization = "Bearer " + response.data.data.adminJwt;
