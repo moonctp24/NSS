@@ -20,8 +20,9 @@ const MedicineMngComp = () => {
 
   const getResult = useCallback(() => {
     // console.log(`code :: ${code} / response :: `, response);
+    // console.log(Object.entries(response).length);
     if (response && code == "200") {
-      if (response.length) {
+      if (true) {
         // 통신 잘됐을 때
         // object 형으로 받아와서 배열 형태로 변환해주기
         const tmpObject = response;

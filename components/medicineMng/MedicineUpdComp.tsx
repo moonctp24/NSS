@@ -16,26 +16,18 @@ const MedicineUpdComp = () => {
   const [isSaveClicked, setIsSaveClicked] = useState(false);
   const { code, response, fetchData } = useAxios();
 
-  // useEffect(() => {
-  //   getResult();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [code, response, router]);
+  useEffect(() => {
+    getResult();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code, response, router]);
 
-  // const getResult = useCallback(() => {
-  //   console.log(`code :: ${code} / response :: `, response);
-  //   if (response && code == "200") {
-  //     // console.log(response);
-  //     // object 형으로 받아와서 배열 형태로 변환해주기
-  //     const tmpObject = response;
-  //     const tmpList: { [s: string]: any } = [];
-  //     let i = 0;
-  //     for (const [key, value] of Object.entries(tmpObject)) {
-  //       tmpList[i] = value;
-  //       i++;
-  //     }
-  //     // setMedicineList(tmpList);
-  //   }
-  // }, [code, response]);
+  const getResult = useCallback(() => {
+    console.log(`code :: ${code} / response :: `, response);
+    if (response && code == "200") {
+      console.log(response);
+      // setMedicineList(tmpList);
+    }
+  }, [code, response]);
 
   useEffect(() => {
     // console.log(router.query.itemSeq);
@@ -58,7 +50,7 @@ const MedicineUpdComp = () => {
     })
       .then((data) => {
         console.log("success");
-        console.log(data);
+        // console.log(data);
         if (data.status === 200) {
           setMDtlInfo(data.data.data);
           setAdmCmmtM(data.data.data.admin_comment || "관리자 코멘트는 없습니다");
@@ -116,15 +108,10 @@ const MedicineUpdComp = () => {
   const getModifiedData = (modifiedData: any) => {
     if (isSaveClicked) {
       modifiedData.admin_comment = admCmmtM;
-      // console.log(modifiedData);
+      console.log(modifiedData);
       fetchData("post", "/api/medicineMng/updMdcnDtl", modifiedData, true);
     }
     setIsSaveClicked(false);
-  };
-
-  const modalCallback = () => {
-    console.log("confirm");
-    dispatch(confirmAction.closeModal());
   };
 
   /**
@@ -132,22 +119,25 @@ const MedicineUpdComp = () => {
    * @param delItem 삭제할 의약품 정보
    */
   const itemDelBtn = () => {
-    // alert(mDtlInfo.itemSeq + " 를 삭제하시겠습니까?");
     dispatch(confirmAction.openModal({ cont: mDtlInfo.medicineName + " 를 삭제하시겠습니까?", callback: modalCallback }));
-    console.log(mDtlInfo.medicineName + " deleted");
-    // axios
-    //   .get("http://3.39.214.33:8081/api/free/medicine", {
-    //     params: {
-    //       itemSeq: mDtlInfo.itemSeq,
-    //       id: mDtlInfo.itemSeq,
-    //     },
-    //   })
-    //   .then(() => {
-    //     console.log("success");
-    //   })
-    //   .catch(() => {
-    //     console.log("fail");
-    //   });
+  };
+  const modalCallback = () => {
+    dispatch(confirmAction.closeModal());
+    console.log(mDtlInfo.medicineName, " real delete");
+
+    axios
+      .get("http://3.39.214.33:8081/api/free/deleteMedicine", {
+        params: {
+          itemSeq: mDtlInfo.itemSeq,
+          id: mDtlInfo.id,
+        },
+      })
+      .then(() => {
+        console.log("success");
+      })
+      .catch(() => {
+        console.log("fail");
+      });
   };
 
   return (
