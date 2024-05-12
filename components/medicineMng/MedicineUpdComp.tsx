@@ -25,7 +25,6 @@ const MedicineUpdComp = () => {
   const getResult = useCallback(() => {
     // console.log(`code :: ${code} / response :: `, response, "/ message:: ", message);
     if (response && code == "200") {
-      // console.log(response);
       dispatch(alertAction.openModal({ cont: message }));
       // setMedicineList(tmpList);
     }
@@ -33,7 +32,6 @@ const MedicineUpdComp = () => {
   }, [code, message, response]);
 
   useEffect(() => {
-    // console.log(router.query.itemSeq);
     let paramD = {
       itemSeq: router.query.itemSeq,
       id: router.query.itemSeq,
@@ -132,15 +130,18 @@ const MedicineUpdComp = () => {
     axios
       .get("http://3.39.214.33:8081/api/free/deleteMedicine", {
         params: {
-          itemSeq: mDtlInfo.itemSeq,
+          // itemSeq: mDtlInfo.itemSeq,
           id: mDtlInfo.id,
         },
       })
-      .then(() => {
+      .then((data) => {
         console.log("success");
+        console.log(data);
       })
-      .catch(() => {
+      .catch((data) => {
         console.log("fail");
+        console.log(data.response.data.message);
+        dispatch(alertAction.openModal({ cont: data.response.data.message }));
       });
   };
 
