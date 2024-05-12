@@ -6,6 +6,7 @@ import axios from "axios";
 import Image from "next/image";
 import { confirmAction } from "@/store/modal/confirm-slice";
 import { useDispatch } from "react-redux";
+import { alertAction } from "@/store/modal/alert-slice";
 
 const MedicineUpdComp = () => {
   const router = useRouter();
@@ -14,20 +15,22 @@ const MedicineUpdComp = () => {
   const [domLoaded, setDomLoaded] = useState(false); // 테이블 데이터 로딩 상태
   const [admCmmtM, setAdmCmmtM] = useState("");
   const [isSaveClicked, setIsSaveClicked] = useState(false);
-  const { code, response, fetchData } = useAxios();
+  const { code, response, message, fetchData } = useAxios();
 
   useEffect(() => {
     getResult();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [code, response, router]);
+  }, [code, response, message, router]);
 
   const getResult = useCallback(() => {
-    console.log(`code :: ${code} / response :: `, response);
+    // console.log(`code :: ${code} / response :: `, response, "/ message:: ", message);
     if (response && code == "200") {
-      console.log(response);
+      // console.log(response);
+      dispatch(alertAction.openModal({ cont: message }));
       // setMedicineList(tmpList);
     }
-  }, [code, response]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code, message, response]);
 
   useEffect(() => {
     // console.log(router.query.itemSeq);
@@ -44,7 +47,7 @@ const MedicineUpdComp = () => {
     });
     AXIOS.get("http://3.39.214.33:8081/api/free/medicine", {
       params: {
-        itemSeq: router.query.itemSeq,
+        // itemSeq: router.query.itemSeq,
         id: router.query.itemSeq,
       },
     })
@@ -108,6 +111,7 @@ const MedicineUpdComp = () => {
   const getModifiedData = (modifiedData: any) => {
     if (isSaveClicked) {
       modifiedData.admin_comment = admCmmtM;
+      modifiedData.id = router.query.itemSeq;
       console.log(modifiedData);
       fetchData("post", "/api/medicineMng/updMdcnDtl", modifiedData, true);
     }
