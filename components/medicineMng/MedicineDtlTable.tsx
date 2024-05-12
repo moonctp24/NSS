@@ -136,12 +136,16 @@ const MedicineDtlTable = (props: any) => {
                 <td>제조일자</td>
                 <td></td>
               </tr>
-              {/* <tr>
-                <td>약 종류</td>
-                <td></td>
-                <td>약 이미지</td>
-                <td></td>
-              </tr> */}
+              <tr>
+                <td>약 생김새</td>
+                <td>
+                  <input type="text" value={apprnc} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setApprnc(e.target.value)}></input>
+                </td>
+                <td>복용법</td>
+                <td>
+                  <input type="text" value={ussg} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUssa(e.target.value)}></input>
+                </td>
+              </tr>
               <tr>
                 <td>효능</td>
                 <td>
