@@ -27,6 +27,7 @@ export const useAxios = () => {
   const dispatch = useDispatch();
   const [code, setCode] = useState<any>(null);
   const [response, setResponse] = useState<any>(null);
+  const [message, setMessage] = useState("");
   const fetchData = (way: String, url: string, data: object | null, isLoading: boolean | undefined) => {
     // console.log("====4545:: ", data);
     if (!!isLoading) {
@@ -41,6 +42,7 @@ export const useAxios = () => {
             // if (res.status === "200" || res.status === 200) {
             setCode(res.data.responseCode);
             setResponse(res.data.data);
+            setMessage(res.data.message);
           } else if (res.data.responseCode === "500" || res.data.status === 500) {
             dispatch(alertAction.openModal({ cont: "권한이 없습니다." }));
             router.push("/nauth/login");
@@ -93,7 +95,7 @@ export const useAxios = () => {
     }
   };
 
-  return { code, response, fetchData };
+  return { code, response, message, fetchData };
 };
 
 export const BACK_API = async (way: String, url: String, req: NextApiRequest, res: NextApiResponse) => {
