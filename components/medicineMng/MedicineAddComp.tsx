@@ -1,18 +1,36 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import MedicineDtlTable from "./MedicineDtlTable";
 import { useRouter } from "next/router";
 import { useAxios } from "@/constants/util/API_UTIL";
+import { useDispatch } from "react-redux";
+import { alertAction } from "@/store/modal/alert-slice";
 
 const MedicineAddComp = () => {
   const [isSaveClicked, setIsSaveClicked] = useState(false);
   const [admCmmtM, setAdmCmmtM] = useState("");
 
   const router = useRouter();
-  const { code, response, fetchData } = useAxios();
+  const { code, response, message, fetchData } = useAxios();
+  const dispatch = useDispatch();
 
   const goMcdnListPage = () => {
     router.push("/medicineMng/mdcnList");
   };
+
+  useEffect(() => {
+    getResult();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code, response, message, router]);
+
+  const getResult = useCallback(() => {
+    console.log(`code :: ${code} / response :: `, response, "/ message:: ", message);
+    if (response && code == "200") {
+      // console.log(response);
+      if (message) dispatch(alertAction.openModal({ cont: message }));
+      // setMedicineList(tmpList);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code, message, response]);
 
   const mDtlAddSave = () => {
     setIsSaveClicked(true);
