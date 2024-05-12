@@ -1,5 +1,6 @@
 import { useAxios } from "@/constants/util/API_UTIL";
 import { codeToKor } from "@/constants/util/commUtil";
+import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
@@ -21,7 +22,7 @@ const UserDtlComp = () => {
     if (response && code == "200") {
       if (response.status === 200) {
         setUserDtlInfo(response);
-        setPrescriptionCnt(response.prescriptions_id_list?.length);
+        setPrescriptionCnt(response.prescriptionsIdList?.length);
         setDomLoaded(true);
       } else {
         let usrDtlInfo = {
@@ -30,32 +31,76 @@ const UserDtlComp = () => {
           username: "김이름",
           userStatus: "ADMIN",
           user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-          prescriptions_id_list: [
+          prescriptionsIdList: [
             // 이 회원이 받은 처방전 내역
             {
-              prescriptions_id: "prescriptionsId_00000000000001",
-              prescription_name: "처방전1",
+              prescriptionsId: "prescriptionsId_00000000000001",
+              prescriptionName: "처방전1",
             },
             {
-              prescriptions_id: "prescriptionsId_00000000000002",
-              prescription_name: "처방전2",
+              prescriptionsId: "prescriptionsId_00000000000002",
+              prescriptionName: "처방전2",
             },
             {
-              prescriptions_id: "prescriptionsId_00000000000003",
-              prescription_name: "처방전3",
+              prescriptionsId: "prescriptionsId_00000000000003",
+              prescriptionName: "처방전3",
             },
           ],
         };
         setUserDtlInfo(usrDtlInfo);
-        setPrescriptionCnt(usrDtlInfo.prescriptions_id_list.length);
+        setPrescriptionCnt(usrDtlInfo.prescriptionsIdList.length);
         setDomLoaded(true);
       }
     }
   }, [code, response]);
 
   useEffect(() => {
-    console.log(router.query.itemSeq);
-    fetchData("get", "/api/userMng/getUserDtl", null, true);
+    console.log(router.query.userSeq);
+    // fetchData("get", "/api/userMng/getUserDtl", null, true);
+    axios
+      .get("http://3.39.214.33:8081/api/free/user", {
+        params: {
+          userEmail: "test2",
+        },
+      })
+      .then((data) => {
+        console.log("success");
+        console.log(data);
+        if (data.status === 200) {
+          // setMDtlInfo(data.data.data);
+          // setAdmCmmtM(data.data.data.admin_comment || "관리자 코멘트는 없습니다");
+          let usrDtlInfo = {
+            userId: "memId_00000000000001",
+            userEmail: "test@email.com",
+            username: "김이름",
+            userStatus: "ADMIN",
+            user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+            prescriptionsIdList: [
+              // 이 회원이 받은 처방전 내역
+              {
+                prescriptionsId: "prescriptionsId_00000000000001",
+                prescriptionName: "처방전1",
+              },
+              {
+                prescriptionsId: "prescriptionsId_00000000000002",
+                prescriptionName: "처방전2",
+              },
+              {
+                prescriptionsId: "prescriptionsId_00000000000003",
+                prescriptionName: "처방전3",
+              },
+            ],
+          };
+
+          setUserDtlInfo(usrDtlInfo);
+          setPrescriptionCnt(usrDtlInfo.prescriptionsIdList.length);
+          setDomLoaded(true);
+        }
+      })
+      .catch(() => {
+        console.log("fail");
+        // 더미 데이터 세팅
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -134,18 +179,18 @@ const UserDtlComp = () => {
             </div>
             <div className="padding10" />
             {domLoaded &&
-              (!!userDtlInfo.prescriptions_id_list ? (
-                userDtlInfo.prescriptions_id_list.map((prscrpt: any, index: number) => {
+              (!!userDtlInfo.prescriptionsIdList ? (
+                userDtlInfo.prescriptionsIdList.map((prscrpt: any, index: number) => {
                   return (
-                    <div className="padding5" key={String(prscrpt.prescriptions_id)}>
+                    <div className="padding5" key={String(prscrpt.prescriptionsId)}>
                       <div
                         className="w-[90px] h-[90px] rounded-[10px] bg-white border-[3px] border-[#00c1a6]/75 cursor-pointer"
                         onClick={() => {
-                          goPrscrptDtl(prscrpt.prescriptions_id);
+                          goPrscrptDtl(prscrpt.prescriptionsId);
                         }}
                       >
                         <p className="ext-sm text-center text-[#020202]">24/02/24</p>
-                        <p className="text-sm text-center text-[#020202]">{prscrpt.prescription_name}</p>
+                        <p className="text-sm text-center text-[#020202]">{prscrpt.prescriptionName}</p>
                       </div>
                     </div>
                   );
