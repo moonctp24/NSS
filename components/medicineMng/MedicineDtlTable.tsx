@@ -11,6 +11,8 @@ const MedicineDtlTable = (props: any) => {
   const [sdEffct, setSdEffct] = useState("");
   const [cautionM, setCautionM] = useState("");
   const [keepM, setKeepM] = useState("");
+  const [apprnc, setApprnc] = useState("");
+  const [ussg, setUssa] = useState("");
 
   useEffect(() => {
     setMdcnNm(mDtl?.medicineName);
@@ -19,6 +21,8 @@ const MedicineDtlTable = (props: any) => {
     setSdEffct(mDtl?.sideEffect);
     setCautionM(mDtl?.caution);
     setKeepM(mDtl?.keepMethod);
+    setApprnc(mDtl?.appearance);
+    setUssa(mDtl?.ussage);
   }, [mDtl]);
 
   useEffect(() => {
@@ -28,17 +32,17 @@ const MedicineDtlTable = (props: any) => {
         itemSeq: mDtl?.itemSeq,
         medicineName: mdcnNm,
         companyName: companyNm,
-        description: "테스트",
-        usage: "물과 함께",
+        // description: "테스트",
+        usage: ussg,
         effect: effct,
         sideEffect: sdEffct,
         caution: cautionM,
         keepMethod: keepM,
-        appearance: "흰색정제",
-        pillImage: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-        className: "",
-        otcName: "",
-        formCodeName: "",
+        appearance: apprnc,
+        // pillImage: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+        // className: "",
+        // otcName: "",
+        // formCodeName: "",
       };
       props.getModifiedData(modifiedData);
     }
@@ -73,14 +77,16 @@ const MedicineDtlTable = (props: any) => {
                 <td>제조일자</td>
                 <td>{dateFormat(mDtl.updated_at)}</td>
               </tr>
-              {/* <tr>
-                <td>약 종류</td>
-                <td>{mDtl.appearance}</td>
-                <td>약 이미지</td>
+              <tr>
+                <td>약 생김새</td>
                 <td>
-                  <Image src={mDtl.pill_image || "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg"} width={50} height={50} alt="pillImg"></Image>
+                  <input type="text" value={apprnc} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setApprnc(e.target.value)}></input>
                 </td>
-              </tr> */}
+                <td>복용법</td>
+                <td>
+                  <input type="text" value={ussg} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUssa(e.target.value)}></input>
+                </td>
+              </tr>
               <tr>
                 <td>효능</td>
                 <td>
