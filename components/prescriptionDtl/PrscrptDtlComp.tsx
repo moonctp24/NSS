@@ -8,7 +8,7 @@ const PrscrptDtlComp = () => {
   const [prscrptDtlInfo, setPrscrptDtlInfo] = useState(Object || null);
 
   useEffect(() => {
-    // console.log(router.query.itemSeq);
+    // console.log(router.query.prscrptId);
     // item_seq로 상세정보 조회하는 통신
     let dummy = {
       prescriptions_id: "prescriptionsId_00000000000001",
