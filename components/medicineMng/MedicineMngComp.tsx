@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import MedicineListTable from "./MedicineListTable";
 import { useRouter } from "next/router";
 import { useAxios } from "@/constants/util/API_UTIL";
+import SearchComp from "../comm/searchComp/searchComp";
 
 const MedicineMngComp = () => {
   const [domLoaded, setDomLoaded] = useState(false); // 테이블 데이터 로딩 상태
@@ -139,6 +140,18 @@ const MedicineMngComp = () => {
     router.push("/medicineMng/mdcnAdd");
   };
 
+  /**
+   * 의약품 검색 통신
+   * @param searchMdcn 검색할 의약품 단어
+   */
+  const searchItemBtnHandler = (searchMdcn: string) => {
+    console.log(searchMdcn);
+  };
+
+  /**
+   * 페이징 처리
+   * @returns
+   */
   const drawTablePage = () => {
     let tmpArray = [];
     let pageRange = Math.ceil(ingredientCnt / 5);
@@ -160,7 +173,6 @@ const MedicineMngComp = () => {
     }
     return tmpArray;
   };
-
   const clickOtherPageHandler = (clickedPage: number) => {
     setNowTablePage(clickedPage);
   };
@@ -169,6 +181,7 @@ const MedicineMngComp = () => {
     <>
       <div className="mainComponent">
         <h1>의약품 목록</h1>
+        <SearchComp searchItemBtnHandler={searchItemBtnHandler} />
         <button className="w-[150px] h-[40px] float-right" onClick={goAddMdcnPage}>
           의약품 추가
         </button>
