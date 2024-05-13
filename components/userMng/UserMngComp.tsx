@@ -5,11 +5,12 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import SearchComp from "../comm/searchComp/searchComp";
 
 const UserMngComp = () => {
   const [usrList, setUsrList] = useState<any>(null);
   const [domLoaded, setDomLoaded] = useState(false); // 테이블 데이터 로딩 상태
-  const [searchNm, setSearchNm] = useState(""); // 검색할 사용자 이름
+  // const [searchNm, setSearchNm] = useState(""); // 검색할 사용자 이름
   const [isSearchNm, setIsSearchNm] = useState(false);
   const [isGetInitData, setIsGetInitData] = useState(false);
 
@@ -99,7 +100,7 @@ const UserMngComp = () => {
    * 회원 검색을 위한 돋보기 버튼 클릭
    * @returns
    */
-  const searchItemBtnHandler = () => {
+  const searchItemBtnHandler = (searchNm: string) => {
     if (searchNm?.length <= 0) {
       dispatch(alertAction.openModal({ cont: "조회할 사용자 이름을 입력하세요." }));
       return false;
@@ -123,31 +124,7 @@ const UserMngComp = () => {
       <div className="mainComponent">
         <h1>회원관리</h1>
         <div className="w-[500px] h-[800px] relative overflow-hidden bg-white mx-auto my-0">
-          <div className="w-full">
-            <div className="srch_area">
-              <div className="frm_srch">
-                <input
-                  type="text"
-                  id="itemSrch"
-                  // ref={itemSrch}
-                  className="ipt"
-                  placeholder="검색"
-                  value={searchNm}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchNm(e.target.value)}
-                  onKeyDown={(e: React.KeyboardEvent) => {
-                    if (e.key === "Enter") {
-                      searchItemBtnHandler();
-                    }
-                  }}
-                />
-                <button type="submit" className="btn_ico_srch" onClick={searchItemBtnHandler}>
-                  <span className="hidden" onClick={searchItemBtnHandler}>
-                    검색하기
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
+          <SearchComp searchItemBtnHandler={searchItemBtnHandler} />
           {domLoaded &&
             (!!usrList ? (
               usrList.map((usr: any, index: number) => {
