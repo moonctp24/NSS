@@ -97,7 +97,8 @@ const UserMngComp = () => {
   }, []);
 
   /**
-   * 회원 검색을 위한 돋보기 버튼 클릭
+   * 회원명으로 검색 통신
+   * @param searchNm 검색할 회원명
    * @returns
    */
   const searchItemBtnHandler = (searchNm: string) => {
@@ -123,14 +124,14 @@ const UserMngComp = () => {
     <>
       <div className="mainComponent">
         <h1>회원관리</h1>
-        <div className="w-[500px] h-[800px] relative overflow-hidden bg-white mx-auto my-0">
+        <div className="w-[405px] h-[800px] relative overflow-hidden bg-white mx-auto my-0">
           <SearchComp searchItemBtnHandler={searchItemBtnHandler} />
           {domLoaded &&
             (!!usrList ? (
               usrList.map((usr: any, index: number) => {
                 return (
                   <div key={String(usr.userId)}>
-                    <div className="w-[400px] usrListGrp px-3 py-3 mx-auto my-0">
+                    <div className="w-[400px] usrListGrp py-3 mx-auto my-0">
                       <div className="flex">
                         <div className="relative h-[50px] w-[50px] rounded-full overflow-hidden">
                           <Image src={usr.user_image || "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg"} alt={"usrImg"} layout="fill"></Image>
@@ -139,7 +140,7 @@ const UserMngComp = () => {
                           {usr.username}
                         </div>
                       </div>
-                      <div className="text-[#00c1a6] font-bold	py-3">{codeToKor(usr.userStatus)}</div>
+                      <div className="text-[#00c1a6] font-bold	px-3 py-3">{codeToKor(usr.userStatus)}</div>
                     </div>
                   </div>
                 );
