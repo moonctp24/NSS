@@ -1,11 +1,10 @@
 import { useAxios } from "@/constants/util/API_UTIL";
-import { codeToKor } from "@/constants/util/commUtil";
 import { alertAction } from "@/store/modal/alert-slice";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import SearchComp from "../comm/searchComp/searchComp";
+import UserListTable from "./UserListTable";
 
 const UserMngComp = () => {
   const [usrList, setUsrList] = useState<any>(null);
@@ -46,34 +45,35 @@ const UserMngComp = () => {
                   userId: "memId_00000000000001",
                   username: "김이름",
                   userStatus: "ACTIVE",
-                  user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+                  // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
                 },
                 {
                   userId: "memId_00000000000002",
                   username: "김이름1",
                   userStatus: "ADMIN",
-                  user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+                  // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
                 },
                 {
                   userId: "memId_00000000000003",
                   username: "김이름2",
                   userStatus: "INACTIVE",
-                  user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+                  // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
                 },
                 {
                   userId: "memId_00000000000004",
                   username: "김이름3",
                   userStatus: "REMOVED",
-                  user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+                  // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
                 },
                 {
                   userId: "memId_00000000000005",
                   username: "김이름4",
                   userStatus: "BANNED",
-                  user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+                  // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
                 },
               ]
         );
+        setIngredientCnt(tmpList.length);
         setDomLoaded(true);
       }
     }
@@ -112,43 +112,88 @@ const UserMngComp = () => {
     fetchData("post", "/api/userMng/searchUsername", data, true);
   };
 
+  const [nowTablePage, setNowTablePage] = useState(1);
+  const [ingredientCnt, setIngredientCnt] = useState(0);
+
   /**
-   * 선택한 회원의 상세 정보 조회 페이지 이동
-   * @param userId 회원 식별자
+   * 페이징 처리
+   * @returns
    */
-  const goUsrMng = (userId: String) => {
-    router.push(`/userMng/userDtl/${userId}`);
+  const drawTablePage = () => {
+    let tmpArray = [];
+    let pageRange = Math.ceil(ingredientCnt / 5);
+    for (let index = 1; index <= pageRange; index++) {
+      if (index === nowTablePage) {
+        // 현재 보고있는 페이지면 css 다르게
+        tmpArray.push(
+          <strong className="num" onClick={() => clickOtherPageHandler(index)}>
+            {index}
+          </strong>
+        );
+      } else {
+        tmpArray.push(
+          <div className="num" onClick={() => clickOtherPageHandler(index)}>
+            {index}
+          </div>
+        );
+      }
+    }
+    return tmpArray;
+  };
+  const clickOtherPageHandler = (clickedPage: number) => {
+    setNowTablePage(clickedPage);
   };
 
   return (
     <>
       <div className="mainComponent">
         <h1>회원관리</h1>
-        <div className="w-[405px] h-[800px] relative overflow-hidden bg-white mx-auto my-0">
-          <SearchComp searchItemBtnHandler={searchItemBtnHandler} />
-          {domLoaded &&
-            (!!usrList ? (
-              usrList.map((usr: any, index: number) => {
-                return (
-                  <div key={String(usr.userId)}>
-                    <div className="w-[400px] usrListGrp py-3 mx-auto my-0">
-                      <div className="flex">
-                        <div className="relative h-[50px] w-[50px] rounded-full overflow-hidden">
-                          <Image src={usr.user_image || "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg"} alt={"usrImg"} layout="fill"></Image>
-                        </div>
-                        <div className="text-base	text-center px-3 py-3 cursor-pointer	" onClick={() => goUsrMng(usr.userId)}>
-                          {usr.username}
-                        </div>
-                      </div>
-                      <div className="text-[#00c1a6] font-bold	px-3 py-3">{codeToKor(usr.userStatus)}</div>
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <div>목록을 불러올 수 없습니다.</div>
-            ))}
+        {/* <div className="w-[405px] h-[800px] relative overflow-hidden bg-white mx-auto my-0"> */}
+        <SearchComp searchItemBtnHandler={searchItemBtnHandler} />
+        <div className="m-auto">
+          {
+            domLoaded && <UserListTable usrList={usrList} nowTablePage={nowTablePage} />
+            // (!!usrList ? (
+            //   usrList.map((usr: any, index: number) => {
+            //     return (
+            //       <div key={String(usr.userId)}>
+            //         <div className="w-[400px] usrListGrp py-3 mx-auto my-0">
+            //           <div className="flex">
+            //             <div className="relative h-[50px] w-[50px] rounded-full overflow-hidden">
+            //               <Image src={usr.user_image || "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg"} alt={"usrImg"} layout="fill"></Image>
+            //             </div>
+            //             <div className="text-base	text-center px-3 py-3 cursor-pointer	" onClick={() => goUsrMng(usr.userId)}>
+            //               {usr.username}
+            //             </div>
+            //           </div>
+            //           <div className="text-[#00c1a6] font-bold	px-3 py-3">{codeToKor(usr.userStatus)}</div>
+            //         </div>
+            //       </div>
+            //     );
+            //   })
+            // ) : (
+            //   <div>목록을 불러올 수 없습니다.</div>
+            // ))
+          }
         </div>
+        {/* ======= paging ======= */}
+        <div className="paging">
+          <div className="first" onClick={() => clickOtherPageHandler(1)}>
+            <span className="hidden">처음페이지</span>
+          </div>
+          <div className="prev" onClick={() => clickOtherPageHandler(nowTablePage - 1 < 1 ? 1 : nowTablePage - 1)}>
+            <span className="hidden">이전페이지</span>
+          </div>
+          {drawTablePage()}
+          <div className="next" onClick={() => clickOtherPageHandler(nowTablePage + 1 > Math.ceil(ingredientCnt / 5) ? Math.ceil(ingredientCnt / 5) : nowTablePage + 1)}>
+            <span className="hidden">다음페이지</span>
+          </div>
+          <div className="last" onClick={() => clickOtherPageHandler(Math.ceil(ingredientCnt / 5))}>
+            <span className="hidden">마지막페이지</span>
+          </div>
+        </div>
+        {/* ======= paging ======= */}
+        {/* </div> */}
       </div>
     </>
   );
