@@ -87,7 +87,7 @@ hr {
   width: 1200px;
   height: 1px;
   border: 0;
-  background: #e1cfff;
+  background: #9bffda;
 }
 
 .headerFlex {
@@ -279,7 +279,7 @@ textarea::placeholder {
 
 /* ----- Table Area ----- */
 [class^="tbl_"] {
-  border-right: 1px solid #e1cfff;
+  border-right: 1px solid #9bffda;
   width: 100%;
 }
 [class^="tbl_"] th,
@@ -287,8 +287,8 @@ textarea::placeholder {
   padding: 8px 20px;
   text-align: center;
   background: #fff;
-  border-left: 1px solid #e1cfff;
-  border-bottom: 1px solid #e1cfff;
+  border-left: 1px solid #9bffda;
+  border-bottom: 1px solid #9bffda;
 }
 [class^="tbl_"] thead th {
   font-weight: 700;
@@ -308,7 +308,7 @@ textarea::placeholder {
 }
 .tbl_item thead th {
   background: #00c1a6;
-  border-color: #e1cfff;
+  border-color: #9bffda;
   color: #fff;
 }
 .tbl_item tfoot th,
@@ -316,7 +316,7 @@ textarea::placeholder {
   border-top: 1px solid #00c1a6;
 }
 .tableBodyTopBorderStyle {
-  border-top: 1px solid #e1cfff;
+  border-top: 1px solid #9bffda;
 }
 
 .tbl_timetable thead th {
