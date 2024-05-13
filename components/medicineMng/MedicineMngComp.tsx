@@ -3,6 +3,9 @@ import MedicineListTable from "./MedicineListTable";
 import { useRouter } from "next/router";
 import { useAxios } from "@/constants/util/API_UTIL";
 import SearchComp from "../comm/searchComp/searchComp";
+import { alertAction } from "@/store/modal/alert-slice";
+import { useDispatch } from "react-redux";
+import axios from "axios";
 
 const MedicineMngComp = () => {
   const [domLoaded, setDomLoaded] = useState(false); // 테이블 데이터 로딩 상태
@@ -13,6 +16,7 @@ const MedicineMngComp = () => {
   const { code, response, fetchData } = useAxios();
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getResult();
@@ -146,6 +150,34 @@ const MedicineMngComp = () => {
    */
   const searchItemBtnHandler = (searchMdcn: string) => {
     console.log(searchMdcn);
+    if (searchMdcn?.length <= 0) {
+      dispatch(alertAction.openModal({ cont: "조회할 의약품명을 입력하세요." }));
+      return false;
+    }
+    axios
+      .get("http://3.39.214.33:8081/api/free/medicineList", {
+        params: {
+          mname: searchMdcn,
+        },
+      })
+      .then((response) => {
+        console.log("success");
+        // object 형으로 받아와서 배열 형태로 변환해주기
+        const tmpObject = response.data.data;
+        const tmpList: { [s: string]: any } = [];
+        let i = 0;
+        for (const [key, value] of Object.entries(tmpObject)) {
+          tmpList[i] = value;
+          i++;
+        }
+        // console.log(tmpList);
+        setMedicineList(tmpList);
+      })
+      .catch((data) => {
+        console.log("fail");
+        console.log(data.response.data.message);
+        dispatch(alertAction.openModal({ cont: data.response.data.message }));
+      });
   };
 
   /**
