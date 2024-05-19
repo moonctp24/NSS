@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // console.log("===============12121212 :: ", req);
-  const response = await BACK_API("POST", `/api/free/updateMedicine`, req, res);
+  const response = await BACK_API("POST", `/api/free/update-medicine`, req, res);
   // console.log(`get medicine list handler response :: `, response);
   // console.log(response.responseCode);
   let data = {};
