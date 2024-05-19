@@ -59,7 +59,7 @@ const MedicineDtlTable = (props: any) => {
                 <td>번호</td>
                 <td className="">{mDtl.itemSeq}</td>
                 <td>등록일시</td>
-                <td>{dateFormat(mDtl.created_at)}</td>
+                <td>{dateFormat(mDtl.createdAt)}</td>
               </tr>
               <tr>
                 <td>의약품명</td>
@@ -67,7 +67,7 @@ const MedicineDtlTable = (props: any) => {
                   <input type="text" value={mdcnNm} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMdcnNm(e.target.value)}></input>
                 </td>
                 <td>수정일시</td>
-                <td>{dateFormat(mDtl.updated_at)}</td>
+                <td>{dateFormat(mDtl.updateAt)}</td>
               </tr>
               <tr>
                 <td>제조사</td>
@@ -75,7 +75,7 @@ const MedicineDtlTable = (props: any) => {
                   <input type="text" value={companyNm} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCompanyNm(e.target.value)}></input>
                 </td>
                 <td>제조일자</td>
-                <td>{dateFormat(mDtl.updated_at)}</td>
+                <td>{dateFormat(mDtl.createdAt)}</td>
               </tr>
               <tr>
                 <td>약 생김새</td>
