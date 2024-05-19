@@ -115,7 +115,6 @@ export const BACK_API = async (way: String, url: String, req: NextApiRequest, re
     // console.log(getParamSetting);
 
     if (way === "POST") {
-      // 여기서 스프링 서버에 요청을 날려줌 (with cookies)
       const response: AxiosResponse<any, any> = await AXIOS.post(`${BASE_URL}${url}`, body, {
         headers: {
           // Cookie: cookie,
@@ -133,7 +132,6 @@ export const BACK_API = async (way: String, url: String, req: NextApiRequest, re
         },
       };
     } else {
-      // 여기서 스프링 서버에 요청을 날려줌 (with cookies)
       const response: AxiosResponse<any, any> = await AXIOS.get(`${BASE_URL}${url}${getParamSetting}`);
 
       console.log(`BACK_API response.data.data :: `, response);
