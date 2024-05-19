@@ -22,7 +22,7 @@ const MedicineDtlTable = (props: any) => {
     setCautionM(mDtl?.caution);
     setKeepM(mDtl?.keepMethod);
     setApprnc(mDtl?.appearance);
-    setUssa(mDtl?.ussage);
+    setUssa(mDtl?.usage);
   }, [mDtl]);
 
   useEffect(() => {
