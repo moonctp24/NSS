@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import SearchComp from "../comm/searchComp/searchComp";
 import UserListTable from "./UserListTable";
+import axios from "axios";
 
 const UserMngComp = () => {
   const [usrList, setUsrList] = useState<any>(null);
@@ -96,19 +97,91 @@ const UserMngComp = () => {
   }, []);
 
   /**
+   * 검색조건 선택 이벤트
+   */
+  const [isClicked, setIsClicked] = useState(false); // server selected YN
+  const selectBoxBtnHandler = () => {
+    setIsClicked(!isClicked);
+  };
+
+  // const [stateList, setStateList] = useState<any>(["이름", "이메일"]);
+  const stateList = ["이름", "이메일"];
+  const [selectedValue, setSelectedValue] = useState<any>("이름"); // 현재 선택된 status
+  let selectedStatusNm = stateList?.map((state: any, index: number) => (
+    <li key={index}>
+      <div className="selectbutton" onClick={() => answerStateValueSelectedHandler(state)}>
+        {state}
+      </div>
+    </li>
+  ));
+
+  const answerStateValueSelectedHandler = (state: string) => {
+    // console.log(state);
+    setSelectedValue(state);
+    setIsClicked(!isClicked);
+  };
+
+  /**
    * 회원명으로 검색 통신
    * @param searchNm 검색할 회원명
    * @returns
    */
   const searchItemBtnHandler = (searchNm: string) => {
-    if (searchNm?.length <= 0) {
-      dispatch(alertAction.openModal({ cont: "조회할 사용자 이름을 입력하세요." }));
-      return false;
-    } else {
-      setIsSearchNm(true);
+    setIsSearchNm(true);
+    if (searchNm?.length === 0) {
+      setIsGetInitData(true);
+      fetchData("get", "/api/userMng/getUserList", null, true);
+    } else if (selectedValue === "이름") {
+      axios
+        .get("http://3.39.214.33:8081/api/free/search-user", {
+          params: {
+            name: searchNm,
+          },
+        })
+        .then((response) => {
+          console.log("success");
+          // object 형으로 받아와서 배열 형태로 변환해주기
+          const tmpObject = response.data.data;
+          const tmpList: { [s: string]: any } = [];
+          let i = 0;
+          for (const [key, value] of Object.entries(tmpObject)) {
+            tmpList[i] = value;
+            i++;
+          }
+          // console.log(tmpList);
+          setUsrList(tmpList);
+        })
+        .catch((data) => {
+          console.log("fail");
+          console.log(data.response.data.message);
+          dispatch(alertAction.openModal({ cont: data.response.data.message }));
+        });
+    } else if (selectedValue === "이메일") {
+      axios
+        .get("http://3.39.214.33:8081/api/free/search-user", {
+          params: {
+            email: searchNm,
+          },
+        })
+        .then((response) => {
+          console.log("success");
+          // object 형으로 받아와서 배열 형태로 변환해주기
+          const tmpObject = response.data.data;
+          const tmpList: { [s: string]: any } = [];
+          let i = 0;
+          for (const [key, value] of Object.entries(tmpObject)) {
+            tmpList[i] = value;
+            i++;
+          }
+          // console.log(tmpList);
+          setUsrList(tmpList);
+        })
+        .catch((data) => {
+          console.log("fail");
+          console.log(data.response.data.message);
+          dispatch(alertAction.openModal({ cont: data.response.data.message }));
+        });
     }
-    let data = { username: searchNm };
-    fetchData("post", "/api/userMng/searchUsername", data, true);
   };
 
   const [nowTablePage, setNowTablePage] = useState(1);
@@ -148,7 +221,17 @@ const UserMngComp = () => {
       <div className="mainComponent">
         <h1>회원관리</h1>
         {/* <div className="w-[405px] h-[800px] relative overflow-hidden bg-white mx-auto my-0"> */}
-        <SearchComp searchItemBtnHandler={searchItemBtnHandler} />
+        <div className="usrListGrp">
+          <div className="select_box_small" id="select_box_small">
+            <div className={`select_box_small ${isClicked && "open"}`} id="select_box_small">
+              <button className="select_txt_small" id="select_txt_small" onClick={selectBoxBtnHandler}>
+                {selectedValue}
+              </button>
+              {!!selectedStatusNm && <ul className="select_lst">{selectedStatusNm}</ul>}
+            </div>
+          </div>
+          <SearchComp searchItemBtnHandler={searchItemBtnHandler} />
+        </div>
         <div className="m-auto">
           {
             domLoaded && <UserListTable usrList={usrList} nowTablePage={nowTablePage} />
