@@ -37,7 +37,7 @@ const MedicineMngComp = () => {
           tmpList[i] = value;
           i++;
         }
-        console.log(tmpList);
+        // console.log(tmpList);
         setMedicineList(tmpList);
       } else {
         // 통신 안됐을 때

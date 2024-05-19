@@ -2,7 +2,6 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-// import { useEffect, useState } from "react";
 
 const Header = () => {
   const router = useRouter();
@@ -17,22 +16,6 @@ const Header = () => {
       router.push("/nauth/login");
     }
   }, [isLoginYN, router]);
-  // const [title, setTitle] = useState("");
-
-  // useEffect(() => {
-  //   let nowPath = router.pathname.split("/")[1];
-  //   if (nowPath === "") {
-  //     setTitle("대시보드");
-  //   } else if (nowPath === "userMng") {
-  //     setTitle("회원관리");
-  //   } else if (nowPath === "medicineMng") {
-  //     setTitle("의약품관리");
-  //   } else if (nowPath === "acct") {
-  //     setTitle("관리자설정");
-  //   } else {
-  //     setTitle("잘못된 페이지");
-  //   }
-  // }, [router]);
 
   const goMenu = (pageName: string) => {
     router.push(`/${pageName}`);

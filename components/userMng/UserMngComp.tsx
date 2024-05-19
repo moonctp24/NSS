@@ -9,7 +9,6 @@ import UserListTable from "./UserListTable";
 const UserMngComp = () => {
   const [usrList, setUsrList] = useState<any>(null);
   const [domLoaded, setDomLoaded] = useState(false); // 테이블 데이터 로딩 상태
-  // const [searchNm, setSearchNm] = useState(""); // 검색할 사용자 이름
   const [isSearchNm, setIsSearchNm] = useState(false);
   const [isGetInitData, setIsGetInitData] = useState(false);
 
