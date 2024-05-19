@@ -27,6 +27,7 @@ const MedicineAddComp = () => {
     if (response && code == "200") {
       // console.log(response);
       if (message) dispatch(alertAction.openModal({ cont: message }));
+      router.push("/medicineMng/mdcnList");
       // setMedicineList(tmpList);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
