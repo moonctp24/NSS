@@ -137,7 +137,7 @@ const MedicineUpdComp = () => {
       <div className="mainComponent">
         <h1>의약품 상세</h1>
         <div className="relative w-[200px] h-[70px] flex float-left">
-          <Image src={mDtlInfo.pill_image || "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg"} width={150} height={150} alt="pillImg"></Image>
+          <Image src={mDtlInfo.pill_image || "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg"} width={150} height={150} alt="pillImg" style={{ width: "auto", height: "auto" }}></Image>
         </div>
         <div className="relative w-[250px] h-[40px] flex float-right">
           <button className="h-[40px] float-right" onClick={mDtlUpdSave}>
