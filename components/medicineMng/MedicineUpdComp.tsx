@@ -16,6 +16,8 @@ const MedicineUpdComp = () => {
   const [admCmmtM, setAdmCmmtM] = useState("");
   const [isSaveClicked, setIsSaveClicked] = useState(false);
   const { code, response, message, fetchData } = useAxios();
+  const [isInitGet, setIsInitGet] = useState(false);
+  const [isSave, setIsSave] = useState(false);
 
   useEffect(() => {
     getResult();
@@ -24,41 +26,13 @@ const MedicineUpdComp = () => {
 
   const getResult = useCallback(() => {
     // console.log(`code :: ${code} / response :: `, response, "/ message:: ", message);
-    if (response && code == "200") {
-      dispatch(alertAction.openModal({ cont: message }));
-      router.push("/medicineMng/mdcnList");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [code, message, response]);
-
-  useEffect(() => {
-    let paramD = {
-      itemSeq: router.query.itemSeq,
-      id: router.query.itemSeq,
-    };
-    const AXIOS = axios.create({
-      // withCredentials: true,
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        // Authorization: adminJwt ? `Bearer ${adminJwt}` : "",
-      },
-    });
-    AXIOS.get("http://3.39.214.33:8081/api/free/medicine", {
-      params: {
-        // itemSeq: router.query.itemSeq,
-        id: router.query.itemSeq,
-      },
-    })
-      .then((data) => {
-        console.log("success");
-        // console.log(data);
-        if (data.status === 200) {
-          setMDtlInfo(data.data.data);
-          setAdmCmmtM(data.data.data.admin_comment || "관리자 코멘트는 없습니다");
-        }
-      })
-      .catch(() => {
-        console.log("fail");
+    if (isInitGet) {
+      setIsInitGet(false);
+      if (response && code == "200") {
+        setMDtlInfo(response);
+        setAdmCmmtM(response.admin_comment || "관리자 코멘트는 없습니다");
+      } else {
+        // console.log("fail");
         // 더미 데이터 세팅
         let tmpResData = {
           id: 2,
@@ -85,9 +59,25 @@ const MedicineUpdComp = () => {
         };
         setMDtlInfo(tmpResData);
         setAdmCmmtM(tmpResData.adminComment || "관리자 코멘트는 없습니다");
-      });
-    // fetchData("get", `/api/medicineMng/getMdcnDtl`, paramD, true);
+      }
+    }
+    if (isSave) {
+      setIsSave(false);
+      if (response && code == "200") {
+        dispatch(alertAction.openModal({ cont: message }));
+        router.push("/medicineMng/mdcnList");
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code, message, response]);
 
+  useEffect(() => {
+    setIsInitGet(true);
+    const getParam = {
+      // itemSeq: router.query.itemSeq,
+      id: router.query.itemSeq,
+    };
+    fetchData("get", "/api/medicineMng/getMdcnDtl", getParam, true);
     setDomLoaded(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -108,6 +98,7 @@ const MedicineUpdComp = () => {
 
   const getModifiedData = (modifiedData: any) => {
     if (isSaveClicked) {
+      setIsSave(true);
       modifiedData.adminComment = admCmmtM;
       modifiedData.id = router.query.itemSeq;
       // console.log(modifiedData);
