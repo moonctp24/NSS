@@ -135,6 +135,7 @@ const MedicineMngComp = () => {
 
   useEffect(() => {
     setIngredientCnt(medicineList?.length); // 테이블 페이징을 위한 의약품 갯수 카운트
+    setNowTablePage(1);
   }, [medicineList]);
 
   /**
@@ -149,15 +150,10 @@ const MedicineMngComp = () => {
    * @param searchMdcn 검색할 의약품 단어
    */
   const searchItemBtnHandler = (searchMdcn: string) => {
-    console.log(searchMdcn);
-    if (searchMdcn?.length <= 0) {
-      dispatch(alertAction.openModal({ cont: "조회할 의약품명을 입력하세요." }));
-      return false;
-    }
     axios
-      .get("http://3.39.214.33:8081/api/free/medicineList", {
+      .get("http://3.39.214.33:8081/api/free/medicines", {
         params: {
-          mname: searchMdcn,
+          name: searchMdcn,
         },
       })
       .then((response) => {
