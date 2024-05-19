@@ -43,7 +43,7 @@ const MedicineListTable = (props: any) => {
             medicineList?.map((m: any, index: number) => {
               if ((props.nowTablePage - 1) * 5 <= index && index < (props.nowTablePage - 1) * 5 + 5) {
                 return (
-                  <tr key={String(m.itemSeq)}>
+                  <tr key={String(m.id)}>
                     <td className="t_center">{index + 1}</td>
                     <td
                       className="t_left makePointer"
@@ -54,7 +54,7 @@ const MedicineListTable = (props: any) => {
                       {m.medicineName}
                     </td>
                     <td className="t_center">
-                      <Image width={50} height={50} src={m.pill_image || "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg"} alt={"pillImg"}></Image>
+                      <Image width={50} height={50} src={m.pill_image || "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg"} alt={"pillImg"} style={{ width: "auto", height: "auto" }}></Image>
                     </td>
                     <td className="t_left">{m.companyName}</td>
                     <td className="t_center">{dateFormat(m.createdAt)}</td>
