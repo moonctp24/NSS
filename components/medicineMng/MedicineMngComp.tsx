@@ -146,7 +146,7 @@ const MedicineMngComp = () => {
    * @param searchMdcn 검색할 의약품 단어
    */
   const searchItemBtnHandler = (searchMdcn: string) => {
-    let nameParam = {
+    const nameParam = {
       name: searchMdcn,
     };
     fetchData("get", "/api/medicineMng/getMdcnList", nameParam, true); // 의약품 리스트 조회 통신
