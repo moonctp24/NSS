@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -40,10 +41,14 @@ const Header = () => {
   return (
     <>
       <div className="w-full h-[120px] bg-[#e6e6e6] headerFlex">
-        <p className="w-[300px] h-[100px] left-[-81px] top-[-5px] text-[40px] text-center text-[#00c1a6]" onClick={() => goMenu("")}>
+        {/* <p className="w-[300px] h-[100px] left-[-81px] top-[-5px] text-[40px] text-center text-[#00c1a6]" onClick={() => goMenu("")}>
           LOGO
-        </p>
-        <div className="headerFlex w-[1200px]">
+        </p> */}
+        <div className="w-[350px] h-[100px] mt-2 text-center makePointer" onClick={() => goMenu("")}>
+          <Image className="m-auto" width={50} height={50} src="https://cdn.icon-icons.com/icons2/1465/PNG/512/740pill_100923.png" alt={"pillImg"} style={{ width: "auto", height: "auto" }} />
+          (임시로고)
+        </div>
+        <div className="btngrp w-[1200px]">
           <button className="navBtn" onClick={() => goMenu("")}>
             대시보드
           </button>
@@ -57,14 +62,9 @@ const Header = () => {
             관리자설정
           </button>
         </div>
-        <div>
-          <div>
-            <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" className="absolute " preserveAspectRatio="none">
-              <circle cx="40" cy="40" r="40" fill="#AFF4C6">
-                <p className="w-[72px] h-[37px] absolute text-2xl text-center text-black">{userName}</p>
-              </circle>
-            </svg>
-            <p className="w-[72px] h-[37px] absolute text-2xl text-center text-black">{userName}</p>
+        <div className="w-[350px] mt-2">
+          <div className="userNameCircle w-[70px] h-[70px]">
+            <div className="text-m text-center mt-6 text-white">{userName || "관리자1"}</div>
           </div>
           <button className="navLogoutBtn" onClick={() => goMenu("nauth/login")}>
             로그아웃
