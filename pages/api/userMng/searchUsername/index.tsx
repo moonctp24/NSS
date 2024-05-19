@@ -2,7 +2,7 @@ import { BACK_API } from "constants/util/API_UTIL";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const response = await BACK_API("POST", "/api/free/searchUser", req, res);
+  const response = await BACK_API("GET", "/api/free/search-user", req, res);
   // console.log(`get medicine list handler response :: `, response);
   let data = {};
   if (response.responseCode === 200) {

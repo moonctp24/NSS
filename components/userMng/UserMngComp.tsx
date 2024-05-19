@@ -1,21 +1,15 @@
 import { useAxios } from "@/constants/util/API_UTIL";
-import { alertAction } from "@/store/modal/alert-slice";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import SearchComp from "../comm/searchComp/searchComp";
 import UserListTable from "./UserListTable";
-import axios from "axios";
 
 const UserMngComp = () => {
   const [usrList, setUsrList] = useState<any>(null);
   const [domLoaded, setDomLoaded] = useState(false); // 테이블 데이터 로딩 상태
-  const [isSearchNm, setIsSearchNm] = useState(false);
-  const [isGetInitData, setIsGetInitData] = useState(false);
 
   const router = useRouter();
   const { code, response, fetchData } = useAxios();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     getResult();
@@ -24,65 +18,54 @@ const UserMngComp = () => {
 
   const getResult = useCallback(() => {
     // console.log(`code :: ${code} / response :: `, response);
-    if (isGetInitData) {
-      setIsGetInitData(false);
-
-      if (response && code == "200") {
-        // console.log(response);
-        const tmpObject = response;
-        const tmpList: { [s: string]: any } = [];
-        // object 형으로 받아와서 배열 형태로 변환해주기
-        let i = 0;
-        for (const [key, value] of Object.entries(tmpObject)) {
-          tmpList[i] = value;
-          i++;
-        }
-        setUsrList(
-          tmpList.length > 0
-            ? tmpList
-            : [
-                {
-                  userId: "memId_00000000000001",
-                  username: "김이름",
-                  userStatus: "ACTIVE",
-                  // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-                },
-                {
-                  userId: "memId_00000000000002",
-                  username: "김이름1",
-                  userStatus: "ADMIN",
-                  // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-                },
-                {
-                  userId: "memId_00000000000003",
-                  username: "김이름2",
-                  userStatus: "INACTIVE",
-                  // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-                },
-                {
-                  userId: "memId_00000000000004",
-                  username: "김이름3",
-                  userStatus: "REMOVED",
-                  // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-                },
-                {
-                  userId: "memId_00000000000005",
-                  username: "김이름4",
-                  userStatus: "BANNED",
-                  // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-                },
-              ]
-        );
-        setIngredientCnt(tmpList.length);
-        setDomLoaded(true);
+    if (response && code == "200") {
+      // console.log(response);
+      const tmpObject = response;
+      const tmpList: { [s: string]: any } = [];
+      // object 형으로 받아와서 배열 형태로 변환해주기
+      let i = 0;
+      for (const [key, value] of Object.entries(tmpObject)) {
+        tmpList[i] = value;
+        i++;
       }
-    }
-
-    if (isSearchNm) {
-      setIsSearchNm(false);
-      if (response && code == "200") {
-        console.log(response);
-      }
+      setUsrList(
+        tmpList.length > 0
+          ? tmpList
+          : [
+              {
+                userId: "memId_00000000000001",
+                username: "김이름",
+                userStatus: "ACTIVE",
+                // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+              },
+              {
+                userId: "memId_00000000000002",
+                username: "김이름1",
+                userStatus: "ADMIN",
+                // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+              },
+              {
+                userId: "memId_00000000000003",
+                username: "김이름2",
+                userStatus: "INACTIVE",
+                // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+              },
+              {
+                userId: "memId_00000000000004",
+                username: "김이름3",
+                userStatus: "REMOVED",
+                // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+              },
+              {
+                userId: "memId_00000000000005",
+                username: "김이름4",
+                userStatus: "BANNED",
+                // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+              },
+            ]
+      );
+      setIngredientCnt(tmpList.length);
+      setDomLoaded(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code, response]);
@@ -91,7 +74,6 @@ const UserMngComp = () => {
    * 최초 회원 리스트 조회
    */
   useEffect(() => {
-    setIsGetInitData(true);
     fetchData("get", "/api/userMng/getUserList", null, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -99,12 +81,11 @@ const UserMngComp = () => {
   /**
    * 검색조건 선택 이벤트
    */
-  const [isClicked, setIsClicked] = useState(false); // server selected YN
+  const [isClicked, setIsClicked] = useState(false);
   const selectBoxBtnHandler = () => {
     setIsClicked(!isClicked);
   };
 
-  // const [stateList, setStateList] = useState<any>(["이름", "이메일"]);
   const stateList = ["이름", "이메일"];
   const [selectedValue, setSelectedValue] = useState<any>("이름"); // 현재 선택된 status
   let selectedStatusNm = stateList?.map((state: any, index: number) => (
@@ -127,60 +108,14 @@ const UserMngComp = () => {
    * @returns
    */
   const searchItemBtnHandler = (searchNm: string) => {
-    setIsSearchNm(true);
     if (searchNm?.length === 0) {
-      setIsGetInitData(true);
       fetchData("get", "/api/userMng/getUserList", null, true);
     } else if (selectedValue === "이름") {
-      axios
-        .get("http://3.39.214.33:8081/api/free/search-user", {
-          params: {
-            name: searchNm,
-          },
-        })
-        .then((response) => {
-          console.log("success");
-          // object 형으로 받아와서 배열 형태로 변환해주기
-          const tmpObject = response.data.data;
-          const tmpList: { [s: string]: any } = [];
-          let i = 0;
-          for (const [key, value] of Object.entries(tmpObject)) {
-            tmpList[i] = value;
-            i++;
-          }
-          // console.log(tmpList);
-          setUsrList(tmpList);
-        })
-        .catch((data) => {
-          console.log("fail");
-          console.log(data.response.data.message);
-          dispatch(alertAction.openModal({ cont: data.response.data.message }));
-        });
+      const nameParam = { name: searchNm };
+      fetchData("get", "/api/userMng/searchUsername", nameParam, true);
     } else if (selectedValue === "이메일") {
-      axios
-        .get("http://3.39.214.33:8081/api/free/search-user", {
-          params: {
-            email: searchNm,
-          },
-        })
-        .then((response) => {
-          console.log("success");
-          // object 형으로 받아와서 배열 형태로 변환해주기
-          const tmpObject = response.data.data;
-          const tmpList: { [s: string]: any } = [];
-          let i = 0;
-          for (const [key, value] of Object.entries(tmpObject)) {
-            tmpList[i] = value;
-            i++;
-          }
-          // console.log(tmpList);
-          setUsrList(tmpList);
-        })
-        .catch((data) => {
-          console.log("fail");
-          console.log(data.response.data.message);
-          dispatch(alertAction.openModal({ cont: data.response.data.message }));
-        });
+      const nameParam = { email: searchNm };
+      fetchData("get", "/api/userMng/searchUsername", nameParam, true);
     }
   };
 
