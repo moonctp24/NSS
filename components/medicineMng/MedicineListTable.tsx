@@ -57,8 +57,8 @@ const MedicineListTable = (props: any) => {
                       <Image width={50} height={50} src={m.pill_image || "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg"} alt={"pillImg"}></Image>
                     </td>
                     <td className="t_left">{m.companyName}</td>
-                    <td className="t_center">{dateFormat(m.created_at)}</td>
-                    <td className="t_center">{dateFormat(m.updated_at)}</td>
+                    <td className="t_center">{dateFormat(m.createdAt)}</td>
+                    <td className="t_center">{dateFormat(m.updateAt)}</td>
                     {/* <td className="">
                       <button
                         className="inTableBtn"
