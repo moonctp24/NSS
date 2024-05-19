@@ -16,7 +16,7 @@ if (typeof window !== "undefined") {
 }
 
 const AXIOS = axios.create({
-  // withCredentials: true,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json; charset=utf-8",
     Authorization: adminJwt ? `Bearer ${adminJwt}` : "",
@@ -29,15 +29,12 @@ export const useAxios = () => {
   const [response, setResponse] = useState<any>(null);
   const [message, setMessage] = useState("");
   const fetchData = (way: String, url: string, data: object | null, isLoading: boolean | undefined) => {
-    // console.log("====4545:: ", data);
     if (!!isLoading) {
       dispatch(spinnerAction.loading());
     }
     if (way === "post") {
       AXIOS.post(url, JSON.stringify(data))
         .then((res: any) => {
-          // console.log("4444444444444444");
-          // console.log(res);
           if (res.data.responseCode === "200" || res.data.responseCode === 200) {
             // if (res.status === "200" || res.status === 200) {
             setCode(res.data.responseCode);
@@ -65,10 +62,8 @@ export const useAxios = () => {
           dispatch(spinnerAction.complete());
         });
     } else if (way === "get") {
-      // console.log("hello++ ", data);
       AXIOS.get(url, { params: data })
         .then((res: any) => {
-          // console.log("hello++ ", res);
           if (res.status === "200" || res.status === 200) {
             setCode(res.status);
             setResponse(res.data.data);
@@ -100,13 +95,24 @@ export const useAxios = () => {
 
 export const BACK_API = async (way: String, url: String, req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { headers, body } = req;
     // 화면에서 넘어온 요청
-    // req.header[`set-cookies`]에 값들이 있을꺼임
+    const { headers, body, query } = req;
 
     console.log(`BACK_API req headers :: `, headers);
     console.log(`BACK_API req body :: `, body);
     console.log(`BACK_API BASE_URL :: `, BASE_URL);
+    // console.log(`url check:: `, url);
+    // console.log(`param check:: `, query);
+    // console.log(`param check22:: `, Object.keys(query));
+    // console.log(`param check33:: `, query.name);
+
+    // get 통신 parameter 세팅
+    let getParamSetting = "?";
+    for (let q of Object.entries(query)) {
+      getParamSetting += q[0] + "=" + q[1] + "&";
+    }
+    getParamSetting = getParamSetting.slice(0, -1);
+    // console.log(getParamSetting);
 
     if (way === "POST") {
       // 여기서 스프링 서버에 요청을 날려줌 (with cookies)
@@ -128,26 +134,9 @@ export const BACK_API = async (way: String, url: String, req: NextApiRequest, re
       };
     } else {
       // 여기서 스프링 서버에 요청을 날려줌 (with cookies)
-      const response: AxiosResponse<any, any> = await AXIOS.get(`${BASE_URL}${url}`, {
-        headers: {
-          // Cookie: cookie,
-        },
-      });
+      const response: AxiosResponse<any, any> = await AXIOS.get(`${BASE_URL}${url}${getParamSetting}`);
 
-      // console.log("header cookie check::: ", response.headers["set-cookie"]);
-      // let cookieObj: Array<any> = new Array(cookieStringToObject(response.headers["set-cookie"]));
-      // cookieObj = cookieObj[0]; // 윗 줄에서 new Array를 해서 그런지 결과가 새 배열에 다시 담겨옴.
-      // // console.log("BACK_API cookieObj :: ", cookieObj);
-      // if (cookieObj.length > 0) {
-      //   res.setHeader("Set-Cookie", [
-      //     `jwtTokenCookie=${cookieObj[0]?.jwtTokenCookie}; path=/; HttpOnly; Expires=${cookieObj[0]?.Expires};`,
-      //     `jwtRefreshTokenCookie=${cookieObj[1]?.jwtRefreshTokenCookie}; path=/; HttpOnly; Expires=${cookieObj[1]?.Expires};`,
-      //     `expiredTokenTimeCookie=${cookieObj[2]?.expiredTokenTimeCookie}; path=/; HttpOnly; Expires=${cookieObj[2]?.Expires};`,
-      //     `userEmailCookie=${cookieObj[3]?.userEmailCookie}; path=/; Expires=${cookieObj[3]?.Expires};`,
-      //     // `userNicknameCookie=${cookieObj[4]?.userNicknameCookie}; path=/; Expires=${cookieObj[4]?.Expires};`,
-      //   ]);
-      // }
-      // console.log(`BACK_API response.data.data :: `, response.data.data);
+      console.log(`BACK_API response.data.data :: `, response);
 
       axios.defaults.headers.Authorization = "Bearer " + response.data.data.adminJwt;
 
