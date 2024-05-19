@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="https://cdn.icon-icons.com/icons2/1465/PNG/512/740pill_100923.png" />
         <title>NSS</title>
       </Head>
       <Provider store={store}>
