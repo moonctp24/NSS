@@ -26,7 +26,7 @@ const MedicineUpdComp = () => {
     // console.log(`code :: ${code} / response :: `, response, "/ message:: ", message);
     if (response && code == "200") {
       dispatch(alertAction.openModal({ cont: message }));
-      // setMedicineList(tmpList);
+      router.push("/medicineMng/mdcnList");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code, message, response]);
@@ -108,9 +108,9 @@ const MedicineUpdComp = () => {
 
   const getModifiedData = (modifiedData: any) => {
     if (isSaveClicked) {
-      modifiedData.admin_comment = admCmmtM;
+      modifiedData.adminComment = admCmmtM;
       modifiedData.id = router.query.itemSeq;
-      console.log(modifiedData);
+      // console.log(modifiedData);
       fetchData("post", "/api/medicineMng/updMdcnDtl", modifiedData, true);
     }
     setIsSaveClicked(false);
@@ -125,24 +125,11 @@ const MedicineUpdComp = () => {
   };
   const modalCallback = () => {
     dispatch(confirmAction.closeModal());
-    console.log(mDtlInfo.medicineName, " real delete");
-
-    axios
-      .get("http://3.39.214.33:8081/api/free/deleteMedicine", {
-        params: {
-          // itemSeq: mDtlInfo.itemSeq,
-          id: mDtlInfo.id,
-        },
-      })
-      .then((data) => {
-        console.log("success");
-        console.log(data);
-      })
-      .catch((data) => {
-        console.log("fail");
-        console.log(data.response.data.message);
-        dispatch(alertAction.openModal({ cont: data.response.data.message }));
-      });
+    // console.log(mDtlInfo.medicineName, " real delete");
+    const param = {
+      id: mDtlInfo.id,
+    };
+    fetchData("post", "/api/medicineMng/delMedicine", param, true); // 의약품 리스트 조회 통신
   };
 
   return (
