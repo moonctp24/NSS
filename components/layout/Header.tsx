@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const Header = () => {
@@ -20,6 +20,8 @@ const Header = () => {
   const goMenu = (pageName: string) => {
     router.push(`/${pageName}`);
   };
+
+  const [isSubMenuShow, setIsSubMenuShow] = useState(false);
 
   return (
     <>
@@ -41,9 +43,19 @@ const Header = () => {
           <button className="navBtn" onClick={() => goMenu("medicineMng/mdcnList")}>
             의약품관리
           </button>
-          <button className="navBtn" onClick={() => goMenu("acct/admSttng")}>
-            관리자설정
-          </button>
+          <div className="h-[70px]">
+            <button className="navBtn" onMouseOver={() => setIsSubMenuShow(true)} onMouseOut={() => setIsSubMenuShow(false)}>
+              관리자설정
+            </button>
+            {isSubMenuShow && (
+              <div className="subNavList" onMouseOver={() => setIsSubMenuShow(true)} onMouseOut={() => setIsSubMenuShow(false)}>
+                <ul>
+                  <li onClick={() => goMenu("admSttng/sysPlcy")}>시스템 정책 관리</li>
+                  <li onClick={() => goMenu("admSttng/sysNtc")}>전체공지 관리</li>
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
         <div className="w-[350px] mt-2">
           <div className="userNameCircle w-[70px] h-[70px]">

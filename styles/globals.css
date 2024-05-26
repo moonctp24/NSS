@@ -179,6 +179,43 @@ button {
   border-radius: 6px;
   color: #ffffff;
 }
+.subNavList {
+  position: absolute;
+  /* top: 45px; */
+  /* min-width: 100%; */
+  width: 300px;
+  max-height: 111px;
+  overflow-y: auto;
+  white-space: nowrap;
+  background: #fff;
+  border: 1px solid #efefef;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  z-index: 9;
+}
+.subNavList::-webkit-scrollbar {
+  width: 16px;
+}
+.subNavList::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 8px;
+  background-clip: padding-box;
+  border: 6px solid #fff;
+}
+.subNavList::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+.subNavList li {
+  display: block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.subNavList li:hover {
+  /* display: block;
+  padding: 6px 12px;
+  cursor: pointer;   */
+  color: #00c1a6;
+}
 .navLogoutBtn {
   width: 230px;
   height: 70px;
@@ -697,8 +734,9 @@ textarea::placeholder {
 .select_lst {
   visibility: hidden;
   position: absolute;
-  top: 52px;
-  min-width: 100%;
+  top: 45px;
+  /* min-width: 100%; */
+  width: 100px;
   max-height: 111px;
   overflow-y: auto;
   white-space: nowrap;
