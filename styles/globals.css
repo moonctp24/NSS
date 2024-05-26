@@ -319,6 +319,10 @@ textarea::placeholder {
   background-color: #d9d9d9;
   height: 100%;
 }
+.sysNoticeTextArea {
+  align-items: center;
+  height: 100%;
+}
 /* ----- input ----- */
 
 /* ----- Table Area ----- */

@@ -51,7 +51,7 @@ const Header = () => {
               <div className="subNavList" onMouseOver={() => setIsSubMenuShow(true)} onMouseOut={() => setIsSubMenuShow(false)}>
                 <ul>
                   <li onClick={() => goMenu("admSttng/sysPlcy")}>시스템 정책 관리</li>
-                  <li onClick={() => goMenu("admSttng/sysNtc")}>전체공지 관리</li>
+                  <li onClick={() => goMenu("admSttng/sysNtc")}>전체공지</li>
                 </ul>
               </div>
             )}
