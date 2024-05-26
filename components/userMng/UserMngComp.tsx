@@ -119,13 +119,13 @@ const UserMngComp = () => {
     }
   };
 
-  const [nowTablePage, setNowTablePage] = useState(1);
-  const [ingredientCnt, setIngredientCnt] = useState(0);
-
   /**
    * 페이징 처리
    * @returns
    */
+  const [nowTablePage, setNowTablePage] = useState(1);
+  const [ingredientCnt, setIngredientCnt] = useState(0);
+
   const drawTablePage = () => {
     let tmpArray = [];
     let pageRange = Math.ceil(ingredientCnt / 5);
