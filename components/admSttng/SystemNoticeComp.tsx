@@ -1,4 +1,4 @@
-const SystemPolicyComp = () => {
+const SystemNoticeComp = () => {
   return (
     <>
       <div className="mainComponent">
@@ -8,4 +8,4 @@ const SystemPolicyComp = () => {
   );
 };
 
-export default SystemPolicyComp;
+export default SystemNoticeComp;
