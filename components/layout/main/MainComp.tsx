@@ -1,6 +1,8 @@
+import { spinnerAction } from "@/store/spinner/spinner-slice";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 const Chart = dynamic(
   () => {
@@ -13,18 +15,24 @@ const MainComp: NextPage = () => {
   const [isLoad, setIsLoad] = useState(false);
   const [initData, setInitData] = useState<any>();
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
+    dispatch(spinnerAction.loading());
+
     setTimeout(() => {
       setIsLoad(true);
       setInitData([0, 19, 26, 20, 19, 30]);
+      dispatch(spinnerAction.complete());
     }, 1000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       <div className="mainComponent">
         <h1>대시보드</h1>
-        {isLoad ? (
+        {isLoad && (
           <>
             <div className="headerFlex">
               <div className="w-full">
@@ -142,8 +150,6 @@ const MainComp: NextPage = () => {
               </div>
             </div>
           </>
-        ) : (
-          <div>is loading</div>
         )}
       </div>
     </>
