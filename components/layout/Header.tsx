@@ -1,14 +1,16 @@
+import { loginAction } from "@/store/login/login-slice";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const router = useRouter();
-  // const isLogin = useSelector((state: any) => state.login.isLogin); // 현재 로그인여부를 Redux에서 불러오기
+  const dispatch = useDispatch();
+
   const isLoginYN = localStorage.getItem("isLogin");
-  const userName = useSelector((state: any) => state.login.userName);
-  // console.log(userName);
+  const userName = localStorage.getItem("userName");
+
   useEffect(() => {
     if (isLoginYN) {
       //
@@ -22,6 +24,11 @@ const Header = () => {
   };
 
   const [isSubMenuShow, setIsSubMenuShow] = useState(false);
+
+  const LogoutProcess = () => {
+    dispatch(loginAction.logout());
+    goMenu("nauth/login");
+  };
 
   return (
     <>
@@ -61,7 +68,7 @@ const Header = () => {
           <div className="userNameCircle w-[70px] h-[70px]">
             <div className="text-m text-center mt-6 text-white">{userName || "관리자1"}</div>
           </div>
-          <button className="navLogoutBtn" onClick={() => goMenu("nauth/login")}>
+          <button className="navLogoutBtn" onClick={LogoutProcess}>
             로그아웃
           </button>
         </div>

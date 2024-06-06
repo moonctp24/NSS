@@ -46,15 +46,14 @@ const LoginComp = () => {
   useEffect(() => {
     postResult();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [code, response, dispatch, router]);
+  }, [code, response]);
 
   const postResult = useCallback(() => {
     console.log(`code :: ${code} / response :: `, response);
-    // console.log("response.status::") + response?.status;
     if (response && code == "200") {
       dispatch(
         loginAction.login({
-          isLogin: true,
+          // isLogin: true,
           userEmail: response.adminEmail,
           userName: response.adminName,
           adminJwt: response.adminJwt,
@@ -62,8 +61,8 @@ const LoginComp = () => {
       );
       router.push("/");
     }
-    // alert(response.status);
-  }, [code, response, dispatch, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code, response]);
 
   // 로그인 버튼 클릭 -> 로그인 로직 실행
   const loginBtn = async () => {
