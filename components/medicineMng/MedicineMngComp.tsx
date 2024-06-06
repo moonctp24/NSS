@@ -21,7 +21,6 @@ const MedicineMngComp = () => {
 
   const getResult = useCallback(() => {
     // console.log(`code :: ${code} / response :: `, response);
-    // console.log(Object.entries(response).length);
     if (response && code == "200") {
       if (true) {
         // 통신 잘됐을 때
