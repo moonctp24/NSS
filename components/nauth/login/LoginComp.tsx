@@ -1,7 +1,6 @@
 import { useAxios } from "@/constants/util/API_UTIL";
 import { loginAction } from "@/store/login/login-slice";
 import { alertAction } from "@/store/modal/alert-slice";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -80,16 +79,17 @@ const LoginComp = () => {
   };
   return (
     <>
-      <div className="w-full h-[1080px] relative overflow-hidden bg-[#00c1a6]">
-        <div className="w-[600px] h-[855px] absolute left-[659px] top-[111px] bg-white/75"></div>
-        <div className="flex flex-col justify-start items-center absolute left-[790px] top-[327px] gap-5">
-          <p className="flex-grow-0 flex-shrink-0 text-[40px] text-left text-[#00c1a6]">로그인</p>
-          <input className="w-[340px] " type="text" placeholder="이메일을 입력해 주세요" value={emailInput} data-key="emailInput" onChange={emailChangeHandler} />
-          <input className="w-[340px] " type="password" placeholder="비밀번호" value={passwordInput} data-key="passwordInput" onChange={passwordChangeHandler} onKeyDown={autoLoginHandler} />
-          <button className="h-11" onClick={loginBtn}>
-            로그인
-          </button>
-          {/* <p className="flex-grow-0 flex-shrink-0 w-[340px] h-3.5 text-xs text-right text-black">비밀번호 찾기</p> */}
+      <div className="w-full h-[1080px] overflow-hidden bg-[#00c1a6]">
+        <div className="absolute top-1/2	left-1/2	-mt-[200px] -ml-[250px] w-[500px] h-[400px] bg-white/75">
+          <div className="absolute top-1/2	left-1/2	-mt-[150px] -ml-[170px]  flex w-[340px] h-[300px] flex-col justify-start items-center gap-5">
+            <p className="flex-grow-0 flex-shrink-0 text-[40px] text-left text-[#00c1a6]">로그인</p>
+            <input type="text" placeholder="이메일을 입력해 주세요" value={emailInput} data-key="emailInput" onChange={emailChangeHandler} />
+            <input type="password" placeholder="비밀번호" value={passwordInput} data-key="passwordInput" onChange={passwordChangeHandler} onKeyDown={autoLoginHandler} />
+            <button className="h-11" onClick={loginBtn}>
+              로그인
+            </button>
+            {/* <p className="flex-grow-0 flex-shrink-0 w-[340px] h-3.5 text-xs text-right text-black">비밀번호 찾기</p> */}
+          </div>
         </div>
       </div>
     </>
