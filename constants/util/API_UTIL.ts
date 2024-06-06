@@ -1,13 +1,11 @@
 import axios, { AxiosResponse } from "axios";
-// import { getCookie, setCookie } from "cookies-next";
 import { NextApiResponse } from "next";
 import router from "next/router";
 import { NextApiRequest } from "next/types";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { alertAction } from "store/modal/alert-slice";
 import { spinnerAction } from "store/spinner/spinner-slice";
-// import { cookieStringToObject } from "./commUtil";
 
 const BASE_URL = `${process.env.API_URL}`;
 let adminJwt = "";
@@ -112,13 +110,10 @@ export const BACK_API = async (way: String, url: String, req: NextApiRequest, re
       getParamSetting += q[0] + "=" + q[1] + "&";
     }
     getParamSetting = getParamSetting.slice(0, -1);
-    // console.log(getParamSetting);
 
     if (way === "POST") {
       const response: AxiosResponse<any, any> = await AXIOS.post(`${BASE_URL}${url}`, body, {
-        headers: {
-          // Cookie: cookie,
-        },
+        headers: headers,
       });
       // console.log(`BACK_API response.data.data :: `, response.data.data);
 
@@ -132,7 +127,7 @@ export const BACK_API = async (way: String, url: String, req: NextApiRequest, re
         },
       };
     } else {
-      const response: AxiosResponse<any, any> = await AXIOS.get(`${BASE_URL}${url}${getParamSetting}`);
+      const response: AxiosResponse<any, any> = await AXIOS.get(`${BASE_URL}${url}${getParamSetting}`, { headers: headers });
 
       console.log(`BACK_API response.data.data :: `, response);
 
