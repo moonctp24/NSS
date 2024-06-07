@@ -59,6 +59,7 @@ const Header = () => {
                 <ul>
                   <li onClick={() => goMenu("admSttng/sysPlcy")}>시스템 정책 관리</li>
                   <li onClick={() => goMenu("admSttng/sysNtc")}>전체공지</li>
+                  <li onClick={() => goMenu("admSttng/abTest")}>AB Test Page</li>
                 </ul>
               </div>
             )}
