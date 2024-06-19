@@ -63,13 +63,13 @@ export const useAxios = () => {
       AXIOS.get(url, { params: data })
         .then((res: any) => {
           if (res.status === "200" || res.status === 200) {
-            setCode(res.status);
+            setCode(res.data.responseCode);
             setResponse(res.data.data);
           } else if (res.data.responseCode === "500" || res.data.status === 500) {
             dispatch(alertAction.openModal({ cont: "권한이 없습니다." }));
             router.push("/nauth/login");
           } else {
-            // throw new Error(res?.data?.message || "오류가 발생 했습니다.");
+            throw new Error(res?.data?.message || "오류가 발생 했습니다.");
           }
         })
         .catch((err) => {

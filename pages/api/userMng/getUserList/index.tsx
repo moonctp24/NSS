@@ -5,7 +5,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const response = await BACK_API("GET", "/api/users", req, res);
   // console.log(`get medicine list handler response :: `, response);
   let data = {};
-  if (res.statusCode === 200) {
+  if (response.responseCode === 200) {
     data = response.data;
   } else {
     console.log("error code check" + response.responseCode);
