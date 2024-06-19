@@ -29,7 +29,7 @@ const UserListTable = (props: any) => {
           </tr>
         </thead>
         <tbody>
-          {!!usrList ? (
+          {!!usrList && usrList.length > 0 ? (
             usrList?.map((m: any, index: number) => {
               if ((props.nowTablePage - 1) * 5 <= index && index < (props.nowTablePage - 1) * 5 + 5) {
                 return (
