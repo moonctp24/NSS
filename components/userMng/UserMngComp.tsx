@@ -17,7 +17,7 @@ const UserMngComp = () => {
   }, [code, response, router]);
 
   const getResult = useCallback(() => {
-    // console.log(`code :: ${code} / response :: `, response);
+    console.log(`code :: ${code} / response :: `, response);
     if (response && code == "200") {
       // console.log(response);
       const tmpObject = response;
@@ -28,44 +28,44 @@ const UserMngComp = () => {
         tmpList[i] = value;
         i++;
       }
-      setUsrList(
-        tmpList.length > 0
-          ? tmpList
-          : [
-              {
-                userId: "memId_00000000000001",
-                username: "김이름",
-                userStatus: "ACTIVE",
-                // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-              },
-              {
-                userId: "memId_00000000000002",
-                username: "김이름1",
-                userStatus: "ADMIN",
-                // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-              },
-              {
-                userId: "memId_00000000000003",
-                username: "김이름2",
-                userStatus: "INACTIVE",
-                // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-              },
-              {
-                userId: "memId_00000000000004",
-                username: "김이름3",
-                userStatus: "REMOVED",
-                // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-              },
-              {
-                userId: "memId_00000000000005",
-                username: "김이름4",
-                userStatus: "BANNED",
-                // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
-              },
-            ]
-      );
+      setUsrList(tmpList);
       setIngredientCnt(tmpList.length);
       setDomLoaded(true);
+    } else {
+      // setUsrList([
+      //   {
+      //     userId: "memId_00000000000001",
+      //     username: "김이름",
+      //     userStatus: "ACTIVE",
+      //     // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+      //   },
+      //   {
+      //     userId: "memId_00000000000002",
+      //     username: "김이름1",
+      //     userStatus: "ADMIN",
+      //     // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+      //   },
+      //   {
+      //     userId: "memId_00000000000003",
+      //     username: "김이름2",
+      //     userStatus: "INACTIVE",
+      //     // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+      //   },
+      //   {
+      //     userId: "memId_00000000000004",
+      //     username: "김이름3",
+      //     userStatus: "REMOVED",
+      //     // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+      //   },
+      //   {
+      //     userId: "memId_00000000000005",
+      //     username: "김이름4",
+      //     userStatus: "BANNED",
+      //     // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+      //   },
+      // ]);
+      // setIngredientCnt(5);
+      // setDomLoaded(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code, response]);
@@ -111,11 +111,11 @@ const UserMngComp = () => {
     if (searchNm?.length === 0) {
       fetchData("get", "/api/userMng/getUserList", null, true);
     } else if (selectedValue === "이름") {
-      const nameParam = { name: searchNm };
-      fetchData("get", "/api/userMng/searchUsername", nameParam, true);
+      const searchParam = { userName: searchNm };
+      fetchData("get", "/api/userMng/getUserList", searchParam, true);
     } else if (selectedValue === "이메일") {
-      const nameParam = { email: searchNm };
-      fetchData("get", "/api/userMng/searchUsername", nameParam, true);
+      const searchParam = { userEmail: searchNm };
+      fetchData("get", "/api/userMng/getUserList", searchParam, true);
     }
   };
 
