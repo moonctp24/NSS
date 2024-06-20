@@ -18,11 +18,9 @@ const UserDtlComp = () => {
   const getResult = useCallback(() => {
     console.log(`code :: ${code} / response :: `, response);
     if (response && code == "200") {
-      if (response.status === 200) {
-        setUserDtlInfo(response);
-        setPrescriptionCnt(response.prescriptionsIdList?.length);
-        setDomLoaded(true);
-      }
+      setUserDtlInfo(response[0] ? response[0] : response);
+      setPrescriptionCnt(response[0] ? response[0].prescriptions?.length : response.prescriptions?.length);
+      setDomLoaded(true);
     } else {
       let usrDtlInfo = {
         userId: "memId_00000000000001",
@@ -54,11 +52,17 @@ const UserDtlComp = () => {
 
   useEffect(() => {
     console.log(router.query.userSeq);
-    const getParam = { useremail: "test2" };
-    fetchData("get", "/api/userMng/getUserDtl", getParam, true);
+    // const getParam = { useremail: "test3" };
+    // fetchData("get", "/api/userMng/getUserDtl", getParam, true);
+    const searchParam = { userEmail: router.query.userSeq };
+    fetchData("get", "/api/userMng/getUserList", searchParam, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /**
+   * 처방전 상세 페이지 이동
+   * @param prscrptId 처방전 식별자
+   */
   const goPrscrptDtl = (prscrptId: string) => {
     router.push(`/prescriptionMng/prescriptionDtl/${prscrptId}`);
   };
@@ -134,8 +138,8 @@ const UserDtlComp = () => {
           </div>
           <div className="padding10" />
           {domLoaded &&
-            (!!userDtlInfo.prescriptionsIdList ? (
-              userDtlInfo.prescriptionsIdList.map((prscrpt: any, index: number) => {
+            (!!userDtlInfo.prescriptions ? (
+              userDtlInfo.prescriptions.map((prscrpt: any, index: number) => {
                 return (
                   <div className="padding5" key={String(prscrpt.prescriptionsId)}>
                     <div
