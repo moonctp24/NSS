@@ -33,16 +33,22 @@ export const useAxios = () => {
     if (way === "post") {
       AXIOS.post(url, JSON.stringify(data))
         .then((res: any) => {
+          console.log("res checkkkkk:: ", res);
+          console.log("res checkkkkk:: ", res.data.responseCode);
           if (res.data.responseCode === "200" || res.data.responseCode === 200) {
+            console.log("res checkkkkk33333333333:: ");
             // if (res.status === "200" || res.status === 200) {
             setCode(res.data.responseCode);
             setResponse(res.data.data);
             setMessage(res.data.message);
-          } else if (res.data.responseCode === "500" || res.data.status === 500) {
-            dispatch(alertAction.openModal({ cont: "권한이 없습니다." }));
-            router.push("/nauth/login");
+          } else if (res.data.responseCode === "500" || res.data.responseCode === 500) {
+            console.log("res checkkkkk22222222:: ");
+            // dispatch(alertAction.openModal({ cont: "권한이 없습니다." }));
+            // router.push("/nauth/login");
+            throw new Error(res?.data?.message || "오류가 발생 했습니다.");
           } else {
             // console.log(res.data.message);
+            console.log("res checkkkkk44444444:: ");
             throw new Error(res?.data?.message || "오류가 발생 했습니다.");
           }
         })
@@ -65,7 +71,7 @@ export const useAxios = () => {
           if (res.status === "200" || res.status === 200) {
             setCode(res.data.responseCode);
             setResponse(res.data.data);
-          } else if (res.data.responseCode === "500" || res.data.status === 500) {
+          } else if (res.data.responseCode === "500" || res.data.responseCode === 500) {
             dispatch(alertAction.openModal({ cont: "권한이 없습니다." }));
             router.push("/nauth/login");
           } else {
