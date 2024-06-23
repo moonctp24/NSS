@@ -167,32 +167,7 @@ const UserMngComp = () => {
           </div>
           <SearchComp searchItemBtnHandler={searchItemBtnHandler} />
         </div>
-        <div className="m-auto">
-          {
-            domLoaded && <UserListTable usrList={usrList} nowTablePage={nowTablePage} />
-            // (!!usrList ? (
-            //   usrList.map((usr: any, index: number) => {
-            //     return (
-            //       <div key={String(usr.userId)}>
-            //         <div className="w-[400px] usrListGrp py-3 mx-auto my-0">
-            //           <div className="flex">
-            //             <div className="relative h-[50px] w-[50px] rounded-full overflow-hidden">
-            //               <Image src={usr.user_image || "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg"} alt={"usrImg"} layout="fill"></Image>
-            //             </div>
-            //             <div className="text-base	text-center px-3 py-3 cursor-pointer	" onClick={() => goUsrMng(usr.userId)}>
-            //               {usr.username}
-            //             </div>
-            //           </div>
-            //           <div className="text-[#00c1a6] font-bold	px-3 py-3">{codeToKor(usr.userStatus)}</div>
-            //         </div>
-            //       </div>
-            //     );
-            //   })
-            // ) : (
-            //   <div>목록을 불러올 수 없습니다.</div>
-            // ))
-          }
-        </div>
+        <div className="m-auto">{domLoaded && <UserListTable usrList={usrList} nowTablePage={nowTablePage} />}</div>
         {/* ======= paging ======= */}
         <div className="paging">
           <div className="first" onClick={() => clickOtherPageHandler(1)}>
