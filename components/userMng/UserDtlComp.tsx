@@ -52,10 +52,10 @@ const UserDtlComp = () => {
 
   useEffect(() => {
     console.log(router.query.userSeq);
-    // const getParam = { useremail: "test3" };
-    // fetchData("get", "/api/userMng/getUserDtl", getParam, true);
-    const searchParam = { userEmail: router.query.userSeq };
-    fetchData("get", "/api/userMng/getUserList", searchParam, true);
+    const getParam = { userId: router.query.userSeq };
+    fetchData("get", "/api/userMng/getUserDtl", getParam, true);
+    // const searchParam = { userId: router.query.userSeq };
+    // fetchData("get", "/api/userMng/getUserList", searchParam, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -91,7 +91,10 @@ const UserDtlComp = () => {
     setIsClicked(!isClicked);
     let paramD = {
       userEmail: userDtlInfo.userEmail,
+      username: userDtlInfo.username,
       userStatus: state,
+      usertype: userDtlInfo.usertype,
+      failCount: userDtlInfo.failCount,
     };
     fetchData("post", "/api/userMng/updUserDtl", paramD, true);
   };
