@@ -11,13 +11,13 @@ const Header = () => {
   const isLoginYN = localStorage.getItem("isLogin");
   const userName = localStorage.getItem("userName");
 
-  useEffect(() => {
-    if (isLoginYN) {
-      //
-    } else {
-      router.push("/nauth/login");
-    }
-  }, [isLoginYN, router]);
+  // useEffect(() => {
+  //   if (isLoginYN) {
+  //     //
+  //   } else {
+  //     router.push("/nauth/login");
+  //   }
+  // }, [isLoginYN, router]);
 
   const goMenu = (pageName: string) => {
     router.push(`/${pageName}`);
