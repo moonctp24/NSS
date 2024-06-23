@@ -20,7 +20,7 @@ const MedicineAddComp = () => {
   useEffect(() => {
     getResult();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [code, response, message, router]);
+  }, [code, response, message]);
 
   const getResult = useCallback(() => {
     console.log(`code :: ${code} / response :: `, response, "/ message:: ", message);
@@ -39,7 +39,7 @@ const MedicineAddComp = () => {
 
   const getModifiedData = (modifiedData: any) => {
     if (isSaveClicked) {
-      modifiedData.admin_comment = admCmmtM;
+      modifiedData.adminComment = admCmmtM;
       fetchData("post", "/api/medicineMng/addMdcnDtl", modifiedData, true);
     }
     setIsSaveClicked(false);

@@ -30,7 +30,7 @@ const MedicineUpdComp = () => {
       setIsInitGet(false);
       if (response && code == "200") {
         setMDtlInfo(response);
-        setAdmCmmtM(response.admin_comment || "관리자 코멘트는 없습니다");
+        setAdmCmmtM(response.adminComment || "관리자 코멘트는 없습니다");
       } else {
         // console.log("fail");
         // 더미 데이터 세팅
