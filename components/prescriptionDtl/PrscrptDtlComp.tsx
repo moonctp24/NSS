@@ -14,7 +14,7 @@ const PrscrptDtlComp = () => {
   }, [code, response, router]);
 
   const getResult = useCallback(() => {
-    console.log(`code :: ${code} / response :: `, response);
+    // console.log(`code :: ${code} / response :: `, response);
     if (response && code == "200") {
       setPrscrptDtlInfo(response);
     } else {

@@ -1,5 +1,5 @@
 import { useAxios } from "@/constants/util/API_UTIL";
-import { codeToKor } from "@/constants/util/commUtil";
+import { codeToKor, dateFormat2 } from "@/constants/util/commUtil";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 
@@ -16,7 +16,7 @@ const UserDtlComp = () => {
   }, [code, response, router]);
 
   const getResult = useCallback(() => {
-    console.log(`code :: ${code} / response :: `, response);
+    // console.log(`code :: ${code} / response :: `, response);
     if (response && code == "200") {
       setUserDtlInfo(response[0] ? response[0] : response);
       setPrescriptionCnt(response[0] ? response[0].prescriptions?.length : response.prescriptions?.length);
@@ -70,7 +70,7 @@ const UserDtlComp = () => {
   /**
    * 등급 선택 이벤트
    */
-  const [isClicked, setIsClicked] = useState(false); // server selected YN
+  const [isClicked, setIsClicked] = useState(false);
   const selectBoxBtnHandler = () => {
     setIsClicked(!isClicked);
   };
@@ -151,7 +151,7 @@ const UserDtlComp = () => {
                         goPrscrptDtl(prscrpt.id);
                       }}
                     >
-                      <p className="ext-sm text-center text-[#020202]">24/02/24</p>
+                      <p className="text-sm text-center text-[#020202]">{dateFormat2(prscrpt.createdAt)}</p>
                       <p className="text-sm text-center text-[#020202]">{prscrpt.prescriptionName}</p>
                     </div>
                   </div>
