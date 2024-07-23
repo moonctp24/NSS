@@ -38,7 +38,7 @@ const UserListTable = (props: any) => {
                     <td
                       className="t_left makePointer"
                       onClick={(e: any) => {
-                        goUserDtlPage(m.userEmail); // todo:: id -> itemSeq
+                        goUserDtlPage(m.userId);
                       }}
                     >
                       {m.userEmail}

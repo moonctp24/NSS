@@ -1,6 +1,4 @@
 import { dateFormat } from "@/constants/util/commUtil";
-// import axios from "axios";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const MedicineDtlTable = (props: any) => {
@@ -29,7 +27,7 @@ const MedicineDtlTable = (props: any) => {
     console.log("clicked!!" + props.isSaveClicked);
     if (props.isSaveClicked) {
       let modifiedData = {
-        itemSeq: mDtl?.itemSeq,
+        id: mDtl?.id,
         medicineName: mdcnNm,
         companyName: companyNm,
         // description: "테스트",
@@ -39,7 +37,7 @@ const MedicineDtlTable = (props: any) => {
         caution: cautionM,
         keepMethod: keepM,
         appearance: apprnc,
-        // pillImage: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+        // pillImage: "https://cdn.icon-icons.com/icons2/1465/PNG/512/740pill_100923.png",
         // className: "",
         // otcName: "",
         // formCodeName: "",
@@ -57,7 +55,7 @@ const MedicineDtlTable = (props: any) => {
             <>
               <tr>
                 <td>번호</td>
-                <td className="">{mDtl.itemSeq}</td>
+                <td className="">{mDtl.id}</td>
                 <td>등록일시</td>
                 <td>{dateFormat(mDtl.createdAt)}</td>
               </tr>
