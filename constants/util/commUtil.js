@@ -71,6 +71,28 @@ export function dateFormat(date = new Date(), format = "yyyy-mm-dd hh:mi:ss") {
 }
 
 /**
+ * 날짜 포메터2
+ * @param {Date} date new Date()
+ * @param {String} format yyyy-mm-dd
+ */
+export function dateFormat2(date = new Date(), format = "yyyy/mm/dd") {
+  const eng = /[a-zA-Z]/;
+  if (typeof date == "string") {
+    format = format.replace(/\|hh24/gi, " hh");
+    for (var i = 0; i < date.length; i++) {
+      format = format.replace(eng, date[i]);
+    }
+    /*date 문자열과 format 길이가 맞지 않는 경우*/
+    if (format.search(eng) != -1) format = format.substring(0, format.search(eng) - 1);
+    return format;
+  }
+  const yy = date.getFullYear();
+  const mm = lPad(date.getMonth() + 1);
+  const dd = lPad(date.getDate());
+  return format.replace("yyyy", yy).replace("mm", mm).replace("dd", dd);
+}
+
+/**
  * 아이템 가격 포멧
  * @param {String} money
  * @returns
