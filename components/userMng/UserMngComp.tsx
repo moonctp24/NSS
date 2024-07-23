@@ -37,31 +37,31 @@ const UserMngComp = () => {
       //     userId: "memId_00000000000001",
       //     username: "김이름",
       //     userStatus: "ACTIVE",
-      //     // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+      //     // user_image: "https://cdn.icon-icons.com/icons2/1465/PNG/512/740pill_100923.png",
       //   },
       //   {
       //     userId: "memId_00000000000002",
       //     username: "김이름1",
       //     userStatus: "ADMIN",
-      //     // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+      //     // user_image: "https://cdn.icon-icons.com/icons2/1465/PNG/512/740pill_100923.png",
       //   },
       //   {
       //     userId: "memId_00000000000003",
       //     username: "김이름2",
       //     userStatus: "INACTIVE",
-      //     // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+      //     // user_image: "https://cdn.icon-icons.com/icons2/1465/PNG/512/740pill_100923.png",
       //   },
       //   {
       //     userId: "memId_00000000000004",
       //     username: "김이름3",
       //     userStatus: "REMOVED",
-      //     // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+      //     // user_image: "https://cdn.icon-icons.com/icons2/1465/PNG/512/740pill_100923.png",
       //   },
       //   {
       //     userId: "memId_00000000000005",
       //     username: "김이름4",
       //     userStatus: "BANNED",
-      //     // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+      //     // user_image: "https://cdn.icon-icons.com/icons2/1465/PNG/512/740pill_100923.png",
       //   },
       // ]);
       // setIngredientCnt(5);

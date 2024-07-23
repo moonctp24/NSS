@@ -27,7 +27,7 @@ const UserDtlComp = () => {
         userEmail: "test@email.com",
         username: "김이름",
         userStatus: "ADMIN",
-        // user_image: "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg",
+        // user_image: "https://cdn.icon-icons.com/icons2/1465/PNG/512/740pill_100923.png",
         prescriptionsIdList: [
           // 이 회원이 받은 처방전 내역
           {

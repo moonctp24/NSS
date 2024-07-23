@@ -25,7 +25,6 @@ const MedicineListTable = (props: any) => {
           <col width="*%" />
           <col width="17%" />
           <col width="17%" />
-          {/* <col width="20%" /> */}
         </colgroup>
         <thead>
           <tr>
@@ -35,7 +34,6 @@ const MedicineListTable = (props: any) => {
             <th>제조사</th>
             <th>등록일시</th>
             <th>마지막수정일시</th>
-            {/* <th>버튼</th> */}
           </tr>
         </thead>
         <tbody>
@@ -48,35 +46,29 @@ const MedicineListTable = (props: any) => {
                     <td
                       className="t_left makePointer"
                       onClick={(e: any) => {
-                        goMdcnUpdPage(m.id); // todo:: id -> itemSeq
+                        goMdcnUpdPage(m.id);
                       }}
                     >
                       {m.medicineName}
                     </td>
                     <td className="t_center">
-                      <Image width={50} height={50} src={m.pillImage || "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg"} alt={"pillImg"} style={{ width: "auto", height: "auto" }}></Image>
+                      <Image
+                        width={50}
+                        height={50}
+                        src={
+                          m.pillImage
+                            ? m.pillImage.split(".").length < 3
+                              ? "https://cdn.icon-icons.com/icons2/1465/PNG/512/740pill_100923.png"
+                              : m.pillImage
+                            : "https://cdn.icon-icons.com/icons2/1465/PNG/512/740pill_100923.png"
+                        }
+                        alt={"pillImg"}
+                        style={{ width: "50px", height: "auto" }}
+                      ></Image>
                     </td>
                     <td className="t_left">{m.companyName}</td>
                     <td className="t_center">{dateFormat(m.createdAt)}</td>
                     <td className="t_center">{dateFormat(m.updateAt)}</td>
-                    {/* <td className="">
-                      <button
-                        className="inTableBtn"
-                        onClick={() => {
-                          goMdcnUpdPage(m.itemSeq);
-                        }}
-                      >
-                        수정
-                      </button>
-                      <button
-                        className="btn_gray inTableBtn"
-                        onClick={(e: any) => {
-                          itemDelBtn(m);
-                        }}
-                      >
-                        삭제
-                      </button>
-                    </td> */}
                   </tr>
                 );
               }

@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import MedicineDtlTable from "./MedicineDtlTable";
 import { useAxios } from "@/constants/util/API_UTIL";
-import axios from "axios";
 import Image from "next/image";
 import { confirmAction } from "@/store/modal/confirm-slice";
 import { useDispatch } from "react-redux";
@@ -54,7 +53,6 @@ const MedicineUpdComp = () => {
           className: "",
           otcName: "",
           formCodeName: "",
-          itemSeq: "197400207",
           adminComment: "관리자 코멘트",
         };
         setMDtlInfo(tmpResData);
@@ -74,8 +72,8 @@ const MedicineUpdComp = () => {
   useEffect(() => {
     setIsInitGet(true);
     const getParam = {
-      // itemSeq: router.query.itemSeq,
-      id: router.query.itemSeq,
+      // id: router.query.id,
+      id: router.query.mid,
     };
     fetchData("get", "/api/medicineMng/getMdcnDtl", getParam, true);
     setDomLoaded(true);
@@ -100,7 +98,7 @@ const MedicineUpdComp = () => {
     if (isSaveClicked) {
       setIsSave(true);
       modifiedData.adminComment = admCmmtM;
-      modifiedData.id = router.query.itemSeq;
+      modifiedData.id = router.query.mid;
       // console.log(modifiedData);
       fetchData("post", "/api/medicineMng/updMdcnDtl", modifiedData, true);
     }
@@ -116,6 +114,7 @@ const MedicineUpdComp = () => {
   };
   const modalCallback = () => {
     dispatch(confirmAction.closeModal());
+    setIsSave(true);
     // console.log(mDtlInfo.medicineName, " real delete");
     const param = {
       id: mDtlInfo.id,
@@ -128,7 +127,13 @@ const MedicineUpdComp = () => {
       <div className="mainComponent">
         <h1>의약품 상세</h1>
         <div className="relative w-[200px] h-[70px] flex float-left">
-          <Image src={mDtlInfo.pill_image || "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg"} width={150} height={150} alt="pillImg" style={{ width: "auto", height: "auto" }}></Image>
+          <Image
+            src={mDtlInfo.pillImage || "https://cdn.icon-icons.com/icons2/1465/PNG/512/740pill_100923.png"}
+            width={150}
+            height={150}
+            alt="pillImg"
+            style={{ width: "auto", height: "auto" }}
+          ></Image>
         </div>
         <div className="relative w-[250px] h-[40px] flex float-right">
           <button className="h-[40px] float-right" onClick={mDtlUpdSave}>
