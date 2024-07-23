@@ -144,11 +144,11 @@ const UserDtlComp = () => {
             (!!userDtlInfo.prescriptions ? (
               userDtlInfo.prescriptions.map((prscrpt: any, index: number) => {
                 return (
-                  <div className="padding5" key={String(prscrpt.prescriptionsId)}>
+                  <div className="padding5" key={String(prscrpt.id)}>
                     <div
                       className="w-[90px] h-[90px] rounded-[10px] bg-white border-[3px] border-[#00c1a6]/75 cursor-pointer"
                       onClick={() => {
-                        goPrscrptDtl(prscrpt.prescriptionsId);
+                        goPrscrptDtl(prscrpt.id);
                       }}
                     >
                       <p className="ext-sm text-center text-[#020202]">24/02/24</p>
