@@ -51,7 +51,7 @@ const UserDtlComp = () => {
   }, [code, response]);
 
   useEffect(() => {
-    console.log(router.query.userSeq);
+    // console.log(router.query.userSeq);
     const getParam = { userId: router.query.userSeq };
     fetchData("get", "/api/userMng/getUserDtl", getParam, true);
     // const searchParam = { userId: router.query.userSeq };
