@@ -69,6 +69,7 @@ const PrscrptDtlComp = () => {
     // console.log(router.query.prscrptId);
     const getParam = { prescriptionId: router.query.prscrptId };
     fetchData("get", "/api/prescription/getPrescriptionDtl", getParam, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
