@@ -41,16 +41,22 @@ const Header = () => {
           (임시로고)
         </div>
         <div className="btngrp">
-          <button className="navBtn" onClick={() => goMenu("")}>
-            대시보드
-          </button>
-          <button className="navBtn" onClick={() => goMenu("userMng/userList")}>
-            회원관리
-          </button>
-          <button className="navBtn" onClick={() => goMenu("medicineMng/mdcnList")}>
-            의약품관리
-          </button>
-          <div className="h-[70px]">
+          <div className="navBtnCase">
+            <button className="navBtn" onClick={() => goMenu("")}>
+              대시보드
+            </button>
+          </div>
+          <div className="navBtnCase">
+            <button className="navBtn" onClick={() => goMenu("userMng/userList")}>
+              회원관리
+            </button>
+          </div>
+          <div className="navBtnCase">
+            <button className="navBtn" onClick={() => goMenu("medicineMng/mdcnList")}>
+              의약품관리
+            </button>
+          </div>
+          <div className="navBtnCase">
             <button className="navBtn" onMouseOver={() => setIsSubMenuShow(true)} onMouseOut={() => setIsSubMenuShow(false)}>
               관리자설정
             </button>
@@ -65,7 +71,7 @@ const Header = () => {
             )}
           </div>
         </div>
-        <div className="w-[350px] mt-2">
+        <div className="w-[350px] mt-2 ml-4">
           <div className="userNameCircle w-[70px] h-[70px]">
             <div className="text-m text-center mt-6 text-white">{userName || "관리자1"}</div>
           </div>
