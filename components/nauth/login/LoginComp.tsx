@@ -6,8 +6,11 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 const LoginComp = () => {
-  const [emailInput, setEmailInput] = useState("test@email.com");
-  const [passwordInput, setPasswordInput] = useState("test123!!");
+  // const [emailInput, setEmailInput] = useState("test@email.com");
+  // const [passwordInput, setPasswordInput] = useState("test123!!");
+
+  const [emailInput, setEmailInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
   const { code, response, fetchData } = useAxios();
   // const [cookies, setCookie, removeCookie] = useCookies();
 
