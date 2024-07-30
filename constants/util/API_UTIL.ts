@@ -8,7 +8,10 @@ import { alertAction } from "store/modal/alert-slice";
 import { spinnerAction } from "store/spinner/spinner-slice";
 
 export const useAxios = () => {
-  const adminJwt = useSelector((state: any) => state.login.adminJwt);
+  let adminJwt = useSelector((state: any) => state.login.adminJwt);
+  if (typeof window !== "undefined") {
+    adminJwt = adminJwt ? adminJwt : localStorage.getItem("adminJwt");
+  }
 
   const AXIOS = axios.create({
     withCredentials: true,
