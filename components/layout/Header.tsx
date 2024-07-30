@@ -32,7 +32,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="w-full h-[120px] bg-[#e6e6e6] headerFlex">
+      <div className="h-[120px] bg-[#e6e6e6] headerFlex">
         {/* <p className="w-[300px] h-[100px] left-[-81px] top-[-5px] text-[40px] text-center text-[#00c1a6]" onClick={() => goMenu("")}>
           LOGO
         </p> */}
@@ -40,7 +40,7 @@ const Header = () => {
           <Image className="m-auto" width={50} height={50} src="https://cdn.icon-icons.com/icons2/1465/PNG/512/740pill_100923.png" alt={"pillImg"} style={{ width: "auto", height: "auto" }} />
           (임시로고)
         </div>
-        <div className="btngrp w-[1200px]">
+        <div className="btngrp">
           <button className="navBtn" onClick={() => goMenu("")}>
             대시보드
           </button>
