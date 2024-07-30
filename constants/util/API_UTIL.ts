@@ -3,25 +3,21 @@ import { NextApiResponse } from "next";
 import router from "next/router";
 import { NextApiRequest } from "next/types";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { alertAction } from "store/modal/alert-slice";
 import { spinnerAction } from "store/spinner/spinner-slice";
 
-const BASE_URL = `${process.env.API_URL}`;
-let adminJwt = "";
-if (typeof window !== "undefined") {
-  adminJwt = localStorage.getItem("adminJwt") || "";
-}
-
-const AXIOS = axios.create({
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json; charset=utf-8",
-    Authorization: adminJwt ? `Bearer ${adminJwt}` : "",
-  },
-});
-
 export const useAxios = () => {
+  const adminJwt = useSelector((state: any) => state.login.adminJwt);
+
+  const AXIOS = axios.create({
+    withCredentials: true,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: adminJwt ? `Bearer ${adminJwt}` : "",
+    },
+  });
+
   const dispatch = useDispatch();
   const [code, setCode] = useState<any>(null);
   const [response, setResponse] = useState<any>(null);
@@ -33,22 +29,15 @@ export const useAxios = () => {
     if (way === "post") {
       AXIOS.post(url, JSON.stringify(data))
         .then((res: any) => {
-          console.log("res checkkkkk:: ", res);
-          console.log("res checkkkkk:: ", res.data.responseCode);
           if (res.data.responseCode === "200" || res.data.responseCode === 200) {
-            console.log("res checkkkkk33333333333:: ");
-            // if (res.status === "200" || res.status === 200) {
             setCode(res.data.responseCode);
             setResponse(res.data.data);
             setMessage(res.data.message);
           } else if (res.data.responseCode === "500" || res.data.responseCode === 500) {
-            console.log("res checkkkkk22222222:: ");
             // dispatch(alertAction.openModal({ cont: "권한이 없습니다." }));
             // router.push("/nauth/login");
             throw new Error(res?.data?.message || "오류가 발생 했습니다.");
           } else {
-            // console.log(res.data.message);
-            console.log("res checkkkkk44444444:: ");
             throw new Error(res?.data?.message || "오류가 발생 했습니다.");
           }
         })
@@ -56,8 +45,6 @@ export const useAxios = () => {
           if (err?.response?.status) {
             // console.log("error catch" + err);
           } else {
-            // console.log("useAxios err :: ", err);
-            // console.log(err?.response?.status);
             dispatch(alertAction.openModal({ cont: err?.message || "오류가 발생 했습니다." }));
           }
           // router.push("/nauth/login");
@@ -80,10 +67,10 @@ export const useAxios = () => {
         })
         .catch((err) => {
           if (err?.response?.status) {
-            console.log("error catch" + err);
+            // console.log("error catch" + err);
           } else {
-            console.log("useAxios err :: ", err);
-            console.log(err?.response?.status);
+            // console.log("useAxios err :: ", err);
+            // console.log(err?.response?.status);
             dispatch(alertAction.openModal({ cont: err?.message || "오류가 발생 했습니다." }));
           }
           router.push("/nauth/login");
@@ -98,13 +85,27 @@ export const useAxios = () => {
 };
 
 export const BACK_API = async (way: String, url: String, req: NextApiRequest, res: NextApiResponse) => {
+  const BASE_URL = `${process.env.API_URL}`;
+  let adminJwt = "";
+  if (typeof window !== "undefined") {
+    adminJwt = localStorage.getItem("adminJwt") || "";
+  }
+
+  const AXIOS = axios.create({
+    withCredentials: true,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: adminJwt ? `Bearer ${adminJwt}` : "",
+    },
+  });
+
   try {
     // 화면에서 넘어온 요청
     const { headers, body, query } = req;
 
-    console.log(`BACK_API req headers :: `, headers);
-    console.log(`BACK_API req body :: `, body);
-    console.log(`BACK_API BASE_URL :: `, BASE_URL);
+    // console.log(`BACK_API req headers :: `, headers);
+    // console.log(`BACK_API req body :: `, body);
+    // console.log(`BACK_API BASE_URL :: `, BASE_URL);
     // console.log(`url check:: `, url);
     // console.log(`param check:: `, query);
     // console.log(`param check22:: `, Object.keys(query));
@@ -135,7 +136,7 @@ export const BACK_API = async (way: String, url: String, req: NextApiRequest, re
     } else {
       const response: AxiosResponse<any, any> = await AXIOS.get(`${BASE_URL}${url}${getParamSetting}`, { headers: headers });
 
-      console.log(`BACK_API response.data.data :: `, response);
+      // console.log(`BACK_API response.data.data :: `, response);
 
       axios.defaults.headers.Authorization = "Bearer " + response.data.data.adminJwt;
 
@@ -149,7 +150,7 @@ export const BACK_API = async (way: String, url: String, req: NextApiRequest, re
     }
   } catch (error: any) {
     // 에러처리
-    console.log(`BACK_API error :: `, error);
+    // console.log(`BACK_API error :: `, error);
     return {
       responseCode: error?.response?.data?.responseCode || 500,
       message: error?.response?.data?.message || "BACK_API 미정의된 오류 발생.",
