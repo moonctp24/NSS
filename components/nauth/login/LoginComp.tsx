@@ -63,6 +63,8 @@ const LoginComp = () => {
         })
       );
       router.push("/");
+    } else {
+      dispatch(alertAction.openModal({ "오류가 발생 했습니다.": String }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code, response]);
