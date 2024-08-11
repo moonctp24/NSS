@@ -36,9 +36,9 @@ export const useAxios = () => {
             setCode(res.data.responseCode);
             setResponse(res.data.data);
             setMessage(res.data.message);
-          } else if (res.data.responseCode === "500" || res.data.responseCode === 500) {
-            // dispatch(alertAction.openModal({ cont: "권한이 없습니다." }));
-            // router.push("/nauth/login");
+          } else if (res.data.responseCode === "401" || res.data.responseCode === 401) {
+            dispatch(alertAction.openModal({ cont: "권한이 없습니다." }));
+            router.push("/nauth/login");
             throw new Error(res?.data?.message || "오류가 발생 했습니다.");
           } else {
             throw new Error(res?.data?.message || "오류가 발생 했습니다.");
@@ -58,10 +58,10 @@ export const useAxios = () => {
     } else if (way === "get") {
       AXIOS.get(url, { params: data })
         .then((res: any) => {
-          if (res.status === "200" || res.status === 200) {
+          if (res.data.responseCode === "200" || res.data.responseCode === 200) {
             setCode(res.data.responseCode);
             setResponse(res.data.data);
-          } else if (res.data.responseCode === "500" || res.data.responseCode === 500) {
+          } else if (res.data.responseCode === "401" || res.data.responseCode === 401) {
             dispatch(alertAction.openModal({ cont: "권한이 없습니다." }));
             router.push("/nauth/login");
           } else {
@@ -155,8 +155,8 @@ export const BACK_API = async (way: String, url: String, req: NextApiRequest, re
     // 에러처리
     // console.log(`BACK_API error :: `, error);
     return {
-      responseCode: error?.response?.data?.responseCode || 500,
-      message: error?.response?.data?.message || "BACK_API 미정의된 오류 발생.",
+      responseCode: error?.response?.data?.responseCode || 401,
+      message: error?.response?.data?.message || "미정의된 오류가 발생했습니다",
       data: error,
     };
   }
